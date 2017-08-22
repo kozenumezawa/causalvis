@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { addText } from '../actions';
+import { addText } from '../actions/actions';
 
 class Main extends React.Component {
   // constructor(props) {
@@ -50,7 +50,6 @@ class Main extends React.Component {
 }
 
 const selector = (state) => {
-  console.log(state.storedText);
   return {
     state: state,
   };

@@ -5,7 +5,7 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 
 import Main from './components/main.jsx';
-import { store } from './reducer';
+import store from './reducers/reducer';
 
 const App = () => (
   <Main />

@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { ADD_TEXT } from './actions';
+import { ADD_TEXT } from '../actions/actions';
 
 const initialState = [
   {
@@ -23,8 +23,10 @@ const text = (state = initialState, action) => {
   }
 };
 
-export const store = combineReducers(
+const store = combineReducers(
   {
     storedText: text,
   },
 );
+
+export default store;
