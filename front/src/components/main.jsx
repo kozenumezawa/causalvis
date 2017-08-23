@@ -2,14 +2,15 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { addText } from '../actions/actions';
+import { addText, fetchTiff } from '../actions/actions';
 
-import { Sidebar, Segment, Button, Menu, Image, Header } from 'semantic-ui-react';
-import { Icon, Step } from 'semantic-ui-react'
+import { Sidebar, Segment, Button, Menu, Image, Header } from 'semantic-ui-react';;
+import { Icon, Step } from 'semantic-ui-react';
 
 class Main extends React.Component {
   constructor(props) {
     super(props);
+    this.props.fetchData('2E2_GFB.tif');
 
     this.onAddBtnClicked = this.onAddBtnClicked.bind(this);
     this.state = { visible: true };
@@ -74,7 +75,7 @@ class Main extends React.Component {
                       </button>
                       <ul>
                         {
-                          this.props.state.storedText.map((obj) => {
+                          this.props.storedText.map((obj) => {
                             return (
                               <li key={obj.id}>
                                 { obj.text }
@@ -97,15 +98,20 @@ class Main extends React.Component {
 
   onAddBtnClicked(e) {
     const text = "test";
-    this.props.dispatch(addText(text));
+    this.props.addText(text);
   }
 }
 
 const selector = (state) => {
   return {
-    state: state,
+    storedText: state.storedText,
   };
 };
 
-export default connect(selector)(Main);
+const mapDispatchToProps = dispatch => ({
+  fetchData: (tiffName) => dispatch(fetchTiff(tiffName)),
+  addText: (text) => dispatch(addText(text)),
+});
+
+export default connect(selector, mapDispatchToProps)(Main);
 
