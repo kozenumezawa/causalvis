@@ -69,8 +69,8 @@ class Main extends React.Component {
                     </Menu.Item>
                   </Sidebar>
                   <Sidebar.Pusher>
-                    <Segment basic style={{ height: 500 }}>
-                      <input type="text" ref="input" />
+                    <Segment style={{ height: 200 }}>
+                      <input type="text" ref="input" />``
                       <br />
                       <button onClick={(e) => this.onAddBtnClicked(e)}>
                         Add
@@ -87,6 +87,9 @@ class Main extends React.Component {
                         }
                       </ul>
                       <Button>Hello</Button>
+                    </Segment>
+                    <Segment style={{ height: 400 }}>
+                      test window
                     </Segment>
                   </Sidebar.Pusher>
                 </Sidebar.Pushable>
