@@ -12,6 +12,7 @@
   },
   "rules": {
     "eqeqeq": "error",
+    "arrow-body-style": "off",
     "react/jsx-max-props-per-line": "warn",
     "jsx-a11y/href-no-hash": "off",
     "jsx-a11y/anchor-is-valid": ["warn", { "aspects": ["invalidHref"] }]
