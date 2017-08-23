@@ -1,4 +1,3 @@
-import { combineReducers } from 'redux';
 import { ADD_TEXT } from '../actions/actions';
 
 const initialState = [
@@ -8,7 +7,7 @@ const initialState = [
   },
 ];
 
-const text = (state = initialState, action) => {
+export const text = (state = initialState, action) => {
   switch (action.type) {
     case ADD_TEXT:
       return [
@@ -22,11 +21,3 @@ const text = (state = initialState, action) => {
       return state;
   }
 };
-
-const store = combineReducers(
-  {
-    storedText: text,
-  },
-);
-
-export default store;

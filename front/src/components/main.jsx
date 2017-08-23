@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 
 import { addText } from '../actions/actions';
 
-import { Sidebar, Segment, Button, Menu, Image, Icon, Header } from 'semantic-ui-react';
+import { Sidebar, Segment, Button, Menu, Image, Header } from 'semantic-ui-react';
+import { Icon, Step } from 'semantic-ui-react'
 
 class Main extends React.Component {
   constructor(props) {
@@ -15,7 +16,12 @@ class Main extends React.Component {
   }
 
   render() {
-    const { activeItem } = this.state || {}
+    const { activeItem } = this.state || {};
+    const steps = [
+      { icon: 'truck', title: 'Data', description: 'Analysis movie' },
+      { active: true, icon: 'payment', title: 'generateTimeSeries', description: 'create time series from movie' },
+      { disabled: true, icon: 'info', title: 'Granger Causality' },
+    ];
 
     return (
       <div>
@@ -27,49 +33,40 @@ class Main extends React.Component {
                 <Sidebar.Pushable as={Segment}>
                   <Sidebar as={Menu} animation='uncover' width='thin' visible={this.state.visible} icon='labeled' vertical inverted>
                     <Menu.Item>
-                      <Menu.Header>Products</Menu.Header>
+                      <Menu.Header>Methods</Menu.Header>
 
                       <Menu.Menu>
-                        <Menu.Item name='enterprise' active={activeItem === 'enterprise'} onClick={this.handleItemClick} />
-                        <Menu.Item name='consumer' active={activeItem === 'consumer'} onClick={this.handleItemClick} />
+                        <Menu.Item name='Granger Causality' active={activeItem === 'enterprise'} onClick={this.handleItemClick} />
+                        <Menu.Item name='Cross Correlation' active={activeItem === 'consumer'} onClick={this.handleItemClick} />
+                        <Menu.Item name='CCM  ' active={activeItem === 'consumer'} onClick={this.handleItemClick} />
                       </Menu.Menu>
                     </Menu.Item>
 
                     <Menu.Item>
-                      <Menu.Header>CMS Solutions</Menu.Header>
+                      <Menu.Header>Item</Menu.Header>
 
                       <Menu.Menu>
-                        <Menu.Item name='rails' active={activeItem === 'rails'} onClick={this.handleItemClick} />
-                        <Menu.Item name='python' active={activeItem === 'python'} onClick={this.handleItemClick} />
-                        <Menu.Item name='php' active={activeItem === 'php'} onClick={this.handleItemClick} />
+                        <Menu.Item name='create Time Series' active={activeItem === 'rails'} onClick={this.handleItemClick} />
                       </Menu.Menu>
                     </Menu.Item>
 
                     <Menu.Item>
-                      <Menu.Header>Hosting</Menu.Header>
+                      <Menu.Header>Filter</Menu.Header>
 
                       <Menu.Menu>
-                        <Menu.Item name='shared' active={activeItem === 'shared'} onClick={this.handleItemClick} />
-                        <Menu.Item name='dedicated' active={activeItem === 'dedicated'} onClick={this.handleItemClick} />
-                      </Menu.Menu>
-                    </Menu.Item>
-
-                    <Menu.Item>
-                      <Menu.Header>Support</Menu.Header>
-
-                      <Menu.Menu>
-                        <Menu.Item name='email' active={activeItem === 'email'} onClick={this.handleItemClick}>
-                          E-mail Support
-                        </Menu.Item>
-
-                        <Menu.Item name='faq' active={activeItem === 'faq'} onClick={this.handleItemClick}>
-                          FAQs
-                        </Menu.Item>
+                        <Menu.Item name='mean filter' active={activeItem === 'shared'} onClick={this.handleItemClick} />
                       </Menu.Menu>
                     </Menu.Item>
                   </Sidebar>
+
                   <Sidebar.Pusher>
                     <Segment style={{ height: 200 }}>
+                      <div>
+                        <br />
+                        <Step.Group items={steps} />
+                      </div>
+                    </Segment>
+                    <Segment style={{ height: 400 }}>
                       <input type="text" ref="input" />``
                       <br />
                       <button onClick={(e) => this.onAddBtnClicked(e)}>
@@ -87,9 +84,6 @@ class Main extends React.Component {
                         }
                       </ul>
                       <Button>Hello</Button>
-                    </Segment>
-                    <Segment style={{ height: 400 }}>
-                      test window
                     </Segment>
                   </Sidebar.Pusher>
                 </Sidebar.Pushable>
