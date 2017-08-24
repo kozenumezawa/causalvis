@@ -1,12 +1,13 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Sidebar, Segment, Button, Step } from 'semantic-ui-react';
+import { Sidebar, Segment } from 'semantic-ui-react';
 
 import { addText, fetchTiff } from '../actions/actions';
 
 import SideMenu from './side-bar/side-menu.jsx';
-
+import ControlWindow from './control-window/control-window.jsx';
+import ResultWindow from './result-window/result-window.jsx';
 
 class Main extends React.Component {
   constructor(props) {
@@ -15,50 +16,24 @@ class Main extends React.Component {
   }
 
   render() {
-    const steps = [
-      { icon: 'image', title: 'Data', description: 'Analysis movie' },
-      { icon: 'crop', title: 'generateTimeSeries', description: 'create time series from movie' },
-      { icon: 'line graph', title: 'Granger Causality' },
-      // { disabled: true, icon: 'line graph', title: 'Granger Causality' },
-      { active: true, icon: 'grid layout', title: 'IRM', description: 'Infinite Relational Modeling' },
-    ];
-
     return (
       <div>
         <Switch>
           <Route
-            exact path="/"
+            exact
+            path="/"
             render={() => (
               <div>
                 <Sidebar.Pushable as={Segment}>
                   <SideMenu />
 
                   <Sidebar.Pusher>
-                    <Segment style={{ height: 200 }}>
-                      <div>
-                        <br />
-                        <Step.Group items={steps} />
-                      </div>
-                    </Segment>
-                    <Segment style={{ height: 400 }}>
-                      <input type="text" ref="input" />``
-                      <br />
-                      <button onClick={(e) => this.onAddBtnClicked(e)}>
-                        Add
-                      </button>
-                      <ul>
-                        {
-                          this.props.storedText.map((obj) => {
-                            return (
-                              <li key={obj.id}>
-                                { obj.text }
-                              </li>
-                            );
-                          })
-                        }
-                      </ul>
-                      <Button>Hello</Button>
-                    </Segment>
+                    <ControlWindow />
+
+                    <ResultWindow
+                      storedText={this.props.storedText}
+                      addText={this.props.addText}
+                    />
                   </Sidebar.Pusher>
                 </Sidebar.Pushable>
               </div>
