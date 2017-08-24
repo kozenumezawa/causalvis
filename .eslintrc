@@ -13,6 +13,7 @@
   "rules": {
     "eqeqeq": "error",
     "arrow-body-style": "off",
+    "max-len": "off",
     "react/jsx-max-props-per-line": "warn",
     "react/prop-types": "off",
     "jsx-a11y/href-no-hash": "off",
