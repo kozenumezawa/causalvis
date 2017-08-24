@@ -15,6 +15,7 @@
     "arrow-body-style": "off",
     "max-len": "off",
     "no-mixed-operators": "off",
+    "no-shadow": "off",
     "class-methods-use-this": "off",
     "react/jsx-max-props-per-line": "warn",
     "react/prop-types": "off",

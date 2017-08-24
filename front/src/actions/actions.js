@@ -1,8 +1,6 @@
 import Dispatcher from '../dispatcher/dispatcher';
 import eventConstants from '../constants/event-constants';
 
-let textId = 1;
-
 export default {
   loadTiff: (status) => {
     Dispatcher.dispatch({
@@ -11,29 +9,39 @@ export default {
     });
   },
 
-  addText: (newText) => {
-    textId += 1;
-    Dispatcher.dispatch({
-      actionType: eventConstants.ADD_TEXT,
-      id: textId,
-      text: newText,
-    });
-  },
-
-  fetchTiff: (tiffName) => {
-    fetch(tiffName)
-      .then((response) => {
-        // dispatch(loadTiff(false));
-        return response;
-      })
+  fetchTiff: (legendName, dataName) => {
+    window.fetch(dataName)
       .then((response) => {
         response.arrayBuffer().then((buffer) => {
+          const allTiffList = [];
           const tiff = new Tiff({ buffer });
-          for (let i = 0, len = tiff.countDirectory(); i < len; i++) {
+          let tiffLen = tiff.countDirectory();
+
+          tiffLen = tiff.countDirectory() - 100;
+
+          for (let i = 50; i < tiffLen; i++) {
             tiff.setDirectory(i);
             const canvas = tiff.toCanvas();
-            console.log(canvas);
+            allTiffList.push(canvas);
           }
+
+          window.fetch(legendName)
+            .then((response) => {
+              // dispatch(loadTiff(false));
+              return response;
+            })
+            .then((response) => {
+              response.arrayBuffer().then((buffer) => {
+                const tiff = new Tiff({ buffer });
+                tiff.setDirectory(0);
+                const legendTiff = tiff.toCanvas();
+                Dispatcher.dispatch({
+                  actionType: eventConstants.LOAD_TIFF,
+                  legendTiff,
+                  allTiffList,
+                });
+              });
+            });
         });
       });
   },

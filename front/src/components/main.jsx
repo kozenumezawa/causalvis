@@ -10,19 +10,12 @@ import SideMenu from './side-bar/side-menu.jsx';
 import ControlWindow from './control-window/control-window.jsx';
 import ResultWindow from './result-window/result-window.jsx';
 
-function getAllState() {
-  return {
-    storedText: Store.getStoredText(),
-  };
-}
-
 export default class Main extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = getAllState();
-    Actions.fetchTiff('2E2_GFB.tif');
-    // this.props.fetchData('trp-3-masked8b_color_mean.tif');
+    this.state = Store.getAllState();
+    Actions.fetchTiff('2E2_GFB.tif', 'trp-3-masked8b_color_mean.tif');
   }
 
   componentDidMount() {
@@ -30,7 +23,7 @@ export default class Main extends React.Component {
   }
 
   onChange() {
-    this.setState(getAllState());
+    this.setState(Store.getAllState());
   }
 
   render() {
@@ -49,7 +42,6 @@ export default class Main extends React.Component {
                     <ControlWindow />
 
                     <ResultWindow
-                      storedText={this.state.storedText}
                       addText={Actions.addText}
                     />
                   </Sidebar.Pusher>

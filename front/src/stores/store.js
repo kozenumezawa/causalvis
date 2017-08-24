@@ -4,12 +4,10 @@ import eventConstants from '../constants/event-constants';
 
 const CHANGE_EVENT = 'change';
 
-let initialState = [
-  {
-    id: 0,
-    text: 'Hello Redux and React',
-  },
-];
+const state = {
+  allTiffList: [],
+  legendTiff: null,
+};
 
 class Store extends EventEmitter {
   constructor() {
@@ -28,16 +26,9 @@ class Store extends EventEmitter {
 
   handler(action) {
     switch (action.actionType) {
-      case eventConstants.ADD_TEXT:
-        initialState = [
-          ...initialState,
-          {
-            id: action.id,
-            text: action.text,
-          },
-        ];
-        break;
       case eventConstants.LOAD_TIFF:
+        state.legendTiff = action.legendTiff;
+        state.allTiffList = action.allTiffList;
         break;
       default:
         break;
@@ -45,8 +36,8 @@ class Store extends EventEmitter {
     this.emitChange();
   }
 
-  getStoredText() {
-    return initialState;
+  getAllState() {
+    return state;
   }
 }
 
