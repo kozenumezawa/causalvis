@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 
 import { Sidebar, Segment } from 'semantic-ui-react';
 
-import Store from '../stores/store'
+import Store from '../stores/store';
 import Actions from '../actions/actions';
 
 import SideMenu from './side-bar/side-menu.jsx';
@@ -21,7 +21,7 @@ export default class Main extends React.Component {
     super(props);
 
     this.state = getAllState();
-    // this.props.fetchData('2E2_GFB.tif');
+    Actions.fetchTiff('2E2_GFB.tif');
     // this.props.fetchData('trp-3-masked8b_color_mean.tif');
   }
 
@@ -62,4 +62,3 @@ export default class Main extends React.Component {
     );
   }
 }
-

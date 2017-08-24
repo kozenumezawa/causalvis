@@ -19,27 +19,23 @@ export default {
       text: newText,
     });
   },
+
+  fetchTiff: (tiffName) => {
+    fetch(tiffName)
+      .then((response) => {
+        // dispatch(loadTiff(false));
+        return response;
+      })
+      .then((response) => {
+        response.arrayBuffer().then((buffer) => {
+          const tiff = new Tiff({ buffer });
+          for (let i = 0, len = tiff.countDirectory(); i < len; i++) {
+            tiff.setDirectory(i);
+            const canvas = tiff.toCanvas();
+            console.log(canvas);
+          }
+        });
+      });
+  },
 };
 
-//
-// export const fetchTiff = (tiffName) => {
-//   return (dispatch) => {
-//     dispatch(loadTiff(true));
-//
-//     fetch(tiffName)
-//       .then((response) => {
-//         dispatch(loadTiff(false));
-//         return response;
-//       })
-//       .then((response) => {
-//         response.arrayBuffer().then((buffer) => {
-//           const tiff = new Tiff({ buffer: buffer });
-//           for (let i = 0, len = tiff.countDirectory(); i < len; i++) {
-//             tiff.setDirectory(i);
-//             const canvas = tiff.toCanvas();
-//             console.log(canvas);
-//           }
-//         });
-//       });
-//   };
-// }
