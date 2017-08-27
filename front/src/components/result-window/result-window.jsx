@@ -12,7 +12,7 @@ export default class ResultWindow extends React.Component {
   render() {
     return (
       <Segment style={{ height: 400 }}>
-        {/*<ClusterMatrix />*/}
+        {/* <ClusterMatrix /> */}
       </Segment>
     );
   }
