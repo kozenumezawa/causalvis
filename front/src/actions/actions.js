@@ -1,10 +1,10 @@
 import Dispatcher from '../dispatcher/dispatcher';
-import eventConstants from '../constants/event-constants';
+import { LOAD_TIFF } from '../constants/event-constants';
 
 export default {
   loadTiff: (status) => {
     Dispatcher.dispatch({
-      actionType: eventConstants.LOAD_TIFF,
+      actionType: LOAD_TIFF,
       isLoading: status,
     });
   },
@@ -36,7 +36,7 @@ export default {
                 tiff.setDirectory(0);
                 const legendTiff = tiff.toCanvas();
                 Dispatcher.dispatch({
-                  actionType: eventConstants.LOAD_TIFF,
+                  actionType: LOAD_TIFF,
                   legendTiff,
                   allTiffList,
                 });

@@ -1,6 +1,6 @@
 import { EventEmitter } from 'events';
 import Dispatcher from '../dispatcher/dispatcher';
-import eventConstants from '../constants/event-constants';
+import { LOAD_TIFF } from '../constants/event-constants';
 
 const CHANGE_EVENT = 'change';
 
@@ -26,7 +26,7 @@ class Store extends EventEmitter {
 
   handler(action) {
     switch (action.actionType) {
-      case eventConstants.LOAD_TIFF:
+      case LOAD_TIFF:
         state.legendTiff = action.legendTiff;
         state.allTiffList = action.allTiffList;
         break;

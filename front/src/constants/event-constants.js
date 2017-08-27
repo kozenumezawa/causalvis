@@ -1,6 +1,1 @@
-const eventConstants = {
-  LOAD_TIFF: 'LOAD_TIFF',
-};
-
-export default eventConstants;
-
+export const LOAD_TIFF = Symbol('load_tiff');
