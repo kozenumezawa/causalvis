@@ -1,1 +1,3 @@
-export const LOAD_TIFF = Symbol('load_tiff');
+export const DATA_INIT = Symbol('data_init');
+export const FETCH_TIFF = Symbol('fetch_tiff');
+

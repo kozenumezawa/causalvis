@@ -3,8 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 
 import { Sidebar, Segment } from 'semantic-ui-react';
 
-import Store from '../stores/store';
-import Actions from '../actions/actions';
+import { loadTiff } from '../intents/data';
 
 import SideMenu from './side-bar/side-menu.jsx';
 import ControlWindow from './control-window/control-window.jsx';
@@ -13,17 +12,20 @@ import ResultWindow from './result-window/result-window.jsx';
 export default class Main extends React.Component {
   constructor(props) {
     super(props);
+  }
 
-    this.state = Store.getAllState();
-    Actions.fetchTiff('2E2_GFB.tif', 'trp-3-masked8b_color_mean.tif');
+  componentWillMount() {
+    this.subscription = this.props.store.subscribe((state) => {
+      this.setState(state);
+    });
   }
 
   componentDidMount() {
-    Store.addChangeListener(this.onChange.bind(this));
+    loadTiff('trp-3-masked8b_color_mean.tif', '2E2_GFB.tif');
   }
 
-  onChange() {
-    this.setState(Store.getAllState());
+  componentWillUnmount() {
+    this.subscription.dispose();
   }
 
   render() {
@@ -41,9 +43,7 @@ export default class Main extends React.Component {
                   <Sidebar.Pusher>
                     <ControlWindow />
 
-                    <ResultWindow
-                      addText={Actions.addText}
-                    />
+                    <ResultWindow />
                   </Sidebar.Pusher>
                 </Sidebar.Pushable>
               </div>
