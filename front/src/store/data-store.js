@@ -1,9 +1,12 @@
 import Rx from 'rx';
+
 import { FETCH_TIFF } from '../constants/event-constants';
+import { createAllTimeSeriesFromTiff } from '../utils/data-store-utils';
 
 const store = (intentSubject) => {
   const state = {
     allTiffList: [],
+    allTimeSeries: [],
     legendTiff: null,
   };
 
@@ -37,6 +40,8 @@ const store = (intentSubject) => {
 
                     state.allTiffList = allTiffList;
                     state.legendTiff = legendTiff;
+                    state.allTimeSeries = createAllTimeSeriesFromTiff(legendTiff, allTiffList);
+
                     subject.onNext({ state });
                   });
                 });
