@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Segment } from 'semantic-ui-react';
 
-// import ClusterMatrix from './components/cluster-matrix.jsx';
+import ClusterMatrix from './components/cluster-matrix.jsx';
 
 export default class ResultWindow extends React.Component {
   constructor(props) {
@@ -12,7 +12,10 @@ export default class ResultWindow extends React.Component {
   render() {
     return (
       <Segment style={{ height: 400 }}>
-        {/* <ClusterMatrix /> */}
+        <ClusterMatrix
+          allTiffList={this.props.allTiffList}
+          allTimeSeries={this.props.allTimeSeries}
+        />
       </Segment>
     );
   }

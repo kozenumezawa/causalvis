@@ -43,7 +43,10 @@ export default class Main extends React.Component {
                   <Sidebar.Pusher>
                     <ControlWindow />
 
-                    <ResultWindow />
+                    <ResultWindow
+                      allTiffList={this.state.data.allTiffList}
+                      allTimeSeries={this.state.data.allTimeSeries}
+                    />
                   </Sidebar.Pusher>
                 </Sidebar.Pushable>
               </div>
