@@ -9,7 +9,7 @@ export default class ClusterMatrix extends React.Component {
     this.state = {
       mean_step: 3,
     };
-    this.scale = 3;
+    this.scale = 2;
   }
 
   componentDidMount() {

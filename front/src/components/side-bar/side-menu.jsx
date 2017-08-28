@@ -5,7 +5,13 @@ import { Sidebar, Menu } from 'semantic-ui-react';
 export default class SideMenu extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = { visible: true };
+    this.handleItemClick = this.handleItemClick.bind(this);
+  }
+
+  handleItemClick(_, { name }) {
+    console.log(name);
   }
 
   render() {
