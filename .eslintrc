@@ -8,7 +8,8 @@
     "modules": true
   },
   "globals": {
-    "Tiff": false
+    "Tiff": false,
+    "API_ENDPOINT": true
   },
   "rules": {
     "eqeqeq": "error",
