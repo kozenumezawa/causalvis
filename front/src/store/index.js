@@ -2,7 +2,7 @@ import Rx from 'rx';
 import dataStore from './data-store';
 import causalStore from './causal-store';
 import filterStore from './filter-store';
-import { intentSubject } from '../intents/data';
+import { intentSubject } from '../intents/intent';
 
 const store = () => {
   const dataSubject = dataStore(intentSubject);

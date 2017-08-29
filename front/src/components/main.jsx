@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 
 import { Sidebar, Segment } from 'semantic-ui-react';
 
-import { loadTiff } from '../intents/data';
+import { loadTiff } from '../intents/intent';
 
 import SideMenu from './side-bar/side-menu.jsx';
 import ControlWindow from './control-window/control-window.jsx';
