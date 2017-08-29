@@ -60,3 +60,15 @@ export const createAllTimeSeriesFromTiff = (legendCanvas, allTiffList) => {
   return transposeTimeSeries(allTimeSeriesInverse);
 };
 
+export const toTwoDimensions = (allTimeSeries, canvasWidth, canvasHeight) => {
+  const twoDimensions = [];
+  for (let y = 0; y < canvasHeight; y++) {
+    twoDimensions[y] = [];
+    const yIdx = y * canvasWidth;
+    for (let x = 0; x < canvasWidth; x++) {
+      twoDimensions[y].push(allTimeSeries[x + yIdx]);
+    }
+  }
+  return twoDimensions;
+};
+

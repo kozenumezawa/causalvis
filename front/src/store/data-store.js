@@ -1,13 +1,13 @@
 import Rx from 'rx';
 
 import { FETCH_TIFF } from '../constants/event-constants';
-import { createAllTimeSeriesFromTiff } from '../utils/data-store-utils';
+import { createAllTimeSeriesFromTiff, toTwoDimensions } from '../utils/data-store-utils';
 
 const store = (intentSubject) => {
   const state = {
     allTiffList: [],
+    legendTiff: [],
     allTimeSeries: [],
-    legendTiff: null,
   };
 
   const subject = new Rx.BehaviorSubject({ state });
@@ -40,8 +40,11 @@ const store = (intentSubject) => {
 
                     state.allTiffList = allTiffList;
                     state.legendTiff = legendTiff;
-                    state.allTimeSeries = createAllTimeSeriesFromTiff(legendTiff, allTiffList);
 
+                    const allTimeSeriesOneDim = createAllTimeSeriesFromTiff(state.legendTiff, state.allTiffList);
+                    const canvasWidth = state.allTiffList[0].width;
+                    const canvasHeight = state.allTiffList[0].height;
+                    state.allTimeSeries = toTwoDimensions(allTimeSeriesOneDim, canvasWidth, canvasHeight);
                     subject.onNext({ state });
                   });
                 });

@@ -10,6 +10,7 @@ export default class ControlWindow extends React.Component {
   render() {
     const steps = [
       { icon: 'image', title: 'Data', description: 'Analysis movie' },
+      { icon: 'filter', title: 'fliter' },
       { icon: 'crop', title: 'generateTimeSeries', description: 'create time series from movie' },
       { icon: 'line graph', title: 'Granger Causality' },
       // { disabled: true, icon: 'line graph', title: 'Granger Causality' },

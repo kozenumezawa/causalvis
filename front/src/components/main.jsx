@@ -12,10 +12,12 @@ import ResultWindow from './result-window/result-window.jsx';
 export default class Main extends React.Component {
   constructor(props) {
     super(props);
+    console.log(API_ENDPOINT);
   }
 
   componentWillMount() {
     this.subscription = this.props.store.subscribe((state) => {
+      console.log(this.state);
       this.setState(state);
     });
   }
@@ -45,7 +47,7 @@ export default class Main extends React.Component {
 
                     <ResultWindow
                       allTiffList={this.state.data.allTiffList}
-                      allTimeSeries={this.state.data.allTimeSeries}
+                      allTimeSeries={this.state.filter.allTimeSeries}
                     />
                   </Sidebar.Pusher>
                 </Sidebar.Pushable>

@@ -2,15 +2,15 @@ import Rx from 'rx';
 
 import { FETCH_TIFF } from '../constants/event-constants';
 
-const store = (intentSubject, filterSubject) => {
+const store = (intentSubject, dataSubject) => {
   const state = {
-    test: 'test',
+    allTimeSeries: [],
   };
 
   const subject = new Rx.BehaviorSubject({ state });
 
-  Rx.Observable.zip(intentSubject, filterSubject).subscribe(([payload, filter]) => {
-    console.log(filter.state);
+  Rx.Observable.zip(intentSubject, dataSubject).subscribe(([payload, data]) => {
+    state.allTimeSeries = data.state.allTimeSeries;
     switch (payload.type) {
       case FETCH_TIFF:
         subject.onNext({ state });
