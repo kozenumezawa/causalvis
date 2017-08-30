@@ -1,7 +1,7 @@
 import Rx from 'rx';
 
 import { FETCH_TIFF } from '../constants/event-constants';
-import { createAllTimeSeriesFromTiff } from '../utils/data-store-utils';
+import { createAllTimeSeriesFromTiff } from '../utils/store-utils';
 
 const store = (intentSubject) => {
   const state = {
