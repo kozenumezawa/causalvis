@@ -23,10 +23,8 @@ const store = (intentSubject, filterSubject, dataSubject) => {
       },
       body: JSON.stringify({
         allTimeSeries: filter.state.allTimeSeries,
-        width: data.state.width,
         maxLag: 20,
         lagStep: 2,
-        meanStep: 3,
         method: 'CROSS',
       }),
     })

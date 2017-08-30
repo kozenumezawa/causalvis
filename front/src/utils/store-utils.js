@@ -72,3 +72,21 @@ export const toTwoDimensions = (allTimeSeries, canvasWidth, canvasHeight) => {
   return twoDimensions;
 };
 
+
+export const isSamplingPoint = (idx, width, meanR) => {
+  if (meanR === 0) {
+    return true;
+  }
+  const x = idx % width;
+  const y = Math.floor(idx / width);
+  if (x % (meanR * 2 + 1) === meanR && y % (meanR * 2 + 1) === meanR) {
+    return true;
+  }
+  return false;
+};
+
+export const arraySum = (arr) => {
+  return arr.reduce((prev, current) => {
+    return prev + current;
+  });
+};
