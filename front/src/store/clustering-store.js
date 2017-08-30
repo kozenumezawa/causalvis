@@ -2,18 +2,15 @@ import Rx from 'rx';
 
 import { FETCH_TIFF } from '../constants/event-constants';
 
-const store = (intentSubject, dataSubject) => {
+const store = (intentSubject, causalSubject) => {
   const state = {
-    allTimeSeries: [],
-    width: 0,
+    clusterMatrix: [],
   };
 
   const subject = new Rx.BehaviorSubject({ state });
 
-  Rx.Observable.zip(intentSubject, dataSubject).subscribe(([payload, data]) => {
-    state.allTimeSeries = data.state.allTimeSeries;
-    state.width = data.state.width;
-
+  Rx.Observable.zip(intentSubject, causalSubject).subscribe(([payload, causal]) => {
+    console.log('causalmatrix', causal.state.causalMatrix);
     switch (payload.type) {
       case FETCH_TIFF:
         subject.onNext({ state });
