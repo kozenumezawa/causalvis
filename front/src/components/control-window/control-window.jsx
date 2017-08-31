@@ -14,13 +14,14 @@ export default class ControlWindow extends React.Component {
       { icon: 'crop', title: 'generateTimeSeries', description: 'create time series from movie' },
       { icon: 'line graph', title: 'Granger Causality' },
       // { disabled: true, icon: 'line graph', title: 'Granger Causality' },
-      { active: true, icon: 'grid layout', title: 'IRM', description: 'Infinite Relational Modeling' },
+      { active: true, icon: 'grid layout', title: 'IRM', description: 'Infinite Relational Model' },
     ];
     const steps2 = [
       { icon: 'image', title: 'Data', description: 'Analysis movie' },
+      { icon: 'filter', title: 'fliter' },
       { icon: 'crop', title: 'generateTimeSeries', description: 'create time series from movie' },
       { icon: 'line graph', title: 'Convergent Cross Mapping' },
-      { active: true, icon: 'grid layout', title: 'IRM', description: 'Infinite Relational Modeling' },
+      { active: true, icon: 'grid layout', title: 'IRM', description: 'Infinite Relational Model' },
     ];
     return (
       <Segment style={{ height: 250 }}>
