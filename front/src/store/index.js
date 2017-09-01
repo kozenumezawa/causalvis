@@ -9,7 +9,7 @@ const store = () => {
   const dataSubject = dataStore(intentSubject);
   const filterSubject = filterStore(intentSubject, dataSubject);
   const causalSubject = causalStore(intentSubject, filterSubject, dataSubject);
-  const clusteringSubject = clusteringStore(intentSubject, causalSubject);
+  const clusteringSubject = clusteringStore(intentSubject, causalSubject, filterSubject);
 
 
   return Rx.Observable.zip(

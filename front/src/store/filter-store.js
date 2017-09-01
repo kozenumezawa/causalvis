@@ -5,18 +5,32 @@ import { isSamplingPoint, arraySum } from '../utils/store-utils';
 
 const removeUselessTimeSeries = (allTimeSeries, width, meanR) => {
   const newAllTimeSeries = [];
+  const sampledCoords = [];
+
   allTimeSeries.forEach((timeSeries, idx) => {
     if (isSamplingPoint(idx, width, meanR) === false || arraySum(timeSeries) === 0) {
       return;
     }
+    const x = idx % width;
+    const y = Math.floor(idx / width);
+    sampledCoords.push({
+      idx,
+      x,
+      y,
+    });
     newAllTimeSeries.push(timeSeries);
   });
-  return newAllTimeSeries;
+
+  return {
+    newAllTimeSeries,
+    sampledCoords,
+  };
 };
 
 const store = (intentSubject, dataSubject) => {
   const state = {
     allTimeSeries: [],
+    sampledCoords: [],
     meanR: 0,
   };
 
@@ -24,7 +38,10 @@ const store = (intentSubject, dataSubject) => {
 
   Rx.Observable.zip(intentSubject, dataSubject).subscribe(([payload, data]) => {
     state.meanR = 1;
-    state.allTimeSeries = removeUselessTimeSeries(data.state.allTimeSeries, data.state.width, state.meanR);
+
+    const removedData = removeUselessTimeSeries(data.state.allTimeSeries, data.state.width, state.meanR);
+    state.allTimeSeries = removedData.newAllTimeSeries;
+    state.sampledCoords = removedData.sampledCoords;
 
     switch (payload.type) {
       case FETCH_TIFF:

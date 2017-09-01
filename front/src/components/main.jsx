@@ -48,6 +48,12 @@ export default class Main extends React.Component {
                     <ResultWindow
                       allTiffList={this.state.data.allTiffList}
                       allTimeSeries={this.state.filter.allTimeSeries}
+                      sampledCoords={this.state.filter.sampledCoords}
+                      meanR={this.state.filter.meanR}
+                      clusterMatrix={this.state.clustering.clusterMatrix}
+                      clusterSampledCoords={this.state.clustering.clusterSampledCoords}
+                      nClusterList={this.state.clustering.nClusterList}
+                      ordering={this.state.clustering.ordering}
                     />
                   </Sidebar.Pusher>
                 </Sidebar.Pushable>

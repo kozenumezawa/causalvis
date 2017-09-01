@@ -2,14 +2,17 @@ import Rx from 'rx';
 
 import { FETCH_TIFF } from '../constants/event-constants';
 
-const store = (intentSubject, causalSubject) => {
+const store = (intentSubject, causalSubject, filterSubject) => {
   const state = {
     clusterMatrix: [],
+    clusterSampledCoords: [],
+    nClusterList: 1,
+    ordering: 1,
   };
 
   const subject = new Rx.BehaviorSubject({ state });
 
-  Rx.Observable.zip(intentSubject, causalSubject).subscribe(([payload, causal]) => {
+  Rx.Observable.zip(intentSubject, causalSubject, filterSubject).subscribe(([payload, causal, filter]) => {
     const causalMatrix = causal.state.causalMatrix;
     if (causalMatrix.length === 0) {
       subject.onNext({ state });
@@ -23,9 +26,10 @@ const store = (intentSubject, causalSubject) => {
         'content-type': 'application/json',
       },
       body: JSON.stringify({
-        causalMatrix: causalMatrix,
+        causalMatrix,
         method: 'IRM',
         threshold: 0.7,
+        sampledCoords: filter.state.sampledCoords,
       }),
     })
       .then((response) => {
@@ -33,6 +37,9 @@ const store = (intentSubject, causalSubject) => {
       })
       .then((json) => {
         state.clusterMatrix = json.clusterMatrix;
+        state.clusterSampledCoords = json.clusterSampledCoords;
+        state.nClusterList = json.nClusterList;
+        state.ordering = json.ordering;
         subject.onNext({ state });
       });
   });
