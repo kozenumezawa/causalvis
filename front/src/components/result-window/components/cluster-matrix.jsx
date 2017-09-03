@@ -43,7 +43,7 @@ export default class ClusterMatrix extends React.Component {
     const heatmapCanvas = document.getElementById('heatmap_canvas');
     const heatmapCtx = heatmapCanvas.getContext('2d');
 
-    const cellSize = 1;
+    const cellSize = 0.5;
     const legendWidth = 15;
     heatmapCanvas.width = graphSorted.length * cellSize + legendWidth;
     heatmapCanvas.height = graphSorted.length * cellSize + legendWidth;
@@ -85,7 +85,7 @@ export default class ClusterMatrix extends React.Component {
     // draw line and legend to the heat map
     drawingTool.drawFrame(heatmapCanvas, heatmapCtx);
     heatmapCtx.line_color = 'black';
-    heatmapCtx.lineWidth = 1;
+    heatmapCtx.lineWidth = 0.5;
     heatmapCtx.beginPath();
     let heatmapCtxX = legendWidth - 1;
     nClusterList.forEach((nCluster, idx) => {
