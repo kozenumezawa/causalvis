@@ -26,6 +26,7 @@ const store = (intentSubject, filterSubject, dataSubject) => {
         maxLag: 20,
         lagStep: 2,
         method: 'CROSS',
+        dataName: 'real',
       }),
     })
       .then((response) => {
@@ -33,8 +34,30 @@ const store = (intentSubject, filterSubject, dataSubject) => {
       })
       .then((json) => {
         state.causalMatrix[0] = json.causalMatrix;
-        subject.onNext({ state });
+
+        window.fetch('http://localhost:3000/api/v1/causal', {
+          mode: 'cors',
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+          },
+          body: JSON.stringify({
+            allTimeSeries: filter.state.allTimeSeries[1],
+            maxLag: 20,
+            lagStep: 2,
+            method: 'CROSS',
+            dataName: 'sim',
+          }),
+        })
+          .then((response) => {
+            return response.json();
+          })
+          .then((json) => {
+            state.causalMatrix[1] = json.causalMatrix;
+            subject.onNext({ state });
+          });
       });
+
   });
   return subject;
 };

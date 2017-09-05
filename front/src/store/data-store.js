@@ -42,9 +42,18 @@ const store = (intentSubject) => {
                     state.allTiffList[0] = allTiffList;
                     state.legendTiff[0] = legendTiff;
                     state.allTimeSeries[0] = createAllTimeSeriesFromTiff(state.legendTiff[0], state.allTiffList[0]);
-                    state.width[0] = state.allTiffList[0].width;
+                    state.width[0] = state.allTiffList[0][0].width;
 
-                    subject.onNext({ state });
+                    window.fetch('NagumoInterpolate.json')
+                      .then((response) => {
+                        return response.json();
+                      })
+                      .then((json) => {
+                        state.allTimeSeries[1] = json.allTimeSeries;
+                        state.width[1] = json.width;
+
+                        subject.onNext({ state });
+                      });
                   });
                 });
             });

@@ -38,14 +38,18 @@ const store = (intentSubject, dataSubject) => {
 
   Rx.Observable.zip(intentSubject, dataSubject).subscribe(([payload, data]) => {
     state.meanR[0] = 1;
+    state.meanR[1] = 1;
 
     if (data.state.allTimeSeries[0] == null) {
       subject.onNext({ state });
       return;
     }
-    const removedData = removeUselessTimeSeries(data.state.allTimeSeries[0], data.state.width[0], state.meanR[0]);
-    state.allTimeSeries[0] = removedData.newAllTimeSeries;
-    state.sampledCoords[0] = removedData.sampledCoords;
+
+    for (let dataIndex = 0; dataIndex < 2; dataIndex++) {
+      const removedData = removeUselessTimeSeries(data.state.allTimeSeries[dataIndex], data.state.width[dataIndex], state.meanR[dataIndex]);
+      state.allTimeSeries[dataIndex] = removedData.newAllTimeSeries;
+      state.sampledCoords[dataIndex] = removedData.sampledCoords;
+    }
 
     switch (payload.type) {
       case FETCH_TIFF:
