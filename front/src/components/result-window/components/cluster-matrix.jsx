@@ -13,7 +13,7 @@ export default class ClusterMatrix extends React.Component {
   }
 
   componentDidMount() {
-    this.canvas = document.getElementById('cluster_canvas');
+    this.canvas = document.getElementById(`cluster_canvas_${this.props.id}`);
     this.ctx = this.canvas.getContext('2d');
     this.canvas.width = 300;
     this.canvas.height = 300;
@@ -40,7 +40,7 @@ export default class ClusterMatrix extends React.Component {
     this.canvas.height = canvas.height * this.scale;
     this.ctx.drawImage(canvas, 0, 0, canvas.width, canvas.height, 0, 0, this.canvas.width, this.canvas.height);
 
-    const heatmapCanvas = document.getElementById('heatmap_canvas');
+    const heatmapCanvas = document.getElementById(`heatmap_canvas_${this.props.id}`);
     const heatmapCtx = heatmapCanvas.getContext('2d');
 
     const cellSize = 0.5;
@@ -155,8 +155,8 @@ export default class ClusterMatrix extends React.Component {
   render() {
     return (
       <div>
-        <canvas id="cluster_canvas" />
-        <canvas id="heatmap_canvas" />
+        <canvas id={`cluster_canvas_${this.props.id}`} />
+        <canvas id={`heatmap_canvas_${this.props.id}`} />
       </div>
     );
   }
