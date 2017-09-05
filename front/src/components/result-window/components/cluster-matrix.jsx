@@ -2,6 +2,8 @@ import React from 'react';
 
 import * as drawingTool from '../../../utils/drawing-tool';
 
+import OriginalCanvas from './canvas/original-canvas.jsx';
+
 export default class ClusterMatrix extends React.Component {
   constructor(props) {
     super(props);
@@ -13,10 +15,11 @@ export default class ClusterMatrix extends React.Component {
   }
 
   componentDidMount() {
-    this.canvas = document.getElementById(`cluster_canvas_${this.props.id}`);
-    this.ctx = this.canvas.getContext('2d');
-    this.canvas.width = 300;
-    this.canvas.height = 300;
+    this.clusterCanvas = document.getElementById(`cluster_canvas_${this.props.id}`);
+    this.clusterCtx = this.clusterCanvas.getContext('2d');
+
+    this.heatmapCanvas = document.getElementById(`heatmap_canvas_${this.props.id}`);
+    this.heatmapCtx = this.heatmapCanvas.getContext('2d');
   }
 
   componentWillReceiveProps(nextProps) {
@@ -24,29 +27,27 @@ export default class ClusterMatrix extends React.Component {
   }
 
   drawData(props) {
-    if (props.allTiffList.length === 0) {
+    if (props.filterAllTimeSeries == null) {
       return;
     }
 
     // draw heatmap and canvas according to the graph
-    const canvas = props.allTiffList[0];
     const graphSorted = props.clusterMatrix;
     const nClusterList = props.nClusterList;
     const clusterSampledCoords = props.clusterSampledCoords;
     const color = drawingTool.getColorCategory(nClusterList.length);
 
     // draw a canvas
-    this.canvas.width = canvas.width * this.scale;
-    this.canvas.height = canvas.height * this.scale;
-    this.ctx.drawImage(canvas, 0, 0, canvas.width, canvas.height, 0, 0, this.canvas.width, this.canvas.height);
+    this.clusterCanvas.width = props.width * this.scale;
+    this.clusterCanvas.height = props.allTimeSeries.length / props.width * this.scale;
+    drawingTool.drawFrame(this.clusterCanvas, this.clusterCtx);
+    // this.clusterCtx.drawImage(canvas, 0, 0, canvas.width, canvas.height, 0, 0, this.clusterCanvas.width, this.clusterCanvas.height);
 
-    const heatmapCanvas = document.getElementById(`heatmap_canvas_${this.props.id}`);
-    const heatmapCtx = heatmapCanvas.getContext('2d');
 
     const cellSize = 0.5;
     const legendWidth = 15;
-    heatmapCanvas.width = graphSorted.length * cellSize + legendWidth;
-    heatmapCanvas.height = graphSorted.length * cellSize + legendWidth;
+    this.heatmapCanvas.width = graphSorted.length * cellSize + legendWidth;
+    this.heatmapCanvas.height = graphSorted.length * cellSize + legendWidth;
 
     // save start and stop index of each cluster
     const clusterRangeList = [];
@@ -67,43 +68,43 @@ export default class ClusterMatrix extends React.Component {
       }
 
       // draw row color to the heatmap
-      heatmapCtx.fillStyle = color[clusterIdx];
+      this.heatmapCtx.fillStyle = color[clusterIdx];
       row.forEach((cell, cellIdx) => {
         if (cell === true) {
-          heatmapCtx.fillRect(cellIdx * cellSize + legendWidth, rowIdx * cellSize + legendWidth, cellSize, cellSize);
+          this.heatmapCtx.fillRect(cellIdx * cellSize + legendWidth, rowIdx * cellSize + legendWidth, cellSize, cellSize);
         }
       });
 
       // draw the canvas according to the cluster
-      this.ctx.fillStyle = color[clusterIdx];
+      this.clusterCtx.fillStyle = color[clusterIdx];
 
       const x = clusterSampledCoords[rowIdx].x * this.scale;
       const y = clusterSampledCoords[rowIdx].y * this.scale;
-      this.ctx.fillRect(x - 1, y - 1, this.state.mean_step * this.scale, this.state.mean_step * this.scale);
+      this.clusterCtx.fillRect(x - 1, y - 1, this.state.mean_step * this.scale, this.state.mean_step * this.scale);
     });
 
     // draw line and legend to the heat map
-    drawingTool.drawFrame(heatmapCanvas, heatmapCtx);
-    heatmapCtx.line_color = 'black';
-    heatmapCtx.lineWidth = 0.5;
-    heatmapCtx.beginPath();
+    drawingTool.drawFrame(this.heatmapCanvas, this.heatmapCtx);
+    this.heatmapCtx.line_color = 'black';
+    this.heatmapCtx.lineWidth = 0.5;
+    this.heatmapCtx.beginPath();
     let heatmapCtxX = legendWidth - 1;
     nClusterList.forEach((nCluster, idx) => {
       // draw legend
-      heatmapCtx.fillStyle = color[idx];
-      heatmapCtx.fillRect(heatmapCtxX, 0, nCluster * cellSize, legendWidth);
-      heatmapCtx.fillRect(0, heatmapCtxX, legendWidth, nCluster * cellSize);
+      this.heatmapCtx.fillStyle = color[idx];
+      this.heatmapCtx.fillRect(heatmapCtxX, 0, nCluster * cellSize, legendWidth);
+      this.heatmapCtx.fillRect(0, heatmapCtxX, legendWidth, nCluster * cellSize);
 
       // draw line
       heatmapCtxX += nCluster * cellSize;
-      heatmapCtx.moveTo(heatmapCtxX, legendWidth);
-      heatmapCtx.lineTo(heatmapCtxX, heatmapCanvas.height);
+      this.heatmapCtx.moveTo(heatmapCtxX, legendWidth);
+      this.heatmapCtx.lineTo(heatmapCtxX, this.heatmapCanvas.height);
 
-      heatmapCtx.moveTo(legendWidth, heatmapCtxX);
-      heatmapCtx.lineTo(heatmapCanvas.width, heatmapCtxX);
+      this.heatmapCtx.moveTo(legendWidth, heatmapCtxX);
+      this.heatmapCtx.lineTo(this.heatmapCanvas.width, heatmapCtxX);
     });
-    heatmapCtx.closePath();
-    heatmapCtx.stroke();
+    this.heatmapCtx.closePath();
+    this.heatmapCtx.stroke();
 
 
     // 因果関係を表すcausal matrixを生成
@@ -155,6 +156,11 @@ export default class ClusterMatrix extends React.Component {
   render() {
     return (
       <div>
+        <OriginalCanvas
+          id={this.props.id}
+          allTimeSeries={this.props.allTimeSeries}
+          width={this.props.width}
+        />
         <canvas id={`cluster_canvas_${this.props.id}`} />
         <canvas id={`heatmap_canvas_${this.props.id}`} />
       </div>
