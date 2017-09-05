@@ -1,6 +1,5 @@
 import Rx from 'rx';
 
-import { FETCH_TIFF } from '../constants/event-constants';
 import { isSamplingPoint, arraySum } from '../utils/store-utils';
 
 const removeUselessTimeSeries = (allTimeSeries, width, meanR) => {
@@ -38,7 +37,7 @@ const store = (intentSubject, dataSubject) => {
 
   Rx.Observable.zip(intentSubject, dataSubject).subscribe(([payload, data]) => {
     state.meanR[0] = 1;
-    state.meanR[1] = 1;
+    state.meanR[1] = 2;
 
     if (data.state.allTimeSeries[0] == null) {
       subject.onNext({ state });
@@ -50,15 +49,7 @@ const store = (intentSubject, dataSubject) => {
       state.allTimeSeries[dataIndex] = removedData.newAllTimeSeries;
       state.sampledCoords[dataIndex] = removedData.sampledCoords;
     }
-
-    switch (payload.type) {
-      case FETCH_TIFF:
-        subject.onNext({ state });
-        break;
-      default:
-        subject.onNext({ state });
-        break;
-    }
+    subject.onNext({ state });
   });
   return subject;
 };

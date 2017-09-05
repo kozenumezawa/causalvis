@@ -8,7 +8,7 @@ import { intentSubject } from '../intents/intent';
 const store = () => {
   const dataSubject = dataStore(intentSubject);
   const filterSubject = filterStore(intentSubject, dataSubject);
-  const causalSubject = causalStore(intentSubject, filterSubject, dataSubject);
+  const causalSubject = causalStore(intentSubject, filterSubject);
   const clusteringSubject = clusteringStore(intentSubject, causalSubject, filterSubject);
 
 

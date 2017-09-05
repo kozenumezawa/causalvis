@@ -1,15 +1,13 @@
 import Rx from 'rx';
 
-import { FETCH_TIFF } from '../constants/event-constants';
-
-const store = (intentSubject, filterSubject, dataSubject) => {
+const store = (intentSubject, filterSubject) => {
   const state = {
     causalMatrix: new Array(2),
   };
 
   const subject = new Rx.BehaviorSubject({ state });
 
-  Rx.Observable.zip(intentSubject, filterSubject, dataSubject).subscribe(([payload, filter, data]) => {
+  Rx.Observable.zip(intentSubject, filterSubject).subscribe(([payload, filter]) => {
     if (filter.state.allTimeSeries[0] == null) {
       subject.onNext({ state });
       return;
@@ -57,7 +55,6 @@ const store = (intentSubject, filterSubject, dataSubject) => {
             subject.onNext({ state });
           });
       });
-
   });
   return subject;
 };

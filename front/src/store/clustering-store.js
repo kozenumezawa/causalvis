@@ -1,7 +1,5 @@
 import Rx from 'rx';
 
-import { FETCH_TIFF } from '../constants/event-constants';
-
 const store = (intentSubject, causalSubject, filterSubject) => {
   const state = {
     clusterMatrix: [],
@@ -36,7 +34,6 @@ const store = (intentSubject, causalSubject, filterSubject) => {
         return response.json();
       })
       .then((json) => {
-
         state.clusterMatrix[0] = json.clusterMatrix;
         state.clusterSampledCoords[0] = json.clusterSampledCoords;
         state.nClusterList[0] = json.nClusterList;
