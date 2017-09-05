@@ -161,7 +161,9 @@ export default class ClusterMatrix extends React.Component {
           width={this.props.width}
           scale={this.props.scale}
         />
+        <span style={{ marginRight: 20 }} />
         <canvas id={`cluster_canvas_${this.props.id}`} />
+        <span style={{ marginRight: 20 }} />
         <canvas id={`heatmap_canvas_${this.props.id}`} />
       </div>
     );
