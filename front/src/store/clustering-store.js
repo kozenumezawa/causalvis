@@ -6,8 +6,8 @@ const store = (intentSubject, causalSubject, filterSubject) => {
   const state = {
     clusterMatrix: [],
     clusterSampledCoords: [],
-    nClusterList: 1,
-    ordering: 1,
+    nClusterList: [],
+    ordering: [],
   };
 
   const subject = new Rx.BehaviorSubject({ state });
@@ -36,10 +36,10 @@ const store = (intentSubject, causalSubject, filterSubject) => {
         return response.json();
       })
       .then((json) => {
-        state.clusterMatrix = json.clusterMatrix;
-        state.clusterSampledCoords = json.clusterSampledCoords;
-        state.nClusterList = json.nClusterList;
-        state.ordering = json.ordering;
+        state.clusterMatrix[0] = json.clusterMatrix;
+        state.clusterSampledCoords[0] = json.clusterSampledCoords;
+        state.nClusterList[0] = json.nClusterList;
+        state.ordering[0] = json.ordering;
         subject.onNext({ state });
       });
   });

@@ -5,10 +5,10 @@ import { createAllTimeSeriesFromTiff } from '../utils/store-utils';
 
 const store = (intentSubject) => {
   const state = {
-    allTiffList: [],
-    legendTiff: [],
-    allTimeSeries: [],
-    width: 0,
+    allTiffList: new Array(2),
+    legendTiff: new Array(2),
+    allTimeSeries: new Array(2),
+    width: new Array(2),
   };
 
   const subject = new Rx.BehaviorSubject({ state });
@@ -39,10 +39,10 @@ const store = (intentSubject) => {
                     tiff.setDirectory(0);
                     const legendTiff = tiff.toCanvas();
 
-                    state.allTiffList = allTiffList;
-                    state.legendTiff = legendTiff;
-                    state.allTimeSeries = createAllTimeSeriesFromTiff(state.legendTiff, state.allTiffList);
-                    state.width = state.allTiffList[0].width;
+                    state.allTiffList[0] = allTiffList;
+                    state.legendTiff[0] = legendTiff;
+                    state.allTimeSeries[0] = createAllTimeSeriesFromTiff(state.legendTiff[0], state.allTiffList[0]);
+                    state.width[0] = state.allTiffList[0].width;
 
                     subject.onNext({ state });
                   });

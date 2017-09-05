@@ -13,12 +13,12 @@ export default class ResultWindow extends React.Component {
     return (
       <Segment>
         <ClusterMatrix
-          allTiffList={this.props.allTiffList}
-          allTimeSeries={this.props.allTimeSeries}
-          meanR={this.props.meanR}
-          clusterMatrix={this.props.clusterMatrix}
-          clusterSampledCoords={this.props.clusterSampledCoords}
-          nClusterList={this.props.nClusterList}
+          allTiffList={this.props.allTiffList[0]}
+          allTimeSeries={this.props.allTimeSeries[0]}
+          meanR={this.props.meanR[0]}
+          clusterMatrix={this.props.clusterMatrix[0]}
+          clusterSampledCoords={this.props.clusterSampledCoords[0]}
+          nClusterList={this.props.nClusterList[0]}
         />
       </Segment>
     );

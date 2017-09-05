@@ -17,7 +17,6 @@ export default class Main extends React.Component {
 
   componentWillMount() {
     this.subscription = this.props.store.subscribe((state) => {
-      console.log(this.state);
       this.setState(state);
     });
   }

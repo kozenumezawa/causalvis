@@ -29,19 +29,23 @@ const removeUselessTimeSeries = (allTimeSeries, width, meanR) => {
 
 const store = (intentSubject, dataSubject) => {
   const state = {
-    allTimeSeries: [],
-    sampledCoords: [],
-    meanR: 0,
+    allTimeSeries: new Array(2),
+    sampledCoords: new Array(2),
+    meanR: new Array(2),
   };
 
   const subject = new Rx.BehaviorSubject({ state });
 
   Rx.Observable.zip(intentSubject, dataSubject).subscribe(([payload, data]) => {
-    state.meanR = 1;
+    state.meanR[0] = 1;
 
-    const removedData = removeUselessTimeSeries(data.state.allTimeSeries, data.state.width, state.meanR);
-    state.allTimeSeries = removedData.newAllTimeSeries;
-    state.sampledCoords = removedData.sampledCoords;
+    if (data.state.allTimeSeries[0] == null) {
+      subject.onNext({ state });
+      return;
+    }
+    const removedData = removeUselessTimeSeries(data.state.allTimeSeries[0], data.state.width[0], state.meanR[0]);
+    state.allTimeSeries[0] = removedData.newAllTimeSeries;
+    state.sampledCoords[0] = removedData.sampledCoords;
 
     switch (payload.type) {
       case FETCH_TIFF:
