@@ -22,6 +22,7 @@ export default class ResultWindow extends React.Component {
           clusterSampledCoords={this.props.clusterSampledCoords[0]}
           nClusterList={this.props.nClusterList[0]}
           width={this.props.width[0]}
+          scale={2}
         />
 
         <ClusterMatrix
@@ -34,6 +35,7 @@ export default class ResultWindow extends React.Component {
           clusterSampledCoords={this.props.clusterSampledCoords[1]}
           nClusterList={this.props.nClusterList[1]}
           width={this.props.width[1]}
+          scale={4}
         />
       </Segment>
     );

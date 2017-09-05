@@ -11,7 +11,6 @@ export default class ClusterMatrix extends React.Component {
     this.state = {
       mean_step: 3,
     };
-    this.scale = 2;
   }
 
   componentDidMount() {
@@ -38,13 +37,13 @@ export default class ClusterMatrix extends React.Component {
     const color = drawingTool.getColorCategory(nClusterList.length);
 
     // draw a canvas
-    this.clusterCanvas.width = props.width * this.scale;
-    this.clusterCanvas.height = props.allTimeSeries.length / props.width * this.scale;
+    this.clusterCanvas.width = props.width * props.scale;
+    this.clusterCanvas.height = props.allTimeSeries.length / props.width * props.scale;
     drawingTool.drawFrame(this.clusterCanvas, this.clusterCtx);
     // this.clusterCtx.drawImage(canvas, 0, 0, canvas.width, canvas.height, 0, 0, this.clusterCanvas.width, this.clusterCanvas.height);
 
 
-    const cellSize = 0.5;
+    const cellSize = 0.5 * props.scale / 2;
     const legendWidth = 15;
     this.heatmapCanvas.width = graphSorted.length * cellSize + legendWidth;
     this.heatmapCanvas.height = graphSorted.length * cellSize + legendWidth;
@@ -78,9 +77,9 @@ export default class ClusterMatrix extends React.Component {
       // draw the canvas according to the cluster
       this.clusterCtx.fillStyle = color[clusterIdx];
 
-      const x = clusterSampledCoords[rowIdx].x * this.scale;
-      const y = clusterSampledCoords[rowIdx].y * this.scale;
-      this.clusterCtx.fillRect(x - 1, y - 1, this.state.mean_step * this.scale, this.state.mean_step * this.scale);
+      const x = clusterSampledCoords[rowIdx].x * props.scale;
+      const y = clusterSampledCoords[rowIdx].y * props.scale;
+      this.clusterCtx.fillRect(x - 1, y - 1, this.state.mean_step * props.scale, this.state.mean_step * props.scale);
     });
 
     // draw line and legend to the heat map
@@ -160,6 +159,7 @@ export default class ClusterMatrix extends React.Component {
           id={this.props.id}
           allTimeSeries={this.props.allTimeSeries}
           width={this.props.width}
+          scale={this.props.scale}
         />
         <canvas id={`cluster_canvas_${this.props.id}`} />
         <canvas id={`heatmap_canvas_${this.props.id}`} />
