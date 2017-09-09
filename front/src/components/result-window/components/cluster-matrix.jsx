@@ -7,10 +7,6 @@ import OriginalCanvas from './canvas/original-canvas.jsx';
 export default class ClusterMatrix extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      mean_step: 3,
-    };
   }
 
   componentDidMount() {
@@ -29,6 +25,8 @@ export default class ClusterMatrix extends React.Component {
     if (props.filterAllTimeSeries == null) {
       return;
     }
+
+    const meanStep = props.meanR * 2 + 1;
 
     // draw heatmap and canvas according to the graph
     const graphSorted = props.clusterMatrix;
@@ -79,7 +77,7 @@ export default class ClusterMatrix extends React.Component {
 
       const x = clusterSampledCoords[rowIdx].x * props.scale;
       const y = clusterSampledCoords[rowIdx].y * props.scale;
-      this.clusterCtx.fillRect(x - 1, y - 1, this.state.mean_step * props.scale, this.state.mean_step * props.scale);
+      this.clusterCtx.fillRect(x - 1, y - 1, meanStep * props.scale, meanStep * props.scale);
     });
 
     // draw line and legend to the heat map
@@ -135,15 +133,6 @@ export default class ClusterMatrix extends React.Component {
     //     }
     //   });
     // });
-  }
-
-  isSamplingPoint(idx, width) {
-    const x = idx % width;
-    const y = Math.floor(idx / width);
-    if (x % this.state.mean_step === 1 && y % this.state.mean_step === 0) {
-      return true;
-    }
-    return false;
   }
 
   sum(arr) {
