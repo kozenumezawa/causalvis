@@ -7,6 +7,8 @@ import OriginalCanvas from './canvas/original-canvas.jsx';
 export default class ClusterMatrix extends React.Component {
   constructor(props) {
     super(props);
+
+    this.legendWidth = 15;
   }
 
   componentDidMount() {
@@ -15,10 +17,19 @@ export default class ClusterMatrix extends React.Component {
 
     this.heatmapCanvas = document.getElementById(`heatmap_canvas_${this.props.id}`);
     this.heatmapCtx = this.heatmapCanvas.getContext('2d');
+    this.heatmapCanvasOverlay = document.getElementById(`heatmap_canvas_${this.props.id}_overlay`);
+
+    this.heatmapCanvas.addEventListener('mousemove', this.onMouseMoveHeatmap.bind(this));
   }
 
   componentWillReceiveProps(nextProps) {
     this.drawData(nextProps);
+  }
+
+  onMouseMoveHeatmap(e) {
+    const rect = e.target.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
   }
 
   drawData(props) {
@@ -42,9 +53,11 @@ export default class ClusterMatrix extends React.Component {
 
 
     const cellSize = 0.5 * props.scale / 2;
-    const legendWidth = 15;
-    this.heatmapCanvas.width = graphSorted.length * cellSize + legendWidth;
-    this.heatmapCanvas.height = graphSorted.length * cellSize + legendWidth;
+
+    this.heatmapCanvas.width = graphSorted.length * cellSize + this.legendWidth;
+    this.heatmapCanvas.height = graphSorted.length * cellSize + this.legendWidth;
+    this.heatmapCanvasOverlay.width = this.heatmapCanvas.width;
+    this.heatmapCanvasOverlay.height = this.heatmapCanvas.height;
 
     // save start and stop index of each cluster
     const clusterRangeList = [];
@@ -68,7 +81,7 @@ export default class ClusterMatrix extends React.Component {
       this.heatmapCtx.fillStyle = color[clusterIdx];
       row.forEach((cell, cellIdx) => {
         if (cell === true) {
-          this.heatmapCtx.fillRect(cellIdx * cellSize + legendWidth, rowIdx * cellSize + legendWidth, cellSize, cellSize);
+          this.heatmapCtx.fillRect(cellIdx * cellSize + this.legendWidth, rowIdx * cellSize + this.legendWidth, cellSize, cellSize);
         }
       });
 
@@ -85,19 +98,19 @@ export default class ClusterMatrix extends React.Component {
     this.heatmapCtx.line_color = 'black';
     this.heatmapCtx.lineWidth = 0.5;
     this.heatmapCtx.beginPath();
-    let heatmapCtxX = legendWidth - 1;
+    let heatmapCtxX = this.legendWidth - 1;
     nClusterList.forEach((nCluster, idx) => {
       // draw legend
       this.heatmapCtx.fillStyle = color[idx];
-      this.heatmapCtx.fillRect(heatmapCtxX, 0, nCluster * cellSize, legendWidth);
-      this.heatmapCtx.fillRect(0, heatmapCtxX, legendWidth, nCluster * cellSize);
+      this.heatmapCtx.fillRect(heatmapCtxX, 0, nCluster * cellSize, this.legendWidth);
+      this.heatmapCtx.fillRect(0, heatmapCtxX, this.legendWidth, nCluster * cellSize);
 
       // draw line
       heatmapCtxX += nCluster * cellSize;
-      this.heatmapCtx.moveTo(heatmapCtxX, legendWidth);
+      this.heatmapCtx.moveTo(heatmapCtxX, this.legendWidth);
       this.heatmapCtx.lineTo(heatmapCtxX, this.heatmapCanvas.height);
 
-      this.heatmapCtx.moveTo(legendWidth, heatmapCtxX);
+      this.heatmapCtx.moveTo(this.legendWidth, heatmapCtxX);
       this.heatmapCtx.lineTo(this.heatmapCanvas.width, heatmapCtxX);
     });
     this.heatmapCtx.closePath();
@@ -143,7 +156,7 @@ export default class ClusterMatrix extends React.Component {
 
   render() {
     return (
-      <div>
+      <div style={{ position: 'relative', height: 300 }}>
         <OriginalCanvas
           id={this.props.id}
           allTimeSeries={this.props.allTimeSeries}
@@ -153,7 +166,8 @@ export default class ClusterMatrix extends React.Component {
         <span style={{ marginRight: 20 }} />
         <canvas id={`cluster_canvas_${this.props.id}`} />
         <span style={{ marginRight: 20 }} />
-        <canvas id={`heatmap_canvas_${this.props.id}`} />
+        <canvas id={`heatmap_canvas_${this.props.id}`} style={{ position: 'absolute', zIndex: 1 }} />
+        <canvas id={`heatmap_canvas_${this.props.id}_overlay`} style={{ position: 'absolute', zIndex: 2 }} />
       </div>
     );
   }
