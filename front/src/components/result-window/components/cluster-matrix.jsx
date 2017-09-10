@@ -48,8 +48,8 @@ export default class ClusterMatrix extends React.Component {
     this.heatmapOverlayCtx.closePath();
     this.heatmapOverlayCtx.stroke();
 
-    const causeIdx = y - this.legendWidth;
-    const effectIdx = x - this.legendWidth;
+    const causeIdx = Math.floor((y - this.legendWidth) / this.props.cellSize);
+    const effectIdx = Math.floor((x - this.legendWidth) / this.props.cellSize);
 
     if (causeIdx < 0 || effectIdx < 0) {
       return;
@@ -97,11 +97,8 @@ export default class ClusterMatrix extends React.Component {
     this.clusterOverlayCanvas.height = this.clusterCanvas.height;
     // this.clusterCtx.drawImage(canvas, 0, 0, canvas.width, canvas.height, 0, 0, this.clusterCanvas.width, this.clusterCanvas.height);
 
-
-    const cellSize = 0.5 * props.scale / 2;
-
-    this.heatmapCanvas.width = this.graphSorted.length * cellSize + this.legendWidth;
-    this.heatmapCanvas.height = this.graphSorted.length * cellSize + this.legendWidth;
+    this.heatmapCanvas.width = this.graphSorted.length * props.cellSize + this.legendWidth;
+    this.heatmapCanvas.height = this.graphSorted.length * props.cellSize + this.legendWidth;
     this.heatmapOverlayCanvas.width = this.heatmapCanvas.width;
     this.heatmapOverlayCanvas.height = this.heatmapCanvas.height;
 
@@ -130,7 +127,7 @@ export default class ClusterMatrix extends React.Component {
       this.heatmapCtx.fillStyle = color[clusterIdx];
       row.forEach((cell, cellIdx) => {
         if (cell === true) {
-          this.heatmapCtx.fillRect(cellIdx * cellSize + this.legendWidth, rowIdx * cellSize + this.legendWidth, cellSize, cellSize);
+          this.heatmapCtx.fillRect(cellIdx * props.cellSize + this.legendWidth, rowIdx * props.cellSize + this.legendWidth, props.cellSize, props.cellSize);
         }
       });
 
@@ -151,11 +148,11 @@ export default class ClusterMatrix extends React.Component {
     this.nClusterList.forEach((nCluster, idx) => {
       // draw legend
       this.heatmapCtx.fillStyle = color[idx];
-      this.heatmapCtx.fillRect(heatmapCtxX, 0, nCluster * cellSize, this.legendWidth);
-      this.heatmapCtx.fillRect(0, heatmapCtxX, this.legendWidth, nCluster * cellSize);
+      this.heatmapCtx.fillRect(heatmapCtxX, 0, nCluster * props.cellSize, this.legendWidth);
+      this.heatmapCtx.fillRect(0, heatmapCtxX, this.legendWidth, nCluster * props.cellSize);
 
       // draw line
-      heatmapCtxX += nCluster * cellSize;
+      heatmapCtxX += nCluster * props.cellSize;
       this.heatmapCtx.moveTo(heatmapCtxX, this.legendWidth);
       this.heatmapCtx.lineTo(heatmapCtxX, this.heatmapCanvas.height);
 
