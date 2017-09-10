@@ -45,7 +45,7 @@ export default class Main extends React.Component {
                     <Accordion>
                       <Accordion.Title>
                         <Icon name="dropdown" />
-                        Control Window
+                        Analysis Methods window
                       </Accordion.Title>
                       <Accordion.Content>
                         <ControlWindow />
@@ -64,7 +64,6 @@ export default class Main extends React.Component {
                       nClusterList={this.state.clustering.nClusterList}
                       ordering={this.state.clustering.ordering}
                     />
-
                   </Sidebar.Pusher>
                 </Sidebar.Pushable>
               </div>

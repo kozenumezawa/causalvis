@@ -23,7 +23,7 @@ export default class ResultWindow extends React.Component {
           nClusterList={this.props.nClusterList[0]}
           width={this.props.width[0]}
           scale={2}
-          cellSize={0.5}
+          cellScale={0.5}
         />
 
         <ClusterMatrix
@@ -37,7 +37,7 @@ export default class ResultWindow extends React.Component {
           nClusterList={this.props.nClusterList[1]}
           width={this.props.width[1]}
           scale={4}
-          cellSize={1}
+          cellScale={1}
         />
       </Segment>
     );

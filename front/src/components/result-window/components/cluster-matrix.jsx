@@ -23,6 +23,7 @@ export default class ClusterMatrix extends React.Component {
     this.heatmapOverlayCtx = this.heatmapOverlayCanvas.getContext('2d');
 
     this.heatmapOverlayCanvas.addEventListener('mousemove', this.onMouseMoveHeatmap.bind(this));
+    this.heatmapOverlayCanvas.addEventListener('mouseup', this.onMouseUpHeatmap.bind(this), false);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -48,15 +49,14 @@ export default class ClusterMatrix extends React.Component {
     this.heatmapOverlayCtx.closePath();
     this.heatmapOverlayCtx.stroke();
 
-    const causeIdx = Math.floor((y - this.legendWidth) / this.props.cellSize);
-    const effectIdx = Math.floor((x - this.legendWidth) / this.props.cellSize);
+    const causeIdx = Math.floor((y - this.legendWidth) / this.props.cellScale);
+    const effectIdx = Math.floor((x - this.legendWidth) / this.props.cellScale);
 
     if (causeIdx < 0 || effectIdx < 0) {
       return;
     }
 
     this.clusterOverlayCtx.clearRect(0, 0, this.clusterOverlayCanvas.width, this.clusterOverlayCanvas.height);
-
     this.clusterOverlayCtx.fillStyle = 'black';
     const causeX = this.clusterSampledCoords[causeIdx].x * this.props.scale;
     const causeY = this.clusterSampledCoords[causeIdx].y * this.props.scale;
@@ -74,6 +74,55 @@ export default class ClusterMatrix extends React.Component {
       this.clusterOverlayCtx.fill();
       // this.clusterOverlayCtx.closePath();
     }
+  }
+
+  onMouseUpHeatmap(e) {
+    const rect = e.target.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const causeIdx = Math.floor((y - this.legendWidth) / this.props.cellScale);
+    const effectIdx = Math.floor((x - this.legendWidth) / this.props.cellScale);
+
+    if (causeIdx > 0 && effectIdx > 0 || causeIdx < 0 && effectIdx < 0) {
+      return;
+    }
+
+    this.heatmapOverlayCtx.strokeStyle = 'white';
+    this.heatmapOverlayCtx.lineWidth = 2;
+    this.heatmapOverlayCtx.beginPath();
+
+    let belongCluster = 0;
+    if (causeIdx > 0 && effectIdx < 0) {
+      belongCluster = this.getBelongCluster(causeIdx);
+    } else {
+      belongCluster = this.getBelongCluster(effectIdx);
+    }
+
+    const startX = this.legendWidth;
+    const startY = this.legendWidth + this.clusterRangeList[belongCluster].start * this.props.cellScale;
+    const width = this.heatmapOverlayCanvas.width - this.legendWidth;
+    const height = (this.clusterRangeList[belongCluster].end - this.clusterRangeList[belongCluster].start) * this.props.cellScale;
+
+    if (causeIdx > 0 && effectIdx < 0) {
+      this.heatmapOverlayCtx.rect(startX, startY, width, height);
+    } else {
+      this.heatmapOverlayCtx.rect(startY, startX, height, width);
+    }
+
+    this.heatmapOverlayCtx.stroke();
+    this.heatmapOverlayCtx.closePath();
+  }
+
+  getBelongCluster(selectedIdx) {
+    let sum = 0;
+    for (let i = 0; i < this.nClusterList.length; i++) {
+      sum += this.nClusterList[i];
+      if (selectedIdx < sum) {
+        return i;
+      }
+    }
+    return this.nClusterList.length - 1;
   }
 
   drawData(props) {
@@ -97,8 +146,8 @@ export default class ClusterMatrix extends React.Component {
     this.clusterOverlayCanvas.height = this.clusterCanvas.height;
     // this.clusterCtx.drawImage(canvas, 0, 0, canvas.width, canvas.height, 0, 0, this.clusterCanvas.width, this.clusterCanvas.height);
 
-    this.heatmapCanvas.width = this.graphSorted.length * props.cellSize + this.legendWidth;
-    this.heatmapCanvas.height = this.graphSorted.length * props.cellSize + this.legendWidth;
+    this.heatmapCanvas.width = this.graphSorted.length * props.cellScale + this.legendWidth;
+    this.heatmapCanvas.height = this.graphSorted.length * props.cellScale + this.legendWidth;
     this.heatmapOverlayCanvas.width = this.heatmapCanvas.width;
     this.heatmapOverlayCanvas.height = this.heatmapCanvas.height;
 
@@ -106,10 +155,10 @@ export default class ClusterMatrix extends React.Component {
     this.heatmapOverlayCanvas.style.left = `${this.clusterCanvas.width}px`;
 
     // save start and stop index of each cluster
-    const clusterRangeList = [];
+    this.clusterRangeList = [];
     this.nClusterList.reduce((prev, current) => {
       const endPixel = prev + current;
-      clusterRangeList.push({
+      this.clusterRangeList.push({
         start: prev,
         end: endPixel,
       });
@@ -119,7 +168,7 @@ export default class ClusterMatrix extends React.Component {
     // draw heatmap and fill canvas
     let clusterIdx = 0;
     this.graphSorted.forEach((row, rowIdx) => {
-      if (rowIdx >= clusterRangeList[clusterIdx].end) {
+      if (rowIdx >= this.clusterRangeList[clusterIdx].end) {
         clusterIdx++;
       }
 
@@ -127,7 +176,7 @@ export default class ClusterMatrix extends React.Component {
       this.heatmapCtx.fillStyle = color[clusterIdx];
       row.forEach((cell, cellIdx) => {
         if (cell === true) {
-          this.heatmapCtx.fillRect(cellIdx * props.cellSize + this.legendWidth, rowIdx * props.cellSize + this.legendWidth, props.cellSize, props.cellSize);
+          this.heatmapCtx.fillRect(cellIdx * props.cellScale + this.legendWidth, rowIdx * props.cellScale + this.legendWidth, props.cellScale, props.cellScale);
         }
       });
 
@@ -148,11 +197,11 @@ export default class ClusterMatrix extends React.Component {
     this.nClusterList.forEach((nCluster, idx) => {
       // draw legend
       this.heatmapCtx.fillStyle = color[idx];
-      this.heatmapCtx.fillRect(heatmapCtxX, 0, nCluster * props.cellSize, this.legendWidth);
-      this.heatmapCtx.fillRect(0, heatmapCtxX, this.legendWidth, nCluster * props.cellSize);
+      this.heatmapCtx.fillRect(heatmapCtxX, 0, nCluster * props.cellScale, this.legendWidth);
+      this.heatmapCtx.fillRect(0, heatmapCtxX, this.legendWidth, nCluster * props.cellScale);
 
       // draw line
-      heatmapCtxX += nCluster * props.cellSize;
+      heatmapCtxX += nCluster * props.cellScale;
       this.heatmapCtx.moveTo(heatmapCtxX, this.legendWidth);
       this.heatmapCtx.lineTo(heatmapCtxX, this.heatmapCanvas.height);
 
