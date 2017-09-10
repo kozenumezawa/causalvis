@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import { Sidebar, Segment } from 'semantic-ui-react';
+import { Sidebar, Segment, Accordion, Icon } from 'semantic-ui-react';
 
 import { loadTiff } from '../intents/intent';
 
@@ -42,7 +42,15 @@ export default class Main extends React.Component {
                   <SideMenu />
 
                   <Sidebar.Pusher>
-                    <ControlWindow />
+                    <Accordion>
+                      <Accordion.Title>
+                        <Icon name="dropdown" />
+                        Control Window
+                      </Accordion.Title>
+                      <Accordion.Content>
+                        <ControlWindow />
+                      </Accordion.Content>
+                    </Accordion>
 
                     <ResultWindow
                       allTiffList={this.state.data.allTiffList}
@@ -56,6 +64,7 @@ export default class Main extends React.Component {
                       nClusterList={this.state.clustering.nClusterList}
                       ordering={this.state.clustering.ordering}
                     />
+
                   </Sidebar.Pusher>
                 </Sidebar.Pushable>
               </div>

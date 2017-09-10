@@ -24,13 +24,10 @@ export default class ControlWindow extends React.Component {
       { active: true, icon: 'grid layout', title: 'IRM', description: 'Infinite Relational Model' },
     ];
     return (
-      <Segment style={{ height: 250 }}>
-        <div>
-          <br />
-          <Step.Group items={steps} />
-          <Step.Group items={steps2} />
-        </div>
-      </Segment>
+      <div>
+        <Step.Group items={steps} />
+        <Step.Group items={steps2} />
+      </div>
     );
   }
 }
