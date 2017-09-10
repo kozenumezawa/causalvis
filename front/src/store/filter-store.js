@@ -37,7 +37,7 @@ const store = (intentSubject, dataSubject) => {
 
   Rx.Observable.zip(intentSubject, dataSubject).subscribe(([payload, data]) => {
     state.meanR[0] = 1;
-    state.meanR[1] = 2;
+    state.meanR[1] = 1;
 
     if (data.state.allTimeSeries[0] == null) {
       subject.onNext({ state });
