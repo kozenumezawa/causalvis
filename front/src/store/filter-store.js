@@ -1,5 +1,6 @@
 import Rx from 'rx';
 
+import { FETCH_TIFF } from '../constants/event-constants';
 import { isSamplingPoint, arraySum } from '../utils/store-utils';
 
 const removeUselessTimeSeries = (allTimeSeries, width, meanR) => {
@@ -36,20 +37,26 @@ const store = (intentSubject, dataSubject) => {
   const subject = new Rx.BehaviorSubject({ state });
 
   Rx.Observable.zip(intentSubject, dataSubject).subscribe(([payload, data]) => {
-    state.meanR[0] = 1;
-    state.meanR[1] = 1;
+    switch (payload.type) {
+      case FETCH_TIFF:
+        state.meanR[0] = 1;
+        state.meanR[1] = 1;
 
-    if (data.state.allTimeSeries[0] == null) {
-      subject.onNext({ state });
-      return;
-    }
+        if (data.state.allTimeSeries[0] == null) {
+          subject.onNext({ state });
+          return;
+        }
 
-    for (let dataIndex = 0; dataIndex < 2; dataIndex++) {
-      const removedData = removeUselessTimeSeries(data.state.allTimeSeries[dataIndex], data.state.width[dataIndex], state.meanR[dataIndex]);
-      state.allTimeSeries[dataIndex] = removedData.newAllTimeSeries;
-      state.sampledCoords[dataIndex] = removedData.sampledCoords;
+        for (let dataIndex = 0; dataIndex < 2; dataIndex++) {
+          const removedData = removeUselessTimeSeries(data.state.allTimeSeries[dataIndex], data.state.width[dataIndex], state.meanR[dataIndex]);
+          state.allTimeSeries[dataIndex] = removedData.newAllTimeSeries;
+          state.sampledCoords[dataIndex] = removedData.sampledCoords;
+        }
+        subject.onNext({ state });
+        break;
+      default:
+        subject.onNext({ state });
     }
-    subject.onNext({ state });
   });
   return subject;
 };

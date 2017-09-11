@@ -64,7 +64,9 @@ export default class Main extends React.Component {
                         Analysis Methods window
                       </Accordion.Title>
                       <Accordion.Content>
-                        <ControlWindow />
+                        <ControlWindow
+                          openModal={this.state.modal.openModal}
+                        />
                       </Accordion.Content>
                     </Accordion>
 

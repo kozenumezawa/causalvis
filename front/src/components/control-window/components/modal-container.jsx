@@ -1,6 +1,7 @@
 import React from 'react';
-
 import { Modal, Header, Button } from 'semantic-ui-react';
+
+import { openModal, closeModal } from '../../../intents/intent';
 
 import CausalinferenceModal from './causalinference-modal.jsx';
 
@@ -9,7 +10,6 @@ export default class ModalContainer extends React.Component {
     super(props);
 
     this.state = {
-      open: false,
       modalContent: '',
       modalHeader: '',
     };
@@ -21,7 +21,6 @@ export default class ModalContainer extends React.Component {
     }
 
     this.setState({
-      open: true,
       modalContent: nextProps.icon,
     });
 
@@ -41,15 +40,15 @@ export default class ModalContainer extends React.Component {
   }
 
   onCancelClick() {
-    this.setState({ open: false });
+    closeModal();
   }
 
   onOKClick() {
-    this.setState({ open: false });
+    closeModal();
   }
 
   close() {
-    this.setState({ open: false });
+    closeModal();
   }
 
   renderModalContent() {
@@ -60,7 +59,7 @@ export default class ModalContainer extends React.Component {
 
   render() {
     return (
-      <Modal dimmer={'inverted'} open={this.state.open} onClose={this.close.bind(this)}>
+      <Modal dimmer={'inverted'} open={this.props.openModal} onClose={this.close.bind(this)}>
         <Modal.Header>
           { this.state.modalHeader }
         </Modal.Header>

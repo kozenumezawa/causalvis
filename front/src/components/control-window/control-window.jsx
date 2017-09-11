@@ -2,6 +2,8 @@ import React from 'react';
 
 import { Step } from 'semantic-ui-react';
 
+import { openModal } from '../../intents/intent';
+
 import ModalContainer from './components/modal-container.jsx';
 
 export default class ControlWindow extends React.Component {
@@ -9,15 +11,14 @@ export default class ControlWindow extends React.Component {
     super(props);
 
     this.state = {
-      openModal: false,
       icon: '',
       position: '',
     };
   }
 
   handleClick(position, icon, e) {
+    openModal();
     this.setState({
-      openModal: true,
       icon: icon,
       position: position,
     });
@@ -62,7 +63,7 @@ export default class ControlWindow extends React.Component {
         })()}
 
         <ModalContainer
-          openModal={this.state.openModal}
+          openModal={this.props.openModal}
           icon={this.state.icon}
           position={this.state.position}
         />
