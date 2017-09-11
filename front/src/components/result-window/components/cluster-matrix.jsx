@@ -1,9 +1,6 @@
 import React from 'react';
 
-import { SELECT_CLUSTER, SELECT_CELL } from '../../../constants/general-constants';
-
 import * as drawingTool from '../../../utils/drawing-tool';
-
 
 import OriginalCanvas from './canvas/original-canvas.jsx';
 
@@ -72,14 +69,6 @@ export default class ClusterMatrix extends React.Component {
     this.heatmapOverlayCtx.clearRect(0, 0, this.heatmapOverlayCanvas.width, this.heatmapOverlayCanvas.height);
     this.clusterOverlayCtx.clearRect(0, 0, this.clusterOverlayCanvas.width, this.clusterOverlayCanvas.height);
 
-    this.clusterOverlayCtx.fillStyle = 'gray';
-    this.heatmapOverlayCtx.strokeStyle = 'gray';
-    this.heatmapOverlayCtx.fillStyle = 'rgba(240,248,255,0.5)';
-    this.heatmapOverlayCtx.lineWidth = 3;
-
-
-    this.heatmapOverlayCtx.beginPath();
-
     const belongCluster = this.getBelongCluster(causeIdx, effectIdx);
 
     // update selectedClusterList
@@ -91,7 +80,13 @@ export default class ClusterMatrix extends React.Component {
       });
     }
 
+    this.clusterOverlayCtx.fillStyle = 'gray';
+    this.heatmapOverlayCtx.strokeStyle = 'gray';
+    this.heatmapOverlayCtx.fillStyle = 'rgba(240,248,255,0.5)';
+    this.heatmapOverlayCtx.lineWidth = 3;
+
     // draw heatmap and canvas
+    this.heatmapOverlayCtx.beginPath();
     this.selectedClusterList.forEach((belongCluster) => {
       const startX = this.legendWidth;
       const startY = this.legendWidth + this.clusterRangeList[belongCluster].start * this.props.cellScale;

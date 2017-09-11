@@ -13,6 +13,10 @@ export default class Main extends React.Component {
   constructor(props) {
     super(props);
     console.log(API_ENDPOINT);
+
+    this.state = {
+      activateIndex: 0,
+    };
   }
 
   componentWillMount() {
@@ -29,6 +33,18 @@ export default class Main extends React.Component {
     this.subscription.dispose();
   }
 
+  onAccordionClick() {
+    if (this.state.activateIndex === 0) {
+      this.setState({
+        activateIndex: -1,
+      });
+    } else {
+      this.setState({
+        activateIndex: 0,
+      });
+    }
+  }
+
   render() {
     return (
       <div>
@@ -42,7 +58,7 @@ export default class Main extends React.Component {
                   <SideMenu />
 
                   <Sidebar.Pusher>
-                    <Accordion>
+                    <Accordion activeIndex={this.state.activateIndex} onTitleClick={this.onAccordionClick.bind(this)}>
                       <Accordion.Title>
                         <Icon name="dropdown" />
                         Analysis Methods window
