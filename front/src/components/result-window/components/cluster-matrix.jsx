@@ -42,51 +42,22 @@ export default class ClusterMatrix extends React.Component {
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    this.heatmapOverlayCtx.strokeStyle = 'black';
-
     this.heatmapOverlayCtx.clearRect(0, 0, this.heatmapOverlayCanvas.width, this.heatmapOverlayCanvas.height);
-    this.heatmapOverlayCtx.beginPath();
 
-    this.heatmapOverlayCtx.moveTo(this.legendWidth, y);
-    this.heatmapOverlayCtx.lineTo(this.heatmapOverlayCanvas.width, y);
-
-    this.heatmapOverlayCtx.moveTo(x, this.legendWidth);
-    this.heatmapOverlayCtx.lineTo(x, this.heatmapOverlayCanvas.height);
-
-    this.heatmapOverlayCtx.closePath();
-    this.heatmapOverlayCtx.stroke();
+    // draw cross line according to coordinates
+    this.drawCrossLine(x, y);
 
     const causeIdx = Math.floor((y - this.legendWidth) / this.props.cellScale);
     const effectIdx = Math.floor((x - this.legendWidth) / this.props.cellScale);
 
-    if (causeIdx < 0 || effectIdx < 0) {
+    if (this.isOnLegend(causeIdx, effectIdx)) {
       return;
     }
 
-    this.clusterOverlayCtx.clearRect(0, 0, this.clusterOverlayCanvas.width, this.clusterOverlayCanvas.height);
-    this.clusterOverlayCtx.fillStyle = 'black';
-    const causeX = this.clusterSampledCoords[causeIdx].x * this.props.scale;
-    const causeY = this.clusterSampledCoords[causeIdx].y * this.props.scale;
-    this.clusterOverlayCtx.fillRect(causeX - 1, causeY - 1, this.meanStep * this.props.scale, this.meanStep * this.props.scale);
-
-    this.clusterOverlayCtx.fillStyle = 'gray';
-    const effectX = this.clusterSampledCoords[effectIdx].x * this.props.scale;
-    const effectY = this.clusterSampledCoords[effectIdx].y * this.props.scale;
-    this.clusterOverlayCtx.fillRect(effectX - 1, effectY - 1, this.meanStep * this.props.scale, this.meanStep * this.props.scale);
-
-    if (this.graphSorted[causeIdx][effectIdx] === true) {
-      this.clusterOverlayCtx.beginPath();
-      this.clusterOverlayCtx.fillStyle = 'white';
-      this.arrow(this.clusterOverlayCtx, causeX, causeY, effectX, effectY, [0, 3, -20, 3, -20, 12]);
-      this.clusterOverlayCtx.fill();
-      // this.clusterOverlayCtx.closePath();
-    }
+    this.drawCausalArrowToCanvas(causeIdx, effectIdx);
   }
 
   onMouseUpHeatmap(e) {
-    this.heatmapOverlayCtx.clearRect(0, 0, this.heatmapOverlayCanvas.width, this.heatmapOverlayCanvas.height);
-    this.clusterOverlayCtx.clearRect(0, 0, this.clusterOverlayCanvas.width, this.clusterOverlayCanvas.height);
-
     const rect = e.target.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
@@ -98,20 +69,20 @@ export default class ClusterMatrix extends React.Component {
       return;
     }
 
+    this.heatmapOverlayCtx.clearRect(0, 0, this.heatmapOverlayCanvas.width, this.heatmapOverlayCanvas.height);
+    this.clusterOverlayCtx.clearRect(0, 0, this.clusterOverlayCanvas.width, this.clusterOverlayCanvas.height);
+
     this.clusterOverlayCtx.fillStyle = 'gray';
     this.heatmapOverlayCtx.strokeStyle = 'gray';
     this.heatmapOverlayCtx.fillStyle = 'rgba(240,248,255,0.5)';
-
     this.heatmapOverlayCtx.lineWidth = 3;
+
+
     this.heatmapOverlayCtx.beginPath();
 
-    let belongCluster = 0;
-    if (causeIdx > 0 && effectIdx < 0) {
-      belongCluster = this.getBelongCluster(causeIdx);
-    } else {
-      belongCluster = this.getBelongCluster(effectIdx);
-    }
+    const belongCluster = this.getBelongCluster(causeIdx, effectIdx);
 
+    // update selectedClusterList
     if (this.selectedClusterList.indexOf(belongCluster) === -1) {
       this.selectedClusterList.push(belongCluster);
     } else {
@@ -120,6 +91,7 @@ export default class ClusterMatrix extends React.Component {
       });
     }
 
+    // draw heatmap and canvas
     this.selectedClusterList.forEach((belongCluster) => {
       const startX = this.legendWidth;
       const startY = this.legendWidth + this.clusterRangeList[belongCluster].start * this.props.cellScale;
@@ -142,7 +114,14 @@ export default class ClusterMatrix extends React.Component {
     });
   }
 
-  getBelongCluster(selectedIdx) {
+  getBelongCluster(causeIdx, effectIdx) {
+    if (causeIdx > 0 && effectIdx < 0) {
+      return this.searchBelongCluster(causeIdx);
+    }
+    return this.searchBelongCluster(effectIdx);
+  }
+
+  searchBelongCluster(selectedIdx) {
     let sum = 0;
     for (let i = 0; i < this.nClusterList.length; i++) {
       sum += this.nClusterList[i];
@@ -151,6 +130,45 @@ export default class ClusterMatrix extends React.Component {
       }
     }
     return this.nClusterList.length - 1;
+  }
+
+  drawCrossLine(x, y) {
+    this.heatmapOverlayCtx.strokeStyle = 'black';
+    this.heatmapOverlayCtx.beginPath();
+    this.heatmapOverlayCtx.moveTo(this.legendWidth, y);
+    this.heatmapOverlayCtx.lineTo(this.heatmapOverlayCanvas.width, y);
+    this.heatmapOverlayCtx.moveTo(x, this.legendWidth);
+    this.heatmapOverlayCtx.lineTo(x, this.heatmapOverlayCanvas.height);
+    this.heatmapOverlayCtx.closePath();
+    this.heatmapOverlayCtx.stroke();
+  }
+
+  isOnLegend(causeIdx, effectIdx) {
+    if (causeIdx < 0 || effectIdx < 0) {
+      return true;
+    }
+    return false;
+  }
+
+  drawCausalArrowToCanvas(causeIdx, effectIdx) {
+    this.clusterOverlayCtx.clearRect(0, 0, this.clusterOverlayCanvas.width, this.clusterOverlayCanvas.height);
+    this.clusterOverlayCtx.fillStyle = 'black';
+    const causeX = this.clusterSampledCoords[causeIdx].x * this.props.scale;
+    const causeY = this.clusterSampledCoords[causeIdx].y * this.props.scale;
+    this.clusterOverlayCtx.fillRect(causeX - 1, causeY - 1, this.meanStep * this.props.scale, this.meanStep * this.props.scale);
+
+    this.clusterOverlayCtx.fillStyle = 'gray';
+    const effectX = this.clusterSampledCoords[effectIdx].x * this.props.scale;
+    const effectY = this.clusterSampledCoords[effectIdx].y * this.props.scale;
+    this.clusterOverlayCtx.fillRect(effectX - 1, effectY - 1, this.meanStep * this.props.scale, this.meanStep * this.props.scale);
+
+    if (this.graphSorted[causeIdx][effectIdx] === true) {
+      this.clusterOverlayCtx.beginPath();
+      this.clusterOverlayCtx.fillStyle = 'white';
+      this.arrow(this.clusterOverlayCtx, causeX, causeY, effectX, effectY, [0, 3, -20, 3, -20, 12]);
+      this.clusterOverlayCtx.fill();
+      // this.clusterOverlayCtx.closePath();
+    }
   }
 
   drawData(props) {
