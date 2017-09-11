@@ -35,13 +35,13 @@ export default class OriginalCanvas extends React.Component {
     this.canvas.height = props.allTimeSeries.length / props.width * props.scale;
 
 
-    let playTimerOn = true;
+    let playTimerOn = false;
     let playIndex = 0;
     const playTiff = setInterval(() => {
       if (++playIndex === props.allTimeSeries[0].length - 1 || playTimerOn === false) {
         playIndex = (playIndex === props.allTimeSeries[0].length - 1) ? 0 : playIndex;
-        // clearInterval(playTiff);
-        // playTimerOn = false;
+        clearInterval(playTiff);
+        playTimerOn = false;
       }
       props.allTimeSeries.forEach((timeSeries, idx) => {
         const scalar = timeSeries[playIndex];

@@ -2,19 +2,31 @@ import React from 'react';
 
 import { Step } from 'semantic-ui-react';
 
+import ModalContainer from './components/modal-container.jsx';
+
 export default class ControlWindow extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      openModal: false,
+      icon: '',
+      position: '',
+    };
   }
 
-  handleClick(key, icon, e) {
-    console.log(key, icon, e);
+  handleClick(position, icon, e) {
+    this.setState({
+      openModal: true,
+      icon: icon,
+      position: position,
+    });
   }
 
-  renderSteps(steps, key) {
+  renderSteps(steps, position) {
     const renderSteps = steps.map((data) => {
       return (
-        <Step icon={data.icon} title={data.title} description={data.description} key={`${key}${data.title}`} onClick={this.handleClick.bind(this, key, data.icon)} />
+        <Step icon={data.icon} title={data.title} description={data.description} key={`${position}${data.title}`} onClick={this.handleClick.bind(this, position, data.icon)} />
       );
     });
     return (
@@ -48,6 +60,12 @@ export default class ControlWindow extends React.Component {
         {(() => {
           return this.renderSteps(steps2, 'below');
         })()}
+
+        <ModalContainer
+          openModal={this.state.openModal}
+          icon={this.state.icon}
+          position={this.state.position}
+        />
       </div>
     );
   }
