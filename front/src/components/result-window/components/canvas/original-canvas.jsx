@@ -61,7 +61,9 @@ export default class OriginalCanvas extends React.Component {
 
   render() {
     return (
-      <canvas id={`original_canvas_${this.props.id}`} />
+      <div style={{ display: 'inline' }}>
+        <canvas id={`original_canvas_${this.props.id}`} />
+      </div>
     );
   }
 }

@@ -3,6 +3,7 @@ import React from 'react';
 import * as drawingTool from '../../../utils/drawing-tool';
 
 import OriginalCanvas from './canvas/original-canvas.jsx';
+import ForceLayout from './force-layout.jsx';
 
 export default class ClusterMatrix extends React.Component {
   constructor(props) {
@@ -320,7 +321,10 @@ export default class ClusterMatrix extends React.Component {
 
   render() {
     return (
-      <div style={{ height: 300 }} >
+      <div style={{ height: 400 }} >
+        <ForceLayout
+          network={this.props.network}
+        />
         <OriginalCanvas
           id={this.props.id}
           allTimeSeries={this.props.allTimeSeries}
@@ -339,7 +343,6 @@ export default class ClusterMatrix extends React.Component {
           <canvas id={`heatmap_canvas_${this.props.id}`} style={{ position: 'absolute', zIndex: 1 }} />
           <canvas id={`heatmap_canvas_${this.props.id}_overlay`} style={{ position: 'absolute', zIndex: 2 }} />
         </div>
-
       </div>
     );
   }

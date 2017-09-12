@@ -81,6 +81,7 @@ export default class Main extends React.Component {
                       clusterSampledCoords={this.state.clustering.clusterSampledCoords}
                       nClusterList={this.state.clustering.nClusterList}
                       ordering={this.state.clustering.ordering}
+                      networks={this.state.network.networks}
                     />
                   </Sidebar.Pusher>
                 </Sidebar.Pushable>

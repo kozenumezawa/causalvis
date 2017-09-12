@@ -15,7 +15,6 @@ const store = (intentSubject, causalSubject, filterSubject) => {
   Rx.Observable.zip(intentSubject, causalSubject, filterSubject).subscribe(([payload, causal, filter]) => {
     switch (payload.type) {
       case FETCH_TIFF:
-        console.log('wei');
         if (causal.state.causalMatrix[0] == null) {
           subject.onNext({ state });
           return;
@@ -66,6 +65,7 @@ const store = (intentSubject, causalSubject, filterSubject) => {
                 state.clusterSampledCoords[1] = json.clusterSampledCoords;
                 state.nClusterList[1] = json.nClusterList;
                 state.ordering[1] = json.ordering;
+                
                 subject.onNext({ state });
               });
           });
