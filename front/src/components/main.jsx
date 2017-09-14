@@ -12,7 +12,7 @@ import ResultWindow from './result-window/result-window.jsx';
 export default class Main extends React.Component {
   constructor(props) {
     super(props);
-    console.log(API_ENDPOINT);
+    // console.log(API_ENDPOINT);
 
     this.state = {
       activateIndex: 0,

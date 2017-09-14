@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class ForceLayout extends React.Component {
+export default class NetworkView extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -25,6 +25,7 @@ export default class ForceLayout extends React.Component {
         height="400"
         default-link-target-marker-shape="triangle"
         node-label-property="index"
+        node-fill-color-property="color"
         default-node-fill-color="white"
         layout-method="sugiyama"
         default-node-width="50"

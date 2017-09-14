@@ -3,7 +3,7 @@ import React from 'react';
 import * as drawingTool from '../../../utils/drawing-tool';
 
 import OriginalCanvas from './canvas/original-canvas.jsx';
-import ForceLayout from './force-layout.jsx';
+import NetworkView from './network-view.jsx';
 
 export default class ClusterMatrix extends React.Component {
   constructor(props) {
@@ -322,7 +322,7 @@ export default class ClusterMatrix extends React.Component {
   render() {
     return (
       <div style={{ height: 400 }} >
-        <ForceLayout
+        <NetworkView
           network={this.props.network}
         />
         <OriginalCanvas

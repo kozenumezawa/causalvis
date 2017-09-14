@@ -1,6 +1,7 @@
 import Rx from 'rx';
 
 import { FETCH_TIFF } from '../constants/event-constants';
+import * as drawingTool from '../utils/drawing-tool';
 
 const store = (intentSubject, clusteringSubject) => {
   const state = {
@@ -28,8 +29,12 @@ const store = (intentSubject, clusteringSubject) => {
 
           const clusterRangeIdx = new Map(clusterRangeList.map((causalClusterRange, idx) => [causalClusterRange, idx]));
 
+          const color = drawingTool.getColorCategory(nClusterList.length);
           const nodes = nClusterList.map((nCluster, idx) => {
-            return { index: `${idx}` };
+            return {
+              index: `${idx}`,
+              color: color[idx],
+            };
           });
 
           const links = [];
