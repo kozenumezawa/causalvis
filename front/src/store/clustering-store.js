@@ -4,9 +4,9 @@ import { FETCH_TIFF } from '../constants/event-constants';
 
 const store = (intentSubject, causalSubject, filterSubject) => {
   const state = {
-    clusterMatrix: [],
+    clusterMatrices: [],
     clusterSampledCoords: [],
-    nClusterList: [],
+    nClusterLists: [],
     ordering: [],
   };
 
@@ -14,62 +14,47 @@ const store = (intentSubject, causalSubject, filterSubject) => {
 
   Rx.Observable.zip(intentSubject, causalSubject, filterSubject).subscribe(([payload, causal, filter]) => {
     switch (payload.type) {
-      case FETCH_TIFF:
-        if (causal.state.causalMatrix[0] == null) {
+      case FETCH_TIFF: {
+        if (causal.state.causalMatrices[0] == null) {
           subject.onNext({ state });
           return;
         }
 
-        window.fetch('http://localhost:3000/api/v1/clustering', {
-          mode: 'cors',
-          method: 'POST',
-          headers: {
-            'content-type': 'application/json',
-          },
-          body: JSON.stringify({
-            causalMatrix: causal.state.causalMatrix[0],
-            method: 'IRM',
-            threshold: 0.7,
-            sampledCoords: filter.state.sampledCoords[0],
-            dataName: 'real',
-          }),
-        })
-          .then((response) => {
-            return response.json();
+        const dataNames = ['real', 'sim'];
+        const fetchPromises = causal.state.causalMatrices.map((causalMatrix, idx) => {
+          return fetch('http://localhost:3000/api/v1/clustering', {
+            mode: 'cors',
+            method: 'POST',
+            headers: {
+              'content-type': 'application/json',
+            },
+            body: JSON.stringify({
+              causalMatrix: causalMatrix,
+              method: 'IRM',
+              threshold: 0.7,
+              sampledCoords: filter.state.sampledCoords[idx],
+              dataName: dataNames[idx],
+            }),
           })
-          .then((json) => {
-            state.clusterMatrix[0] = json.clusterMatrix;
-            state.clusterSampledCoords[0] = json.clusterSampledCoords;
-            state.nClusterList[0] = json.nClusterList;
-            state.ordering[0] = json.ordering;
-
-            window.fetch('http://localhost:3000/api/v1/clustering', {
-              mode: 'cors',
-              method: 'POST',
-              headers: {
-                'content-type': 'application/json',
-              },
-              body: JSON.stringify({
-                causalMatrix: causal.state.causalMatrix[1],
-                method: 'IRM',
-                threshold: 0.7,
-                sampledCoords: filter.state.sampledCoords[1],
-                dataName: 'sim',
-              }),
+            .then((response) => {
+              return response.json();
             })
-              .then((response) => {
-                return response.json();
-              })
-              .then((json) => {
-                state.clusterMatrix[1] = json.clusterMatrix;
-                state.clusterSampledCoords[1] = json.clusterSampledCoords;
-                state.nClusterList[1] = json.nClusterList;
-                state.ordering[1] = json.ordering;
-                
-                subject.onNext({ state });
-              });
+            .then((json) => {
+              return json;
+            });
+        });
+
+        Promise.all(fetchPromises).then((responseJSONS) => {
+          responseJSONS.forEach((json, idx) => {
+            state.clusterMatrices[idx] = json.clusterMatrix;
+            state.clusterSampledCoords[idx] = json.clusterSampledCoords;
+            state.nClusterLists[idx] = json.nClusterList;
+            state.ordering[idx] = json.ordering;
           });
+          subject.onNext({ state });
+        });
         break;
+      }
       default:
         subject.onNext({ state });
         break;

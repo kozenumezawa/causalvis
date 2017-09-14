@@ -1,5 +1,4 @@
 import Rx from 'rx';
-import { forceSimulation, forceLink, forceManyBody, forceCenter } from 'd3-force';
 
 import { FETCH_TIFF } from '../constants/event-constants';
 
@@ -13,7 +12,7 @@ const store = (intentSubject, clusteringSubject) => {
   Rx.Observable.zip(intentSubject, clusteringSubject).subscribe(([payload, clustering]) => {
     switch (payload.type) {
       case FETCH_TIFF: {
-        const { clusterMatrix: clusterMatricies, nClusterList: nClusterLists } = clustering.state;
+        const { clusterMatrices, nClusterLists } = clustering.state;
 
         const networks = nClusterLists.map((nClusterList, dataIdx) => {
           // save start and stop index of each cluster
@@ -43,7 +42,7 @@ const store = (intentSubject, clusteringSubject) => {
               let causalCnt = 0;
               for (let causalIdx = causalClusterRange.start; causalIdx < causalClusterRange.end; causalIdx++) {
                 for (let effectIdx = effectClusterRange.start; effectIdx < effectClusterRange.end; effectIdx++) {
-                  if (clusterMatricies[dataIdx][causalIdx][effectIdx] === true) {
+                  if (clusterMatrices[dataIdx][causalIdx][effectIdx] === true) {
                     causalCnt++;
                   }
                 }
