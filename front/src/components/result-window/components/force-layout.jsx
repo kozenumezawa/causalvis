@@ -19,7 +19,21 @@ export default class ForceLayout extends React.Component {
 
   render() {
     return (
-      <eg-renderer ref="network" width="400" height="400" link-source-property="source.index" link-target-property="target.index" default-link-target-marker-shape="triangle" node-label-property="index" default-node-fill-color="red" />
+      <eg-renderer-ogdf
+        ref="network"
+        width="400"
+        height="400"
+        default-link-target-marker-shape="triangle"
+        node-label-property="index"
+        default-node-fill-color="white"
+        layout-method="sugiyama"
+        default-node-width="50"
+        default-node-height="50"
+        default-node-label-font-size="30"
+        default-link-target-marker-size="20"
+        fmmm-unit-edge-length="200"
+        link-stroke-opacity-property="intensity"
+      />
     );
   }
 }

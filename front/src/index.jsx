@@ -1,4 +1,5 @@
 import 'eg-renderer';
+import 'eg-renderer-ogdf';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';

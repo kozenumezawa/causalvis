@@ -15,7 +15,7 @@ const store = (intentSubject, clusteringSubject) => {
       case FETCH_TIFF: {
         const { clusterMatrix: clusterMatricies, nClusterList: nClusterLists } = clustering.state;
 
-        const networkPromises = nClusterLists.map((nClusterList, dataIdx) => {
+        const networks = nClusterLists.map((nClusterList, dataIdx) => {
           // save start and stop index of each cluster
           const clusterRangeList = [];
           nClusterList.reduce((prev, current) => {
@@ -29,8 +29,8 @@ const store = (intentSubject, clusteringSubject) => {
 
           const clusterRangeIdx = new Map(clusterRangeList.map((causalClusterRange, idx) => [causalClusterRange, idx]));
 
-          const nodes = nClusterList.map(() => {
-            return {};
+          const nodes = nClusterList.map((nCluster, idx) => {
+            return { index: `${idx}` };
           });
 
           const links = [];
@@ -50,32 +50,21 @@ const store = (intentSubject, clusteringSubject) => {
               }
               const width = effectClusterRange.end - effectClusterRange.start;
               const area = width * height;
-              if (causalCnt > area * 0.9) {
+              if (causalCnt > area * 0.95) {
                 links.push({
                   source: clusterRangeIdx.get(causalClusterRange),
                   target: clusterRangeIdx.get(effectClusterRange),
-                  inteinsity: causalCnt / area,
+                  intensity: (1 - 0) / (1 - 0.95) * (causalCnt / area - 1) + 1,
                 });
               }
             }
           }
 
-          const simulation = forceSimulation(nodes);
-          simulation.force("link", forceLink(links));
-          simulation.force("charge", forceManyBody());
-          simulation.force("center", forceCenter(200, 200));
-
-          return new Promise((resolve, reject) => {
-            simulation.on('end', () => {
-              resolve({ nodes, links });
-            });
-          });
+          return { nodes, links };
         });
 
-        Promise.all(networkPromises).then((networks) => {
-          state.networks = networks;
-          subject.onNext({ state });
-        });
+        state.networks = networks;
+        subject.onNext({ state });
         break;
       }
       default:
