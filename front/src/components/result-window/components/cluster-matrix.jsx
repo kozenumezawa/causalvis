@@ -32,6 +32,7 @@ export default class ClusterMatrix extends React.Component {
     if (nextProps.allTimeSeries !== this.props.allTimeSeries) {
       this.drawData(nextProps);
     }
+    this.drawSelectedCluster(nextProps);
   }
 
   onMouseMoveHeatmap(e) {
@@ -68,13 +69,22 @@ export default class ClusterMatrix extends React.Component {
     if (causeIdx > 0 && effectIdx > 0 || causeIdx < 0 && effectIdx < 0) {
       return;
     }
-    this.heatmapOverlayCtx.clearRect(0, 0, this.heatmapOverlayCanvas.width, this.heatmapOverlayCanvas.height);
-    this.clusterOverlayCtx.clearRect(0, 0, this.clusterOverlayCanvas.width, this.clusterOverlayCanvas.height);
 
     const belongCluster = this.getBelongCluster(causeIdx, effectIdx);
     selectCluster(belongCluster, this.props.positionIdx);
+    this.drawSelectedCluster(this.props);
+  }
 
-    // update selectedClusterList
+  getBelongCluster(causeIdx, effectIdx) {
+    if (causeIdx > 0 && effectIdx < 0) {
+      return this.searchBelongCluster(causeIdx);
+    }
+    return this.searchBelongCluster(effectIdx);
+  }
+
+  drawSelectedCluster(props) {
+    this.heatmapOverlayCtx.clearRect(0, 0, this.heatmapOverlayCanvas.width, this.heatmapOverlayCanvas.height);
+    this.clusterOverlayCtx.clearRect(0, 0, this.clusterOverlayCanvas.width, this.clusterOverlayCanvas.height);
 
     this.clusterOverlayCtx.fillStyle = 'gray';
     this.heatmapOverlayCtx.strokeStyle = 'gray';
@@ -83,11 +93,11 @@ export default class ClusterMatrix extends React.Component {
 
     // draw heatmap and canvas
     this.heatmapOverlayCtx.beginPath();
-    this.props.selectedClusterList.forEach((belongCluster) => {
+    props.selectedClusterList.forEach((belongCluster) => {
       const startX = this.legendWidth;
-      const startY = this.legendWidth + this.clusterRangeList[belongCluster].start * this.props.cellScale;
+      const startY = this.legendWidth + this.clusterRangeList[belongCluster].start * props.cellScale;
       const width = this.heatmapOverlayCanvas.width - this.legendWidth;
-      const height = (this.clusterRangeList[belongCluster].end - this.clusterRangeList[belongCluster].start) * this.props.cellScale;
+      const height = (this.clusterRangeList[belongCluster].end - this.clusterRangeList[belongCluster].start) * props.cellScale;
 
       this.heatmapOverlayCtx.fillRect(startX, startY, width, height);
       this.heatmapOverlayCtx.fillRect(startY, startX, height, width);
@@ -98,18 +108,11 @@ export default class ClusterMatrix extends React.Component {
       this.heatmapOverlayCtx.closePath();
 
       for (let cellIdx = this.clusterRangeList[belongCluster].start; cellIdx < this.clusterRangeList[belongCluster].end; cellIdx++) {
-        const x = this.clusterSampledCoords[cellIdx].x * this.props.scale;
-        const y = this.clusterSampledCoords[cellIdx].y * this.props.scale;
-        this.clusterOverlayCtx.fillRect(x - 1, y - 1, this.meanStep * this.props.scale, this.meanStep * this.props.scale);
+        const x = this.clusterSampledCoords[cellIdx].x * props.scale;
+        const y = this.clusterSampledCoords[cellIdx].y * props.scale;
+        this.clusterOverlayCtx.fillRect(x - 1, y - 1, this.meanStep * props.scale, this.meanStep * props.scale);
       }
     });
-  }
-
-  getBelongCluster(causeIdx, effectIdx) {
-    if (causeIdx > 0 && effectIdx < 0) {
-      return this.searchBelongCluster(causeIdx);
-    }
-    return this.searchBelongCluster(effectIdx);
   }
 
   searchBelongCluster(selectedIdx) {
@@ -318,6 +321,7 @@ export default class ClusterMatrix extends React.Component {
       <div style={{ height: 400 }} >
         <NetworkView
           network={this.props.network}
+          positionIdx={this.props.positionIdx}
         />
         <OriginalCanvas
           id={this.props.id}

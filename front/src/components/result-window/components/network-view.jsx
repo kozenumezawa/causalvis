@@ -1,12 +1,14 @@
 import React from 'react';
 
+import { selectCluster } from '../../../intents/intent';
+
 export default class NetworkView extends React.Component {
   constructor(props) {
     super(props);
   }
 
   componentDidMount() {
-    this.refs.network.addEventListener('nodeclick', this.nodeClick);
+    this.refs.network.addEventListener('nodeclick', this.nodeClick.bind(this));
   }
 
   shouldComponentUpdate(nextProps) {
@@ -24,11 +26,10 @@ export default class NetworkView extends React.Component {
 
   nodeClick(e) {
     const clusterNumber = Number(e.detail.id);
-    console.log(clusterNumber);
+    selectCluster(clusterNumber, this.props.positionIdx);
   }
 
   render() {
-    console.log('a');
     return (
       <eg-renderer-ogdf
         ref="network"
