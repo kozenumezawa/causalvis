@@ -25,6 +25,8 @@ export default class ResultWindow extends React.Component {
           scale={2}
           cellScale={0.5}
           network={this.props.networks[0]}
+          positionIdx={0}
+          selectedClusterList={this.props.selectedClusterLists[0]}
         />
 
         <ClusterMatrix
@@ -40,6 +42,8 @@ export default class ResultWindow extends React.Component {
           scale={4}
           cellScale={1}
           network={this.props.networks[1]}
+          positionIdx={1}
+          selectedClusterList={this.props.selectedClusterLists[1]}
         />
       </Segment>
     );

@@ -23,7 +23,9 @@ export default class OriginalCanvas extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.drawData(nextProps);
+    if (nextProps.allTimeSeries !== this.props.allTimeSeries) {
+      this.drawData(nextProps);
+    }
   }
 
   drawData(props) {

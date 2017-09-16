@@ -4,6 +4,7 @@ import filterStore from './filter-store';
 import causalStore from './causal-store';
 import clusteringStore from './clustering-store';
 import networkStore from './network-store';
+import canvasEventStore from './canvas-event-store';
 
 import modalStore from './modal-store';
 
@@ -16,6 +17,7 @@ const store = () => {
   const clusteringSubject = clusteringStore(intentSubject, causalSubject, filterSubject);
   const networkSubject = networkStore(intentSubject, clusteringSubject);
   const modalSubject = modalStore(intentSubject);
+  const canvasEventSubject = canvasEventStore(intentSubject);
 
   return Rx.Observable.zip(
     dataSubject,
@@ -24,7 +26,8 @@ const store = () => {
     clusteringSubject,
     networkSubject,
     modalSubject,
-    (data, filter, causal, clustering, network, modal) => {
+    canvasEventSubject,
+    (data, filter, causal, clustering, network, modal, canvasEvent) => {
       return {
         data: data.state,
         filter: filter.state,
@@ -32,6 +35,7 @@ const store = () => {
         clustering: clustering.state,
         network: network.state,
         modal: modal.state,
+        canvasEvent: canvasEvent.state,
       };
     },
   );

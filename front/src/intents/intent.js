@@ -5,6 +5,7 @@ import {
   DATA_INIT,
   OPEN_MODAL,
   CLOSE_MODAL,
+  SELECT_CLUSTER,
 } from '../constants/event-constants';
 
 export const intentSubject = new Rx.BehaviorSubject({ type: DATA_INIT });
@@ -28,3 +29,12 @@ export const closeModal = () => {
     type: CLOSE_MODAL,
   });
 };
+
+export const selectCluster = (clusterNumber, positionIdx) => {
+  intentSubject.onNext({
+    type: SELECT_CLUSTER,
+    clusterNumber: clusterNumber,
+    positionIdx: positionIdx,
+  });
+};
+

@@ -6,7 +6,16 @@ export default class NetworkView extends React.Component {
   }
 
   componentDidMount() {
-    this.refs.network.addEventListener('nodeClick', this.nodeClick);
+    this.refs.network.addEventListener('nodeclick', this.nodeClick);
+  }
+
+  shouldComponentUpdate(nextProps) {
+    const oldJSON = JSON.stringify(this.props.network);
+    const newJSON = JSON.stringify(nextProps.network);
+    if (oldJSON === newJSON) {
+      return false;
+    }
+    return true;
   }
 
   componentDidUpdate() {
@@ -14,10 +23,12 @@ export default class NetworkView extends React.Component {
   }
 
   nodeClick(e) {
-    console.log(e);
+    const clusterNumber = Number(e.detail.id);
+    console.log(clusterNumber);
   }
 
   render() {
+    console.log('a');
     return (
       <eg-renderer-ogdf
         ref="network"

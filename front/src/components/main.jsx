@@ -82,6 +82,7 @@ export default class Main extends React.Component {
                       nClusterLists={this.state.clustering.nClusterLists}
                       ordering={this.state.clustering.ordering}
                       networks={this.state.network.networks}
+                      selectedClusterLists={this.state.canvasEvent.selectedClusterLists}
                     />
                   </Sidebar.Pusher>
                 </Sidebar.Pushable>

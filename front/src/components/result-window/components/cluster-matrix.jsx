@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { selectCluster } from '../../../intents/intent';
 import * as drawingTool from '../../../utils/drawing-tool';
 
 import OriginalCanvas from './canvas/original-canvas.jsx';
@@ -10,7 +11,6 @@ export default class ClusterMatrix extends React.Component {
     super(props);
 
     this.legendWidth = 15;
-    this.selectedClusterList = [];
   }
 
   componentDidMount() {
@@ -29,11 +29,13 @@ export default class ClusterMatrix extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.drawData(nextProps);
+    if (nextProps.allTimeSeries !== this.props.allTimeSeries) {
+      this.drawData(nextProps);
+    }
   }
 
   onMouseMoveHeatmap(e) {
-    if (this.selectedClusterList.length !== 0) {
+    if (this.props.selectedClusterList.length !== 0) {
       return;
     }
     const rect = e.target.getBoundingClientRect();
@@ -66,20 +68,13 @@ export default class ClusterMatrix extends React.Component {
     if (causeIdx > 0 && effectIdx > 0 || causeIdx < 0 && effectIdx < 0) {
       return;
     }
-
     this.heatmapOverlayCtx.clearRect(0, 0, this.heatmapOverlayCanvas.width, this.heatmapOverlayCanvas.height);
     this.clusterOverlayCtx.clearRect(0, 0, this.clusterOverlayCanvas.width, this.clusterOverlayCanvas.height);
 
     const belongCluster = this.getBelongCluster(causeIdx, effectIdx);
+    selectCluster(belongCluster, this.props.positionIdx);
 
     // update selectedClusterList
-    if (this.selectedClusterList.indexOf(belongCluster) === -1) {
-      this.selectedClusterList.push(belongCluster);
-    } else {
-      this.selectedClusterList = this.selectedClusterList.filter((clusterNumber) => {
-        return (clusterNumber !== belongCluster);
-      });
-    }
 
     this.clusterOverlayCtx.fillStyle = 'gray';
     this.heatmapOverlayCtx.strokeStyle = 'gray';
@@ -88,7 +83,7 @@ export default class ClusterMatrix extends React.Component {
 
     // draw heatmap and canvas
     this.heatmapOverlayCtx.beginPath();
-    this.selectedClusterList.forEach((belongCluster) => {
+    this.props.selectedClusterList.forEach((belongCluster) => {
       const startX = this.legendWidth;
       const startY = this.legendWidth + this.clusterRangeList[belongCluster].start * this.props.cellScale;
       const width = this.heatmapOverlayCanvas.width - this.legendWidth;
@@ -171,7 +166,6 @@ export default class ClusterMatrix extends React.Component {
     if (props.filterAllTimeSeries == null) {
       return;
     }
-
     // draw heatmap and canvas according to the graph
     this.graphSorted = props.clusterMatrix;
     this.nClusterList = props.nClusterList;
