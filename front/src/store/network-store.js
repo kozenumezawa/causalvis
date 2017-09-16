@@ -28,12 +28,15 @@ const store = (intentSubject, clusteringSubject) => {
           }, 0);
 
           const clusterRangeIdx = new Map(clusterRangeList.map((causalClusterRange, idx) => [causalClusterRange, idx]));
-
           const color = drawingTool.getColorCategory(nClusterList.length);
+          const sizeCoeff = 3;
           const nodes = nClusterList.map((nCluster, idx) => {
             return {
               index: `${idx}`,
               color: color[idx],
+              nodeWidth: nCluster * sizeCoeff,
+              nodeHeight: nCluster * sizeCoeff,
+              fontSize: nCluster * sizeCoeff * 0.7,
             };
           });
 
