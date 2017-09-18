@@ -1,7 +1,7 @@
 import React from 'react';
 import colormap from 'colormap';
 
-import * as drawingTool from '../../../../utils/drawing-tool';
+import * as drawingTool from '../../../utils/drawing-tool';
 
 export default class OriginalCanvas extends React.Component {
   constructor(props) {

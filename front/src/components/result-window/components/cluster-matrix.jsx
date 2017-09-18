@@ -3,7 +3,7 @@ import React from 'react';
 import { selectCluster } from '../../../intents/intent';
 import * as drawingTool from '../../../utils/drawing-tool';
 
-import OriginalCanvas from './canvas/original-canvas.jsx';
+import OriginalCanvas from './original-canvas.jsx';
 import NetworkView from './network-view.jsx';
 
 export default class ClusterMatrix extends React.Component {
