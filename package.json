@@ -34,11 +34,13 @@
     "webpack-dev-server": "^2.7.1"
   },
   "dependencies": {
+    "chart.js": "^2.6.0",
     "colormap": "^2.2.0",
     "d3": "^4.10.2",
     "eg-renderer": "git+https://github.com/likr/eg-renderer-canvas.git",
     "eg-renderer-ogdf": "git+https://github.com/likr/eg-renderer-ogdf.git",
     "react": "^15.6.1",
+    "react-chartjs-2": "^2.6.2",
     "react-dom": "^15.6.1",
     "react-router-dom": "^4.1.2",
     "rx": "^4.1.0",

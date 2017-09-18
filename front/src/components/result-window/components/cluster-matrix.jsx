@@ -5,6 +5,7 @@ import * as drawingTool from '../../../utils/drawing-tool';
 
 import OriginalCanvas from './original-canvas.jsx';
 import NetworkView from './network-view.jsx';
+import GraphContainer from './graph-container.jsx';
 
 export default class ClusterMatrix extends React.Component {
   constructor(props) {
@@ -319,6 +320,7 @@ export default class ClusterMatrix extends React.Component {
   render() {
     return (
       <div style={{ height: 400 }} >
+        <GraphContainer />
         <NetworkView
           network={this.props.network}
           positionIdx={this.props.positionIdx}
