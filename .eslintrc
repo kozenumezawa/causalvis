@@ -31,6 +31,7 @@
     "react/prop-types": "off",
     "react/prefer-stateless-function": "off",
     "react/no-string-refs": "off",
+    "react/no-find-dom-node": "off",
     "jsx-a11y/href-no-hash": "off",
     "jsx-a11y/anchor-is-valid": ["warn", { "aspects": ["invalidHref"] }]
   },

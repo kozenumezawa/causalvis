@@ -17,7 +17,7 @@ const store = () => {
   const clusteringSubject = clusteringStore(intentSubject, causalSubject, filterSubject);
   const networkSubject = networkStore(intentSubject, clusteringSubject);
   const modalSubject = modalStore(intentSubject);
-  const canvasEventSubject = canvasEventStore(intentSubject);
+  const canvasEventSubject = canvasEventStore(intentSubject, filterSubject);
 
   return Rx.Observable.zip(
     dataSubject,
