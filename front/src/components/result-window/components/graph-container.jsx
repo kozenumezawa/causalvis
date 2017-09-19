@@ -13,42 +13,21 @@ export default class GraphContainer extends React.Component {
 
   render() {
     const chartData = {
-      datasets: [
-        {
-          label: 'data1',
+      datasets: this.props.selectedTimeSeries.map((selectedTimeSeries) => {
+        return {
           fill: false,
-          backgroundColor: 'rgba(75,192,192,0.4)',
-          pointBorderColor: 'rgba(75,192,192,1)',
+          backgroundColor: `${selectedTimeSeries.color}`,
+          pointBorderColor: `${selectedTimeSeries.color}`,
           pointBackgroundColor: '#fff',
           pointBorderWidth: 1,
           pointHoverRadius: 5,
           pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-          pointHoverBorderColor: 'rgba(220,220,220,1)',
           pointHoverBorderWidth: 2,
           pointRadius: 1,
           pointHitRadius: 10,
-          data: this.props.selectedTimeSeries,
-        },
-        {
-          label: 'data2',
-          fill: false,
-          backgroundColor: 'rgba(75,192,192,0.4)',
-          pointBorderColor: 'rgba(75,192,192,1)',
-          pointBackgroundColor: '#fff',
-          pointBorderWidth: 1,
-          pointHoverRadius: 5,
-          pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-          pointHoverBorderColor: 'rgba(220,220,220,1)',
-          pointHoverBorderWidth: 2,
-          pointRadius: 1,
-          pointHitRadius: 10,
-          data: [
-            { x: 30, y: 30 },
-            { x: 45, y: 40 },
-            { x: 50, y: 50 },
-          ],
-        },
-      ],
+          data: selectedTimeSeries.data,
+        };
+      }),
     };
 
     const options = {
