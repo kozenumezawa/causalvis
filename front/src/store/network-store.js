@@ -9,23 +9,13 @@ const store = (intentSubject, clusteringSubject) => {
   };
 
   const subject = new Rx.BehaviorSubject({ state });
-
   Rx.Observable.zip(intentSubject, clusteringSubject).subscribe(([payload, clustering]) => {
     switch (payload.type) {
       case FETCH_TIFF: {
-        const { clusterMatrices, nClusterLists } = clustering.state;
+        const { clusterMatrices, nClusterLists, clusterRangeLists } = clustering.state;
 
         const networks = nClusterLists.map((nClusterList, dataIdx) => {
-          // save start and stop index of each cluster
-          const clusterRangeList = [];
-          nClusterList.reduce((prev, current) => {
-            const endPixel = prev + current;
-            clusterRangeList.push({
-              start: prev,
-              end: endPixel,
-            });
-            return endPixel;
-          }, 0);
+          const clusterRangeList = clusterRangeLists[dataIdx];
 
           const clusterRangeIdx = new Map(clusterRangeList.map((causalClusterRange, idx) => [causalClusterRange, idx]));
           const color = drawingTool.getColorCategory(nClusterList.length);

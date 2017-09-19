@@ -20,6 +20,7 @@ export default class ResultWindow extends React.Component {
           meanR={this.props.meanR[0]}
           clusterMatrix={this.props.clusterMatrices[0]}
           clusterSampledCoords={this.props.clusterSampledCoords[0]}
+          clusterRangeList={this.props.clusterRangeLists[0]}
           nClusterList={this.props.nClusterLists[0]}
           width={this.props.width[0]}
           scale={2}
@@ -27,6 +28,7 @@ export default class ResultWindow extends React.Component {
           network={this.props.networks[0]}
           positionIdx={0}
           selectedClusterList={this.props.selectedClusterLists[0]}
+          selectedTimeSeries={this.props.selectedTimeSeriesLists[0]}
         />
 
         <ClusterMatrix
@@ -37,6 +39,7 @@ export default class ResultWindow extends React.Component {
           meanR={this.props.meanR[1]}
           clusterMatrix={this.props.clusterMatrices[1]}
           clusterSampledCoords={this.props.clusterSampledCoords[1]}
+          clusterRangeList={this.props.clusterRangeLists[1]}
           nClusterList={this.props.nClusterLists[1]}
           width={this.props.width[1]}
           scale={4}
@@ -44,6 +47,7 @@ export default class ResultWindow extends React.Component {
           network={this.props.networks[1]}
           positionIdx={1}
           selectedClusterList={this.props.selectedClusterLists[1]}
+          selectedTimeSeries={this.props.selectedTimeSeriesLists[1]}
         />
       </Segment>
     );

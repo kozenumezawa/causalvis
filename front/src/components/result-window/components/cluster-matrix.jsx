@@ -194,16 +194,7 @@ export default class ClusterMatrix extends React.Component {
     this.heatmapCanvas.style.left = `${this.clusterCanvas.width}px`;
     this.heatmapOverlayCanvas.style.left = `${this.clusterCanvas.width}px`;
 
-    // save start and stop index of each cluster
-    this.clusterRangeList = [];
-    this.nClusterList.reduce((prev, current) => {
-      const endPixel = prev + current;
-      this.clusterRangeList.push({
-        start: prev,
-        end: endPixel,
-      });
-      return endPixel;
-    }, 0);
+    this.clusterRangeList = props.clusterRangeList;
 
     // draw heatmap and fill canvas
     let clusterIdx = 0;
@@ -320,11 +311,13 @@ export default class ClusterMatrix extends React.Component {
   render() {
     return (
       <div style={{ height: 400 }} >
-        <GraphContainer />
-        <NetworkView
-          network={this.props.network}
-          positionIdx={this.props.positionIdx}
+        <GraphContainer
+          selectedTimeSeries={this.props.selectedTimeSeries}
         />
+        {/*<NetworkView*/}
+          {/*network={this.props.network}*/}
+          {/*positionIdx={this.props.positionIdx}*/}
+        {/*/>*/}
         <OriginalCanvas
           id={this.props.id}
           allTimeSeries={this.props.allTimeSeries}

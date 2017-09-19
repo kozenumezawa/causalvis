@@ -6,6 +6,7 @@ const store = (intentSubject, causalSubject, filterSubject) => {
   const state = {
     clusterMatrices: [],
     clusterSampledCoords: [],
+    clusterRangeLists: [],
     nClusterLists: [],
     ordering: [],
   };
@@ -50,6 +51,18 @@ const store = (intentSubject, causalSubject, filterSubject) => {
             state.clusterSampledCoords[idx] = json.clusterSampledCoords;
             state.nClusterLists[idx] = json.nClusterList;
             state.ordering[idx] = json.ordering;
+
+            // save start and stop index of each cluster
+            const clusterRangeList = [];
+            json.nClusterList.reduce((prev, current) => {
+              const endPixel = prev + current;
+              clusterRangeList.push({
+                start: prev,
+                end: endPixel,
+              });
+              return endPixel;
+            }, 0);
+            state.clusterRangeLists[idx] = clusterRangeList;
           });
           subject.onNext({ state });
         });

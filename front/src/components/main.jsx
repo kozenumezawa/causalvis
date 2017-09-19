@@ -79,10 +79,12 @@ export default class Main extends React.Component {
                       meanR={this.state.filter.meanR}
                       clusterMatrices={this.state.clustering.clusterMatrices}
                       clusterSampledCoords={this.state.clustering.clusterSampledCoords}
+                      clusterRangeLists={this.state.clustering.clusterRangeLists}
                       nClusterLists={this.state.clustering.nClusterLists}
                       ordering={this.state.clustering.ordering}
                       networks={this.state.network.networks}
                       selectedClusterLists={this.state.canvasEvent.selectedClusterLists}
+                      selectedTimeSeriesLists={this.state.canvasEvent.selectedTimeSeriesLists}
                     />
                   </Sidebar.Pusher>
                 </Sidebar.Pushable>
