@@ -86,6 +86,7 @@ export default class Main extends React.Component {
                       networks={this.state.network.networks}
                       selectedClusterLists={this.state.canvasEvent.selectedClusterLists}
                       selectedTimeSeriesLists={this.state.canvasEvent.selectedTimeSeriesLists}
+                      pointToAllCausals={this.state.canvasEvent.pointToAllCausals}
                     />
                   </Sidebar.Pusher>
                 </Sidebar.Pushable>

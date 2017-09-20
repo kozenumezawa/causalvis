@@ -1,6 +1,6 @@
 import Rx from 'rx';
 
-import { SELECT_CLUSTER } from '../constants/event-constants';
+import { SELECT_CLUSTER, SELECT_ONE_POINT } from '../constants/event-constants';
 import * as drawingTool from '../utils/drawing-tool';
 
 const isClusterContained = (selectedClusterLists, positionIdx, clusterNumber) => {
@@ -29,15 +29,16 @@ const get2DArrayAverage = (arr) => {
   return arr2D;
 };
 
-const store = (intentSubject, dataSubject, clusteringSubject) => {
+const store = (intentSubject, dataSubject, filterSubject, clusteringSubject) => {
   const state = {
     selectedClusterLists: [[], []],
     selectedTimeSeriesLists: [{ averageData: [], rawData: [] }, { averageData: [], rawData: [] }],
+    pointToAllCausals: [[], []],
   };
 
   const subject = new Rx.BehaviorSubject({ state });
 
-  Rx.Observable.zip(intentSubject, dataSubject, clusteringSubject).subscribe(([payload, data, clustering]) => {
+  Rx.Observable.zip(intentSubject, dataSubject, filterSubject, clusteringSubject).subscribe(([payload, data, filter, clustering]) => {
     switch (payload.type) {
       case SELECT_CLUSTER: {
         const { clusterNumber, positionIdx } = payload;
@@ -79,7 +80,7 @@ const store = (intentSubject, dataSubject, clusteringSubject) => {
           state.selectedTimeSeriesLists[positionIdx].rawData.push(
             selectedTimeSeries.map((timeSeries, rowIdx) => {
               return {
-                label: String(rowIdx),
+                label: `${clusterNumber}_${rowIdx}`,
                 color: color[clusterNumber],
                 data: timeSeries.map((value, x) => {
                   return {
@@ -91,6 +92,22 @@ const store = (intentSubject, dataSubject, clusteringSubject) => {
             }));
         }
 
+        subject.onNext({ state });
+        break;
+      }
+      case SELECT_ONE_POINT: {
+        const { x, y, positionIdx } = payload;
+        const meanR = filter.state.meanR[positionIdx];
+
+        // search index from the coordinate
+        let rowIdx = 0;
+        for (const sampledCoord of clustering.state.clusterSampledCoords[positionIdx]) {
+          if (x >= sampledCoord.x - meanR && x <= sampledCoord.x + meanR && y >= sampledCoord.y - meanR && y <= sampledCoord.y + meanR) {
+            break;
+          }
+          rowIdx++;
+        }
+        state.pointToAllCausals[positionIdx] = clustering.state.clusterMatrices[positionIdx][rowIdx];
         subject.onNext({ state });
         break;
       }

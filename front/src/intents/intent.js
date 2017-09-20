@@ -6,6 +6,8 @@ import {
   OPEN_MODAL,
   CLOSE_MODAL,
   SELECT_CLUSTER,
+  SELECT_ONE_POINT,
+  CHECK_CLICK,
 } from '../constants/event-constants';
 
 export const intentSubject = new Rx.BehaviorSubject({ type: DATA_INIT });
@@ -38,3 +40,17 @@ export const selectCluster = (clusterNumber, positionIdx) => {
   });
 };
 
+export const selectOnePoint = (x, y, positionIdx) => {
+  intentSubject.onNext({
+    type: SELECT_ONE_POINT,
+    x,
+    y,
+    positionIdx,
+  });
+};
+
+export const checkClick = () => {
+  intentSubject.onNext({
+    type: CHECK_CLICK,
+  });
+};

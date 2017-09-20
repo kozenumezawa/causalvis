@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { selectCluster } from '../../../intents/intent';
+import { selectCluster, selectOnePoint } from '../../../intents/intent';
 import * as drawingTool from '../../../utils/drawing-tool';
 
 import OriginalCanvas from './original-canvas.jsx';
 import NetworkView from './network-view.jsx';
 import GraphContainer from './graph-container.jsx';
 import DetailGraphContainer from './detail-graph-container.jsx';
-import DetailShapeView from './detail-shape-view.jsx';
+import DetailCausalShapeView from './detail-causal-shape-view.jsx';
 
 export default class ClusterMatrix extends React.Component {
   constructor(props) {
@@ -29,6 +29,8 @@ export default class ClusterMatrix extends React.Component {
 
     this.heatmapOverlayCanvas.addEventListener('mousemove', this.onMouseMoveHeatmap.bind(this));
     this.heatmapOverlayCanvas.addEventListener('mouseup', this.onMouseUpHeatmap.bind(this), false);
+    this.clusterOverlayCanvas.addEventListener('mouseup', this.onMouseUpShape.bind(this), false);
+
   }
 
   componentWillReceiveProps(nextProps) {
@@ -76,6 +78,14 @@ export default class ClusterMatrix extends React.Component {
     const belongCluster = this.getBelongCluster(causeIdx, effectIdx);
     selectCluster(belongCluster, this.props.positionIdx);
     this.drawSelectedCluster(this.props);
+  }
+
+  onMouseUpShape(e) {
+    const rect = e.target.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    selectOnePoint(Math.floor(x / this.props.scale), Math.floor(y / this.props.scale), this.props.positionIdx);
   }
 
   getBelongCluster(causeIdx, effectIdx) {
@@ -317,17 +327,18 @@ export default class ClusterMatrix extends React.Component {
 
   render() {
     return (
-      <div style={{ height: 400 }} >
-        <DetailShapeView
+      <div style={{ height: 500 }} >
+        <DetailCausalShapeView
           {...this.props}
           selectedCluster={this.props.selectedClusterList[0]}
         />
         <GraphContainer
           dataContainer={this.props.selectedTimeSeriesList.averageData}
         />
-        <DetailGraphContainer
-          dataContainer={this.props.selectedTimeSeriesList.rawData}
-        />
+        {/*<DetailGraphContainer*/}
+          {/*dataContainer={this.props.selectedTimeSeriesList.rawData}*/}
+        {/*/>*/}
+
         {/*<NetworkView*/}
           {/*network={this.props.network}*/}
           {/*positionIdx={this.props.positionIdx}*/}

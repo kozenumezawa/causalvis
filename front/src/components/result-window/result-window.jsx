@@ -30,6 +30,7 @@ export default class ResultWindow extends React.Component {
           positionIdx={0}
           selectedClusterList={this.props.selectedClusterLists[0]}
           selectedTimeSeriesList={this.props.selectedTimeSeriesLists[0]}
+          pointToAllCausal={this.props.pointToAllCausals[0]}
         />
 
         <ClusterMatrix
@@ -50,6 +51,7 @@ export default class ResultWindow extends React.Component {
           positionIdx={1}
           selectedClusterList={this.props.selectedClusterLists[1]}
           selectedTimeSeriesList={this.props.selectedTimeSeriesLists[1]}
+          pointToAllCausal={this.props.pointToAllCausals[1]}
         />
       </Segment>
     );
