@@ -113,7 +113,9 @@ export default class ClusterMatrix extends React.Component {
       for (let cellIdx = this.clusterRangeList[belongCluster].start; cellIdx < this.clusterRangeList[belongCluster].end; cellIdx++) {
         const x = this.clusterSampledCoords[cellIdx].x * props.scale;
         const y = this.clusterSampledCoords[cellIdx].y * props.scale;
-        this.clusterOverlayCtx.fillRect(x - 1, y - 1, props.meanStep * props.scale, props.meanStep * props.scale);
+        const sideLength = props.meanStep * props.scale;
+        const r = (props.meanStep - 1) * props.scale / 2;
+        this.clusterOverlayCtx.fillRect(x - r, y - r, sideLength, sideLength);
       }
     });
   }
@@ -149,15 +151,18 @@ export default class ClusterMatrix extends React.Component {
 
   drawCausalArrowToCanvas(causeIdx, effectIdx) {
     this.clusterOverlayCtx.clearRect(0, 0, this.clusterOverlayCanvas.width, this.clusterOverlayCanvas.height);
+    const sideLength = this.props.meanStep * this.props.scale;
+    const r = (this.props.meanStep - 1) * this.props.scale / 2;
+
     this.clusterOverlayCtx.fillStyle = 'black';
     const causeX = this.clusterSampledCoords[causeIdx].x * this.props.scale;
     const causeY = this.clusterSampledCoords[causeIdx].y * this.props.scale;
-    this.clusterOverlayCtx.fillRect(causeX - 1, causeY - 1, this.props.meanStep * this.props.scale, this.props.meanStep * this.props.scale);
+    this.clusterOverlayCtx.fillRect(causeX - r, causeY - r, sideLength, sideLength);
 
     this.clusterOverlayCtx.fillStyle = 'gray';
     const effectX = this.clusterSampledCoords[effectIdx].x * this.props.scale;
     const effectY = this.clusterSampledCoords[effectIdx].y * this.props.scale;
-    this.clusterOverlayCtx.fillRect(effectX - 1, effectY - 1, this.props.meanStep * this.props.scale, this.props.meanStep * this.props.scale);
+    this.clusterOverlayCtx.fillRect(effectX - r, effectY - r, sideLength, sideLength);
 
     if (this.graphSorted[causeIdx][effectIdx] === true) {
       this.clusterOverlayCtx.beginPath();
@@ -216,7 +221,9 @@ export default class ClusterMatrix extends React.Component {
 
       const x = this.clusterSampledCoords[rowIdx].x * props.scale;
       const y = this.clusterSampledCoords[rowIdx].y * props.scale;
-      this.clusterCtx.fillRect(x - 1, y - 1, props.meanStep * props.scale, props.meanStep * props.scale);
+      const sideLength = props.meanStep * props.scale;
+      const r = (props.meanStep - 1) * props.scale / 2;
+      this.clusterCtx.fillRect(x - r, y - r, sideLength, sideLength);
     });
 
     // draw line and legend to the heat map
