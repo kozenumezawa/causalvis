@@ -1,17 +1,51 @@
 import React from 'react';
 
-import { Sidebar, Menu } from 'semantic-ui-react';
+import { Sidebar, Menu, Checkbox } from 'semantic-ui-react';
 
 export default class SideMenu extends React.Component {
   constructor(props) {
     super(props);
 
+    this.viewLists = ['Original Data', 'Cluster Matrix', 'Cluster View', 'Graph'];
+
     this.state = { visible: true };
     this.handleItemClick = this.handleItemClick.bind(this);
   }
 
-  handleItemClick(_, { name }) {
-    console.log(name);
+  handleItemClick(event, data) {
+    const name = data.name
+    console.log(data.value, name);
+  }
+
+  handleCheckClick(event, data) {
+    switch (data.value) {
+      case this.viewLists[0]:
+        break;
+      case this.viewLists[1]:
+        break;
+      case this.viewLists[2]:
+        break;
+      case this.viewLists[3]:
+        break;
+      default:
+    }
+  }
+
+  renderCheckBoxes() {
+    const renderData = this.viewLists.map((dataName, idx) => {
+      return (
+        <div>
+          <Menu.Item key={`view list${idx}`} style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
+            <div>
+              {`${dataName}`}
+            </div>
+            <div style={{ width: 10 }} />
+            <Checkbox value={`${dataName}`} onClick={this.handleCheckClick} />
+          </Menu.Item>
+        </div>
+      );
+    });
+    return renderData;
   }
 
   render() {
@@ -47,10 +81,11 @@ export default class SideMenu extends React.Component {
         </Menu.Item>
 
         <Menu.Item>
-          <Menu.Header>Clustering</Menu.Header>
-
+          <Menu.Header>Filter</Menu.Header>
           <Menu.Menu>
-            <Menu.Item name="IRM" onClick={this.handleItemClick} />
+            {(() => {
+              return this.renderCheckBoxes.bind(this)();
+            })()}
           </Menu.Menu>
         </Menu.Item>
       </Sidebar>

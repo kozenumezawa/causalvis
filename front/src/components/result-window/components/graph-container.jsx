@@ -15,6 +15,7 @@ export default class GraphContainer extends React.Component {
     const chartData = {
       datasets: this.props.selectedTimeSeries.map((selectedTimeSeries) => {
         return {
+          label: `Cluster${selectedTimeSeries.clusterNumber}`,
           fill: false,
           backgroundColor: `${selectedTimeSeries.color}`,
           pointBorderColor: `${selectedTimeSeries.color}`,
@@ -33,6 +34,9 @@ export default class GraphContainer extends React.Component {
     const options = {
       maintainAspectRatio: false,
       responsive: false,
+      legend: {
+        display: false,
+      },
       scales: {
         xAxes: [{
           scaleLabel: {
