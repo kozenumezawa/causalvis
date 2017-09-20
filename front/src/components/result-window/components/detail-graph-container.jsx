@@ -17,7 +17,7 @@ export default class DetailGraphContainer extends React.Component {
     const data2DArray = this.props.dataContainer.map((data) => {
       return data.map((selectedTimeSeries) => {
         return {
-          label: `Cluster${selectedTimeSeries.label}`,
+          label: `${selectedTimeSeries.label}`,
           fill: false,
           borderColor: `${selectedTimeSeries.color}`,
           pointBackgroundColor: '#fff',
