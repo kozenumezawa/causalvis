@@ -32,7 +32,7 @@ const get2DArrayAverage = (arr) => {
 const store = (intentSubject, dataSubject, clusteringSubject) => {
   const state = {
     selectedClusterLists: [[], []],
-    selectedTimeSeriesLists: [[], []],
+    selectedTimeSeriesLists: [{ averageData: [], rawData: [] }, { averageData: [], rawData: [] }],
   };
 
   const subject = new Rx.BehaviorSubject({ state });
@@ -43,16 +43,14 @@ const store = (intentSubject, dataSubject, clusteringSubject) => {
         const { clusterNumber, positionIdx } = payload;
         // update selectedClusterLists
         if (isClusterContained(state.selectedClusterLists, positionIdx, clusterNumber)) {
-          state.selectedClusterLists[positionIdx] = state.selectedClusterLists[positionIdx].filter((containedClusterNumber) => {
-            return (containedClusterNumber !== clusterNumber);
-          });
+          // delete a clicked cluster from selectedClusterLists and selectedClusterLists
+          const deleteIdx = state.selectedClusterLists[positionIdx].indexOf(clusterNumber);
 
-          state.selectedTimeSeriesLists[positionIdx] = state.selectedTimeSeriesLists[positionIdx].filter((selectedTimeSeries) => {
-            return (selectedTimeSeries.clusterNumber !== clusterNumber);
-          });
+          state.selectedClusterLists[positionIdx].splice(deleteIdx, 1);
+          state.selectedTimeSeriesLists[positionIdx].averageData.splice(deleteIdx, 1);
+          state.selectedTimeSeriesLists[positionIdx].rawData.splice(deleteIdx, 1);
         } else {
           state.selectedClusterLists[positionIdx].push(clusterNumber);
-
           // update selectedTimeSeries
           const allTimeSeries = data.state.allTimeSeries[positionIdx];
           const clusterRangeList = clustering.state.clusterRangeLists[positionIdx];
@@ -62,21 +60,35 @@ const store = (intentSubject, dataSubject, clusteringSubject) => {
           const color = drawingTool.getColorCategory(nClusterList.length);
 
           const selectedTimeSeries = [];
-          for (let dataIdx = clusterRangeList[clusterNumber].start; dataIdx < clusterRangeList[clusterNumber].end; dataIdx++) {
-            selectedTimeSeries.push(allTimeSeries[clusterSampledCoords[dataIdx].idx]);
+          for (let rowIdx = clusterRangeList[clusterNumber].start; rowIdx < clusterRangeList[clusterNumber].end; rowIdx++) {
+            selectedTimeSeries.push(allTimeSeries[clusterSampledCoords[rowIdx].idx]);
           }
 
           const averageTimeSeries = get2DArrayAverage(selectedTimeSeries);
-          state.selectedTimeSeriesLists[positionIdx].push({
-            clusterNumber: clusterNumber,
+          state.selectedTimeSeriesLists[positionIdx].averageData.push({
+            label: clusterNumber,
             color: color[clusterNumber],
-            data: averageTimeSeries.map((value, idx) => {
+            data: averageTimeSeries.map((value, x) => {
               return {
-                x: idx,
+                x: x,
                 y: value,
               };
             }),
           });
+
+          state.selectedTimeSeriesLists[positionIdx].rawData.push(
+            selectedTimeSeries.map((timeSeries, rowIdx) => {
+              return {
+                label: String(rowIdx),
+                color: color[clusterNumber],
+                data: timeSeries.map((value, x) => {
+                  return {
+                    x: x,
+                    y: value,
+                  };
+                }),
+              };
+            }));
         }
 
         subject.onNext({ state });

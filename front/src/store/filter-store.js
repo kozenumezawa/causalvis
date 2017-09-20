@@ -32,6 +32,7 @@ const store = (intentSubject, dataSubject) => {
     allTimeSeries: new Array(2),
     sampledCoords: new Array(2),
     meanR: new Array(2),
+    meanStep: new Array(2),
   };
 
   const subject = new Rx.BehaviorSubject({ state });
@@ -41,6 +42,8 @@ const store = (intentSubject, dataSubject) => {
       case FETCH_TIFF:
         state.meanR[0] = 1;
         state.meanR[1] = 1;
+        state.meanStep[0] = state.meanR[0] * 2 + 1;
+        state.meanStep[1] = state.meanR[1] * 2 + 1;
 
         if (data.state.allTimeSeries[0] == null) {
           subject.onNext({ state });

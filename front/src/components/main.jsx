@@ -77,6 +77,7 @@ export default class Main extends React.Component {
                       filterAllTimeSeries={this.state.filter.allTimeSeries}
                       sampledCoords={this.state.filter.sampledCoords}
                       meanR={this.state.filter.meanR}
+                      meanStep={this.state.filter.meanStep}
                       clusterMatrices={this.state.clustering.clusterMatrices}
                       clusterSampledCoords={this.state.clustering.clusterSampledCoords}
                       clusterRangeLists={this.state.clustering.clusterRangeLists}

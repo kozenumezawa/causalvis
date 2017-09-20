@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Scatter } from 'react-chartjs-2';
 
-export default class GraphContainer extends React.Component {
+export default class DetailGraphContainer extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -12,24 +12,25 @@ export default class GraphContainer extends React.Component {
   }
 
   render() {
-    const chartData = {
-      datasets: this.props.dataContainer.map((selectedTimeSeries) => {
+    // data2DArray must be flatten to be acceptable as datasets like this:
+    // [[{}, {},][{}, {}]]  => [{}, {},{}, {}]
+    const data2DArray = this.props.dataContainer.map((data) => {
+      return data.map((selectedTimeSeries) => {
         return {
           label: `Cluster${selectedTimeSeries.label}`,
           fill: false,
-          backgroundColor: `${selectedTimeSeries.color}`,
           borderColor: `${selectedTimeSeries.color}`,
-          pointBorderColor: `${selectedTimeSeries.color}`,
           pointBackgroundColor: '#fff',
           pointBorderWidth: 1,
-          pointHoverRadius: 5,
-          pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-          pointHoverBorderWidth: 2,
-          pointRadius: 1,
-          pointHitRadius: 10,
+          pointRadius: 0,
+          pointHitRadius: 0,
           data: selectedTimeSeries.data,
         };
-      }),
+      });
+    });
+
+    const chartData = {
+      datasets: Array.prototype.concat.apply([], data2DArray),
     };
 
     const options = {

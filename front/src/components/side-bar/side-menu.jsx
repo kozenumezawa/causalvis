@@ -13,7 +13,7 @@ export default class SideMenu extends React.Component {
   }
 
   handleItemClick(event, data) {
-    const name = data.name
+    const name = data.name;
     console.log(data.value, name);
   }
 
@@ -40,7 +40,7 @@ export default class SideMenu extends React.Component {
               {`${dataName}`}
             </div>
             <div style={{ width: 10 }} />
-            <Checkbox value={`${dataName}`} onClick={this.handleCheckClick} />
+            <Checkbox value={`${dataName}`} onClick={this.handleCheckClick.bind(this)} />
           </Menu.Item>
         </div>
       );
@@ -81,7 +81,16 @@ export default class SideMenu extends React.Component {
         </Menu.Item>
 
         <Menu.Item>
-          <Menu.Header>Filter</Menu.Header>
+          <Menu.Header>Upper Data</Menu.Header>
+          <Menu.Menu>
+            {(() => {
+              return this.renderCheckBoxes.bind(this)();
+            })()}
+          </Menu.Menu>
+        </Menu.Item>
+
+        <Menu.Item>
+          <Menu.Header>Lower Data</Menu.Header>
           <Menu.Menu>
             {(() => {
               return this.renderCheckBoxes.bind(this)();

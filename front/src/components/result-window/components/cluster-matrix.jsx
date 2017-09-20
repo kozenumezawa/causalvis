@@ -6,6 +6,8 @@ import * as drawingTool from '../../../utils/drawing-tool';
 import OriginalCanvas from './original-canvas.jsx';
 import NetworkView from './network-view.jsx';
 import GraphContainer from './graph-container.jsx';
+import DetailGraphContainer from './detail-graph-container.jsx';
+import DetailShapeView from './detail-shape-view.jsx';
 
 export default class ClusterMatrix extends React.Component {
   constructor(props) {
@@ -111,7 +113,7 @@ export default class ClusterMatrix extends React.Component {
       for (let cellIdx = this.clusterRangeList[belongCluster].start; cellIdx < this.clusterRangeList[belongCluster].end; cellIdx++) {
         const x = this.clusterSampledCoords[cellIdx].x * props.scale;
         const y = this.clusterSampledCoords[cellIdx].y * props.scale;
-        this.clusterOverlayCtx.fillRect(x - 1, y - 1, this.meanStep * props.scale, this.meanStep * props.scale);
+        this.clusterOverlayCtx.fillRect(x - 1, y - 1, props.meanStep * props.scale, props.meanStep * props.scale);
       }
     });
   }
@@ -150,12 +152,12 @@ export default class ClusterMatrix extends React.Component {
     this.clusterOverlayCtx.fillStyle = 'black';
     const causeX = this.clusterSampledCoords[causeIdx].x * this.props.scale;
     const causeY = this.clusterSampledCoords[causeIdx].y * this.props.scale;
-    this.clusterOverlayCtx.fillRect(causeX - 1, causeY - 1, this.meanStep * this.props.scale, this.meanStep * this.props.scale);
+    this.clusterOverlayCtx.fillRect(causeX - 1, causeY - 1, this.props.meanStep * this.props.scale, this.props.meanStep * this.props.scale);
 
     this.clusterOverlayCtx.fillStyle = 'gray';
     const effectX = this.clusterSampledCoords[effectIdx].x * this.props.scale;
     const effectY = this.clusterSampledCoords[effectIdx].y * this.props.scale;
-    this.clusterOverlayCtx.fillRect(effectX - 1, effectY - 1, this.meanStep * this.props.scale, this.meanStep * this.props.scale);
+    this.clusterOverlayCtx.fillRect(effectX - 1, effectY - 1, this.props.meanStep * this.props.scale, this.props.meanStep * this.props.scale);
 
     if (this.graphSorted[causeIdx][effectIdx] === true) {
       this.clusterOverlayCtx.beginPath();
@@ -174,7 +176,6 @@ export default class ClusterMatrix extends React.Component {
     this.graphSorted = props.clusterMatrix;
     this.nClusterList = props.nClusterList;
     this.clusterSampledCoords = props.clusterSampledCoords;
-    this.meanStep = props.meanR * 2 + 1;
 
     const color = drawingTool.getColorCategory(this.nClusterList.length);
 
@@ -195,7 +196,6 @@ export default class ClusterMatrix extends React.Component {
     this.heatmapOverlayCanvas.style.left = `${this.clusterCanvas.width}px`;
 
     this.clusterRangeList = props.clusterRangeList;
-
     // draw heatmap and fill canvas
     let clusterIdx = 0;
     this.graphSorted.forEach((row, rowIdx) => {
@@ -216,7 +216,7 @@ export default class ClusterMatrix extends React.Component {
 
       const x = this.clusterSampledCoords[rowIdx].x * props.scale;
       const y = this.clusterSampledCoords[rowIdx].y * props.scale;
-      this.clusterCtx.fillRect(x - 1, y - 1, this.meanStep * props.scale, this.meanStep * props.scale);
+      this.clusterCtx.fillRect(x - 1, y - 1, props.meanStep * props.scale, props.meanStep * props.scale);
     });
 
     // draw line and legend to the heat map
@@ -311,19 +311,26 @@ export default class ClusterMatrix extends React.Component {
   render() {
     return (
       <div style={{ height: 400 }} >
+        <DetailShapeView
+          {...this.props}
+          selectedCluster={this.props.selectedClusterList[0]}
+        />
         <GraphContainer
-          selectedTimeSeries={this.props.selectedTimeSeries}
+          dataContainer={this.props.selectedTimeSeriesList.averageData}
+        />
+        <DetailGraphContainer
+          dataContainer={this.props.selectedTimeSeriesList.rawData}
         />
         {/*<NetworkView*/}
           {/*network={this.props.network}*/}
           {/*positionIdx={this.props.positionIdx}*/}
         {/*/>*/}
-        <OriginalCanvas
-          id={this.props.id}
-          allTimeSeries={this.props.allTimeSeries}
-          width={this.props.width}
-          scale={this.props.scale}
-        />
+        {/*<OriginalCanvas*/}
+          {/*id={this.props.id}*/}
+          {/*allTimeSeries={this.props.allTimeSeries}*/}
+          {/*width={this.props.width}*/}
+          {/*scale={this.props.scale}*/}
+        {/*/>*/}
 
         <span style={{ marginRight: 20 }} />
         <div style={{ position: 'relative', display: 'inline' }}>
