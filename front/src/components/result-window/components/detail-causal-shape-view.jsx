@@ -10,6 +10,11 @@ export default class DetailCausalShapeView extends React.Component {
   componentDidMount() {
     this.canvas = document.getElementById(`detail_causal_shape_${this.props.id}`);
     this.ctx = this.canvas.getContext('2d');
+
+    this.canvas.width = 100;
+    this.canvas.height = 100;
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    drawingTool.drawFrame(this.canvas, this.ctx);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -32,7 +37,7 @@ export default class DetailCausalShapeView extends React.Component {
         return;
       }
       if (pointToAllCausal.pointRowIdx === rowIdx) {
-        this.ctx.fillStyle = 'gray';
+        this.ctx.fillStyle = 'blue';
       }
       const x = clusterSampledCoords[rowIdx].x * scale;
       const y = clusterSampledCoords[rowIdx].y * scale;
