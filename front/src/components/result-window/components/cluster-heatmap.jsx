@@ -48,6 +48,7 @@ export default class ClusterMatrix extends React.Component {
     if (this.isOnLegend(causeIdx, effectIdx)) {
       return;
     }
+    // this.drawCausalArrowToCanvas(causeIdx, effectIdx);
   }
 
   onMouseUpHeatmap(e) {

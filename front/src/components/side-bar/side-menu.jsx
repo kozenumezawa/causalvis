@@ -6,7 +6,7 @@ export default class SideMenu extends React.Component {
   constructor(props) {
     super(props);
 
-    this.viewLists = ['Original Data', 'Cluster Matrix', 'Cluster View', 'Graph'];
+    this.viewLists = ['Original Data', 'Network', 'Cluster View', 'Cluster Matrix', 'Graph'];
 
     this.state = { visible: true };
     this.handleItemClick = this.handleItemClick.bind(this);
