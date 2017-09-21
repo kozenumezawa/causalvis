@@ -5,6 +5,8 @@ import ClusterMatrix from './components/cluster-matrix.jsx';
 import ClusterHeatmap from './components/cluster-heatmap.jsx';
 import OriginalCanvas from './components/original-canvas.jsx';
 import NetworkView from './components/network-view.jsx';
+import GraphContainer from './components/graph-container.jsx';
+import DetailGraphContainer from './components/detail-graph-container.jsx';
 
 export default class ResultWindow extends React.Component {
   constructor(props) {
@@ -40,6 +42,15 @@ export default class ResultWindow extends React.Component {
     });
   }
 
+  renderGraphContainer() {
+    return this.props.selectedTimeSeriesLists.map((selectedTimeSeriesList) => {
+      return (
+        <GraphContainer
+          dataContainer={selectedTimeSeriesList.averageData}
+        />
+      );
+    });
+  }
   render() {
     return (
       <div style={{ position: 'relative', top: 50, height: 1000 }}>
@@ -96,7 +107,7 @@ export default class ResultWindow extends React.Component {
             pointToAllCausal={this.props.pointToAllCausals[1]}
           />
         </div>
-        <div style={{ position: 'absolute', top: 350, left: 50 }} >
+        <div style={{ position: 'absolute', top: 250, left: 50 }} >
           {
             (() => {
               return this.renderNetworkView();
@@ -106,7 +117,7 @@ export default class ResultWindow extends React.Component {
 
         <div>
           <ClusterHeatmap
-            style={{ position: 'absolute', top: 310, left: 550 }}
+            style={{ position: 'absolute', top: 250, left: 550 }}
             id={0}
             allTiffList={this.props.allTiffList[0]}
             allTimeSeries={this.props.allTimeSeries[0]}
@@ -128,7 +139,7 @@ export default class ResultWindow extends React.Component {
           />
 
           <ClusterHeatmap
-            style={{ position: 'absolute', top: 310, left: 850 }}
+            style={{ position: 'absolute', top: 250, left: 850 }}
             id={1}
             allTiffList={this.props.allTiffList[0]}
             allTimeSeries={this.props.allTimeSeries[1]}
@@ -149,6 +160,17 @@ export default class ResultWindow extends React.Component {
             pointToAllCausal={this.props.pointToAllCausals[1]}
           />
         </div>
+
+        <div style={{ position: 'absolute', top: 600, left: 550 }} >
+          {
+            (() => {
+              return this.renderGraphContainer();
+            })()
+          }
+        </div>
+        {/*<DetailGraphContainer*/}
+        {/*dataContainer={this.props.selectedTimeSeriesList.rawData}*/}
+        {/*/>*/}
       </div>
     );
   }
