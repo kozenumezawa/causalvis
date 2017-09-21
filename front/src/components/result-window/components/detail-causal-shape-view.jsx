@@ -13,6 +13,9 @@ export default class DetailCausalShapeView extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if (nextProps.pointToAllCausal.data.length === 0) {
+      return;
+    }
     this.drawData(nextProps);
   }
 
@@ -23,11 +26,13 @@ export default class DetailCausalShapeView extends React.Component {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     drawingTool.drawFrame(this.canvas, this.ctx);
 
-    this.ctx.fillStyle = 'black';
-
-    pointToAllCausal.forEach((causal, rowIdx) => {
-      if (causal === false) {
+    pointToAllCausal.data.forEach((causal, rowIdx) => {
+      this.ctx.fillStyle = 'black';
+      if (causal === false && pointToAllCausal.pointRowIdx !== rowIdx) {
         return;
+      }
+      if (pointToAllCausal.pointRowIdx === rowIdx) {
+        this.ctx.fillStyle = 'gray';
       }
       const x = clusterSampledCoords[rowIdx].x * scale;
       const y = clusterSampledCoords[rowIdx].y * scale;

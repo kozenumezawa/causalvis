@@ -33,7 +33,7 @@ const store = (intentSubject, dataSubject, filterSubject, clusteringSubject) => 
   const state = {
     selectedClusterLists: [[], []],
     selectedTimeSeriesLists: [{ averageData: [], rawData: [] }, { averageData: [], rawData: [] }],
-    pointToAllCausals: [[], []],
+    pointToAllCausals: [{ pointRowIdx: -1, data: [] }, { pointRowIdx: -1, data: [] }],
   };
 
   const subject = new Rx.BehaviorSubject({ state });
@@ -107,7 +107,11 @@ const store = (intentSubject, dataSubject, filterSubject, clusteringSubject) => 
           }
           rowIdx++;
         }
-        state.pointToAllCausals[positionIdx] = clustering.state.clusterMatrices[positionIdx][rowIdx];
+        state.pointToAllCausals[positionIdx] = {
+          pointRowIdx: rowIdx,
+          data: clustering.state.clusterMatrices[positionIdx][rowIdx],
+        };
+
         subject.onNext({ state });
         break;
       }
