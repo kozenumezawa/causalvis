@@ -41,7 +41,7 @@ export default class NetworkView extends React.Component {
         default-node-width="50"
         default-node-height="50"
         default-node-label-font-size="30"
-        node-label-property="index"
+        // node-label-property="index"
         node-fill-color-property="color"
         node-width-property="nodeWidth"
         node-height-property="nodeHeight"

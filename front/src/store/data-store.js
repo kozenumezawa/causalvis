@@ -21,9 +21,8 @@ const store = (intentSubject) => {
             response.arrayBuffer().then((buffer) => {
               const allTiffList = [];
               const tiff = new Tiff({ buffer });
-              let tiffLen = tiff.countDirectory();
-              tiffLen = tiff.countDirectory() - 100;
-              for (let i = 50; i < tiffLen; i++) {
+              const tiffLen = tiff.countDirectory();
+              for (let i = 0; i < tiffLen; i++) {
                 tiff.setDirectory(i);
                 const canvas = tiff.toCanvas();
                 allTiffList.push(canvas);

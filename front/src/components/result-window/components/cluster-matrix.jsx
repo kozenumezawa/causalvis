@@ -339,10 +339,10 @@ export default class ClusterMatrix extends React.Component {
           {/*dataContainer={this.props.selectedTimeSeriesList.rawData}*/}
         {/*/>*/}
 
-        {/*<NetworkView*/}
-          {/*network={this.props.network}*/}
-          {/*positionIdx={this.props.positionIdx}*/}
-        {/*/>*/}
+        <NetworkView
+          network={this.props.network}
+          positionIdx={this.props.positionIdx}
+        />
         {/*<OriginalCanvas*/}
           {/*id={this.props.id}*/}
           {/*allTimeSeries={this.props.allTimeSeries}*/}
