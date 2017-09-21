@@ -9,6 +9,7 @@ export default class NetworkView extends React.Component {
 
   componentDidMount() {
     this.refs.network.addEventListener('nodeclick', this.nodeClick.bind(this));
+    this.refs.network.load(this.props.network);
   }
 
   shouldComponentUpdate(nextProps) {
@@ -20,10 +21,6 @@ export default class NetworkView extends React.Component {
     return true;
   }
 
-  componentDidUpdate() {
-    this.refs.network.load(this.props.network);
-  }
-
   nodeClick(e) {
     const clusterNumber = Number(e.detail.id);
     selectCluster(clusterNumber, this.props.positionIdx);
@@ -33,8 +30,8 @@ export default class NetworkView extends React.Component {
     return (
       <eg-renderer-ogdf
         ref="network"
-        width="400"
-        height="400"
+        width="250"
+        height="250"
         default-link-target-marker-shape="triangle"
         default-link-target-marker-size="20"
         default-node-fill-color="white"

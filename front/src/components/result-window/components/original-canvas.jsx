@@ -20,6 +20,8 @@ export default class OriginalCanvas extends React.Component {
 
     this.canvas = document.getElementById(`original_canvas_${this.props.id}`);
     this.ctx = this.canvas.getContext('2d');
+
+    this.drawData(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -63,9 +65,7 @@ export default class OriginalCanvas extends React.Component {
 
   render() {
     return (
-      <div style={{ display: 'inline' }}>
-        <canvas id={`original_canvas_${this.props.id}`} />
-      </div>
+      <canvas id={`original_canvas_${this.props.id}`} />
     );
   }
 }

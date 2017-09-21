@@ -58,36 +58,26 @@ export default class Main extends React.Component {
                   <SideMenu />
 
                   <Sidebar.Pusher>
-                    <Accordion activeIndex={this.state.activateIndex} onTitleClick={this.onAccordionClick.bind(this)}>
-                      <Accordion.Title>
-                        <Icon name="dropdown" />
-                        Analysis Methods window
-                      </Accordion.Title>
-                      <Accordion.Content>
-                        <ControlWindow
-                          openModal={this.state.modal.openModal}
-                        />
-                      </Accordion.Content>
-                    </Accordion>
-
-                    <ResultWindow
-                      allTiffList={this.state.data.allTiffList}
-                      width={this.state.data.width}
-                      allTimeSeries={this.state.data.allTimeSeries}
-                      filterAllTimeSeries={this.state.filter.allTimeSeries}
-                      sampledCoords={this.state.filter.sampledCoords}
-                      meanR={this.state.filter.meanR}
-                      meanStep={this.state.filter.meanStep}
-                      clusterMatrices={this.state.clustering.clusterMatrices}
-                      clusterSampledCoords={this.state.clustering.clusterSampledCoords}
-                      clusterRangeLists={this.state.clustering.clusterRangeLists}
-                      nClusterLists={this.state.clustering.nClusterLists}
-                      ordering={this.state.clustering.ordering}
-                      networks={this.state.network.networks}
-                      selectedClusterLists={this.state.canvasEvent.selectedClusterLists}
-                      selectedTimeSeriesLists={this.state.canvasEvent.selectedTimeSeriesLists}
-                      pointToAllCausals={this.state.canvasEvent.pointToAllCausals}
-                    />
+                    <div>
+                      <ResultWindow
+                        allTiffList={this.state.data.allTiffList}
+                        width={this.state.data.width}
+                        allTimeSeries={this.state.data.allTimeSeries}
+                        filterAllTimeSeries={this.state.filter.allTimeSeries}
+                        sampledCoords={this.state.filter.sampledCoords}
+                        meanR={this.state.filter.meanR}
+                        meanStep={this.state.filter.meanStep}
+                        clusterMatrices={this.state.clustering.clusterMatrices}
+                        clusterSampledCoords={this.state.clustering.clusterSampledCoords}
+                        clusterRangeLists={this.state.clustering.clusterRangeLists}
+                        nClusterLists={this.state.clustering.nClusterLists}
+                        ordering={this.state.clustering.ordering}
+                        networks={this.state.network.networks}
+                        selectedClusterLists={this.state.canvasEvent.selectedClusterLists}
+                        selectedTimeSeriesLists={this.state.canvasEvent.selectedTimeSeriesLists}
+                        pointToAllCausals={this.state.canvasEvent.pointToAllCausals}
+                      />
+                    </div>
                   </Sidebar.Pusher>
                 </Sidebar.Pushable>
               </div>

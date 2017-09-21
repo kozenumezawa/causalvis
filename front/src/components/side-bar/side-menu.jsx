@@ -34,8 +34,8 @@ export default class SideMenu extends React.Component {
   renderCheckBoxes() {
     const renderData = this.viewLists.map((dataName, idx) => {
       return (
-        <div>
-          <Menu.Item key={`view list${idx}`} style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
+        <div key={`view list${idx}`}>
+          <Menu.Item style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
             <div>
               {`${dataName}`}
             </div>
@@ -54,32 +54,6 @@ export default class SideMenu extends React.Component {
         <Menu.Item header style={{ color: 'white', fontSize: 20 }}>
           Causal Vis
         </Menu.Item>
-        <Menu.Item>
-          <Menu.Header>Methods</Menu.Header>
-
-          <Menu.Menu>
-            <Menu.Item name="Granger Causality" onClick={this.handleItemClick} />
-            <Menu.Item name="Cross Correlation" onClick={this.handleItemClick} />
-            <Menu.Item name="CCM" onClick={this.handleItemClick} />
-          </Menu.Menu>
-        </Menu.Item>
-
-        <Menu.Item>
-          <Menu.Header>Item</Menu.Header>
-
-          <Menu.Menu>
-            <Menu.Item name="create Time Series" onClick={this.handleItemClick} />
-          </Menu.Menu>
-        </Menu.Item>
-
-        <Menu.Item>
-          <Menu.Header>Filter</Menu.Header>
-
-          <Menu.Menu>
-            <Menu.Item name="mean filter" onClick={this.handleItemClick} />
-          </Menu.Menu>
-        </Menu.Item>
-
         <Menu.Item>
           <Menu.Header>Upper Data</Menu.Header>
           <Menu.Menu>
