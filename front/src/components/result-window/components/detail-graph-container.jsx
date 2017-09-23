@@ -29,6 +29,7 @@ export default class DetailGraphContainer extends React.Component {
       });
     });
 
+    const data1DArray = Array.prototype.concat.apply([], data2DArray);
     const chartData = {
       datasets: Array.prototype.concat.apply([], data2DArray),
     };

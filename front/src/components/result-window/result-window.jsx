@@ -47,6 +47,7 @@ export default class ResultWindow extends React.Component {
       return (
         <GraphContainer
           dataContainer={selectedTimeSeriesList.averageData}
+          rawContainer={selectedTimeSeriesList.rawData}
         />
       );
     });
