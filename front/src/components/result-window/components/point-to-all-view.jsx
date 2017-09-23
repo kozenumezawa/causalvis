@@ -2,7 +2,7 @@ import React from 'react';
 
 import * as drawingTool from '../../../utils/drawing-tool';
 
-export default class DetailCausalShapeView extends React.Component {
+export default class PointToAllView extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -49,7 +49,7 @@ export default class DetailCausalShapeView extends React.Component {
 
   render() {
     return (
-      <canvas id={`detail_causal_shape_${this.props.id}`} style={{ position: 'relative' }} />
+      <canvas id={`detail_causal_shape_${this.props.id}`} style={this.props.style} />
     );
   }
 }

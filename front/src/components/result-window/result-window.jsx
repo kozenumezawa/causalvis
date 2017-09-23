@@ -7,6 +7,7 @@ import OriginalCanvas from './components/original-canvas.jsx';
 import NetworkView from './components/network-view.jsx';
 import GraphContainer from './components/graph-container.jsx';
 import DetailGraphContainer from './components/detail-graph-container.jsx';
+import PointToAllView from './components/point-to-all-view.jsx';
 
 export default class ResultWindow extends React.Component {
   constructor(props) {
@@ -117,8 +118,8 @@ export default class ResultWindow extends React.Component {
         </div>
 
         <div>
-          <ClusterHeatmap
-            style={{ position: 'absolute', top: 250, left: 550 }}
+          <PointToAllView
+            style={{ position: 'absolute', top: 800, left: 550 }}
             id={0}
             allTiffList={this.props.allTiffList[0]}
             allTimeSeries={this.props.allTimeSeries[0]}
@@ -138,9 +139,8 @@ export default class ResultWindow extends React.Component {
             selectedTimeSeriesList={this.props.selectedTimeSeriesLists[0]}
             pointToAllCausal={this.props.pointToAllCausals[0]}
           />
-
-          <ClusterHeatmap
-            style={{ position: 'absolute', top: 250, left: 850 }}
+          <PointToAllView
+            style={{ position: 'absolute', top: 800, left: 850 }}
             id={1}
             allTiffList={this.props.allTiffList[0]}
             allTimeSeries={this.props.allTimeSeries[1]}
@@ -161,17 +161,6 @@ export default class ResultWindow extends React.Component {
             pointToAllCausal={this.props.pointToAllCausals[1]}
           />
         </div>
-
-        <div style={{ position: 'absolute', top: 600, left: 550 }} >
-          {
-            (() => {
-              return this.renderGraphContainer();
-            })()
-          }
-        </div>
-        {/*<DetailGraphContainer*/}
-        {/*dataContainer={this.props.selectedTimeSeriesList.rawData}*/}
-        {/*/>*/}
       </div>
     );
   }

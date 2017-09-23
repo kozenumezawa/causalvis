@@ -3,8 +3,6 @@ import React from 'react';
 import { selectCluster, selectOnePoint } from '../../../intents/intent';
 import * as drawingTool from '../../../utils/drawing-tool';
 
-import DetailCausalShapeView from './detail-causal-shape-view.jsx';
-
 export default class ClusterMatrix extends React.Component {
   constructor(props) {
     super(props);
@@ -266,11 +264,6 @@ export default class ClusterMatrix extends React.Component {
           <canvas id={`heatmap_canvas_${this.props.id}`} style={{ position: 'absolute', zIndex: 1 }} />
           <canvas id={`heatmap_canvas_${this.props.id}_overlay`} style={{ position: 'absolute', zIndex: 2 }} />
         </div>
-
-        {/*<DetailCausalShapeView*/}
-          {/*{...this.props}*/}
-          {/*selectedCluster={this.props.selectedClusterList[0]}*/}
-        {/*/>*/}
       </div>
     );
   }
