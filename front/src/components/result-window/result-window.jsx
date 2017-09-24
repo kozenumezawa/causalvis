@@ -8,6 +8,7 @@ import NetworkView from './components/network-view.jsx';
 import GraphContainer from './components/graph-container.jsx';
 import DetailGraphContainer from './components/detail-graph-container.jsx';
 import PointToAllView from './components/point-to-all-view.jsx';
+import PointToNearView from './components/point-to-near-view.jsx';
 
 export default class ResultWindow extends React.Component {
   constructor(props) {
@@ -53,16 +54,17 @@ export default class ResultWindow extends React.Component {
       );
     });
   }
+
   render() {
     return (
       <div style={{ position: 'relative', top: 50, height: 1000 }}>
-        <div style={{ position: 'absolute', left: 50 }} >
-          {
-            (() => {
-              return this.renderOriginalCanvas();
-            })()
-          }
-        </div>
+        {/*<div style={{ position: 'absolute', left: 50 }} >*/}
+          {/*{*/}
+            {/*(() => {*/}
+              {/*return this.renderOriginalCanvas();*/}
+            {/*})()*/}
+          {/*}*/}
+        {/*</div>*/}
 
         <div>
           <ClusterMatrix
@@ -109,14 +111,83 @@ export default class ResultWindow extends React.Component {
             pointToAllCausal={this.props.pointToAllCausals[1]}
           />
         </div>
-        <div style={{ position: 'absolute', top: 250, left: 50 }} >
-          {
-            (() => {
-              return this.renderNetworkView();
-            })()
-          }
-        </div>
+        {/*<div style={{ position: 'absolute', top: 250, left: 50 }} >*/}
+          {/*{*/}
+            {/*(() => {*/}
+              {/*return this.renderNetworkView();*/}
+            {/*})()*/}
+          {/*}*/}
+        {/*</div>*/}
 
+        {/*<div>*/}
+          {/*<ClusterHeatmap*/}
+            {/*style={{ position: 'absolute', top: 250, left: 550 }}*/}
+            {/*id={0}*/}
+            {/*allTiffList={this.props.allTiffList[0]}*/}
+            {/*allTimeSeries={this.props.allTimeSeries[0]}*/}
+            {/*filterAllTimeSeries={this.props.filterAllTimeSeries[0]}*/}
+            {/*meanR={this.props.meanR[0]}*/}
+            {/*meanStep={this.props.meanStep[0]}*/}
+            {/*clusterMatrix={this.props.clusterMatrices[0]}*/}
+            {/*clusterSampledCoords={this.props.clusterSampledCoords[0]}*/}
+            {/*clusterRangeList={this.props.clusterRangeLists[0]}*/}
+            {/*nClusterList={this.props.nClusterLists[0]}*/}
+            {/*width={this.props.width[0]}*/}
+            {/*scale={2}*/}
+            {/*cellScale={0.5}*/}
+            {/*network={this.props.networks[0]}*/}
+            {/*positionIdx={0}*/}
+            {/*selectedClusterList={this.props.selectedClusterLists[0]}*/}
+            {/*selectedTimeSeriesList={this.props.selectedTimeSeriesLists[0]}*/}
+            {/*pointToAllCausal={this.props.pointToAllCausals[0]}*/}
+          {/*/>*/}
+
+          {/*<ClusterHeatmap*/}
+            {/*style={{ position: 'absolute', top: 250, left: 850 }}*/}
+            {/*id={1}*/}
+            {/*allTiffList={this.props.allTiffList[0]}*/}
+            {/*allTimeSeries={this.props.allTimeSeries[1]}*/}
+            {/*filterAllTimeSeries={this.props.filterAllTimeSeries[1]}*/}
+            {/*meanR={this.props.meanR[1]}*/}
+            {/*meanStep={this.props.meanStep[1]}*/}
+            {/*clusterMatrix={this.props.clusterMatrices[1]}*/}
+            {/*clusterSampledCoords={this.props.clusterSampledCoords[1]}*/}
+            {/*clusterRangeList={this.props.clusterRangeLists[1]}*/}
+            {/*nClusterList={this.props.nClusterLists[1]}*/}
+            {/*width={this.props.width[1]}*/}
+            {/*scale={4}*/}
+            {/*cellScale={1}*/}
+            {/*network={this.props.networks[1]}*/}
+            {/*positionIdx={1}*/}
+            {/*selectedClusterList={this.props.selectedClusterLists[1]}*/}
+            {/*selectedTimeSeriesList={this.props.selectedTimeSeriesLists[1]}*/}
+            {/*pointToAllCausal={this.props.pointToAllCausals[1]}*/}
+          {/*/>*/}
+        {/*</div>*/}
+
+        {/*<div style={{ position: 'absolute', top: 600, left: 550 }} >*/}
+          {/*{*/}
+            {/*(() => {*/}
+              {/*return this.renderGraphContainer();*/}
+            {/*})()*/}
+          {/*}*/}
+        {/*</div>*/}
+
+
+        <div>
+          <PointToNearView
+            style={{ position: 'absolute', top: 600, left: 50 }}
+            id={0}
+            positionIdx={0}
+            pointToNearCausal={this.props.pointToNearCausals[0]}
+          />
+          <PointToNearView
+            style={{ position: 'absolute', top: 600, left: 260 }}
+            id={1}
+            positionIdx={1}
+            pointToNearCausal={this.props.pointToNearCausals[1]}
+          />
+        </div>
         <div>
           <PointToAllView
             style={{ position: 'absolute', top: 800, left: 550 }}

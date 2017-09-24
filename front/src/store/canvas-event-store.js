@@ -100,6 +100,7 @@ const store = (intentSubject, dataSubject, filterSubject, clusteringSubject) => 
         const { x, y, positionIdx } = payload;
         const meanR = filter.state.meanR[positionIdx];
 
+        // set nearCoordsList
         const nearCoordsList = [];
         const pixelInterval = 3;
         for (let i = -1; i <= 1; i++) {
@@ -112,7 +113,7 @@ const store = (intentSubject, dataSubject, filterSubject, clusteringSubject) => 
           }
         }
 
-        // search index of each coordinates from the coordinate
+        // search each row index from the coordinate
         clustering.state.clusterSampledCoords[positionIdx].forEach((sampledCoord, rowIdx) => {
           for (const obj of nearCoordsList) {
             if (obj.x >= sampledCoord.x - meanR && obj.x <= sampledCoord.x + meanR && obj.y >= sampledCoord.y - meanR && obj.y <= sampledCoord.y + meanR) {
@@ -121,32 +122,32 @@ const store = (intentSubject, dataSubject, filterSubject, clusteringSubject) => 
           }
         });
 
-        console.log(nearCoordsList);
+        // console.log(nearCoordsList);
         const clusterMatrix = clustering.state.clusterMatrices[positionIdx];
+        const centerRowIdx = nearCoordsList[4].rowIdx;
         state.pointToAllCausals[positionIdx] = {
-          pointRowIdx: nearCoordsList[4].rowIdx,
-          data: clusterMatrix[nearCoordsList[4].rowIdx],
+          pointRowIdx: centerRowIdx,
+          data: clusterMatrix[centerRowIdx],
         };
 
         const getNearRelation = () => {
-          const relation = [];
-          const width = data.state.width[positionIdx];
-          for (let x = -1; x <= 1; x++) {
-            for (let y = -1; y <= 1; y++) {
-              if (x === -1 && y === -1) {
-                continue;
-              }
-              // const targetIdx = rowIdx + y *
-              // clusterMatrix[rowIdx]
-            }
-          }
+          const relation = nearCoordsList.map((nearCoords) => {
+            const targetRowIdx = nearCoords.rowIdx;
+            return {
+              x: nearCoords.x,
+              y: nearCoords.y,
+              rowIdx: nearCoords.rowIdx,
+              fromCenter: clusterMatrix[centerRowIdx][targetRowIdx],
+              toCenter: clusterMatrix[targetRowIdx][centerRowIdx],
+            };
+          });
           return relation;
         };
 
-        // state.pointToNearCausals[0] = {
-        //   pointRowIdx: rowIdx,
-        //   data: getNearRelation(),
-        // };
+        state.pointToNearCausals[positionIdx] = {
+          pointRowIdx: centerRowIdx,
+          data: getNearRelation(),
+        };
         subject.onNext({ state });
         break;
       }

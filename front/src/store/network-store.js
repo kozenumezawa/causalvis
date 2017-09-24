@@ -47,7 +47,7 @@ const store = (intentSubject, clusteringSubject) => {
               }
               const width = effectClusterRange.end - effectClusterRange.start;
               const area = width * height;
-              if (causalCnt > area * 0.95) {
+              if (causalCnt > area * 0.9) {
                 links.push({
                   source: clusterRangeIdx.get(causalClusterRange),
                   target: clusterRangeIdx.get(effectClusterRange),

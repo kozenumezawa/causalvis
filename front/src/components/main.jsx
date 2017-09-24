@@ -76,6 +76,7 @@ export default class Main extends React.Component {
                         selectedClusterLists={this.state.canvasEvent.selectedClusterLists}
                         selectedTimeSeriesLists={this.state.canvasEvent.selectedTimeSeriesLists}
                         pointToAllCausals={this.state.canvasEvent.pointToAllCausals}
+                        pointToNearCausals={this.state.canvasEvent.pointToNearCausals}
                       />
                     </div>
                   </Sidebar.Pusher>
