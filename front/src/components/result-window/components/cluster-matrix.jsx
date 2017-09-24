@@ -5,7 +5,7 @@ import * as drawingTool from '../../../utils/drawing-tool';
 
 import GraphContainer from './graph-container.jsx';
 import DetailGraphContainer from './detail-graph-container.jsx';
-import DetailCausalShapeView from './detail-causal-shape-view.jsx';
+import DetailCausalShapeView from './point-to-all-view.jsx';
 
 export default class ClusterMatrix extends React.Component {
   constructor(props) {

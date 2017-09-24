@@ -34,6 +34,7 @@ const store = (intentSubject, dataSubject, filterSubject, clusteringSubject) => 
     selectedClusterLists: [[], []],
     selectedTimeSeriesLists: [{ averageData: [], rawData: [] }, { averageData: [], rawData: [] }],
     pointToAllCausals: [{ pointRowIdx: -1, data: [] }, { pointRowIdx: -1, data: [] }],
+    pointToNearCausals: [{ pointRowIdx: -1, data: [] }, { pointRowIdx: -1, data: [] }],
   };
 
   const subject = new Rx.BehaviorSubject({ state });
@@ -99,19 +100,53 @@ const store = (intentSubject, dataSubject, filterSubject, clusteringSubject) => 
         const { x, y, positionIdx } = payload;
         const meanR = filter.state.meanR[positionIdx];
 
-        // search index from the coordinate
-        let rowIdx = 0;
-        for (const sampledCoord of clustering.state.clusterSampledCoords[positionIdx]) {
-          if (x >= sampledCoord.x - meanR && x <= sampledCoord.x + meanR && y >= sampledCoord.y - meanR && y <= sampledCoord.y + meanR) {
-            break;
+        const nearCoordsList = [];
+        const pixelInterval = 3;
+        for (let i = -1; i <= 1; i++) {
+          for (let j = -1; j <= 1; j++) {
+            nearCoordsList.push({
+              x: x + j * pixelInterval,
+              y: y + i * pixelInterval,
+              rowIdx: -1,
+            });
           }
-          rowIdx++;
         }
+
+        // search index of each coordinates from the coordinate
+        clustering.state.clusterSampledCoords[positionIdx].forEach((sampledCoord, rowIdx) => {
+          for (const obj of nearCoordsList) {
+            if (obj.x >= sampledCoord.x - meanR && obj.x <= sampledCoord.x + meanR && obj.y >= sampledCoord.y - meanR && obj.y <= sampledCoord.y + meanR) {
+              obj.rowIdx = rowIdx;
+            }
+          }
+        });
+
+        console.log(nearCoordsList);
+        const clusterMatrix = clustering.state.clusterMatrices[positionIdx];
         state.pointToAllCausals[positionIdx] = {
-          pointRowIdx: rowIdx,
-          data: clustering.state.clusterMatrices[positionIdx][rowIdx],
+          pointRowIdx: nearCoordsList[4].rowIdx,
+          data: clusterMatrix[nearCoordsList[4].rowIdx],
         };
 
+        const getNearRelation = () => {
+          const relation = [];
+          const width = data.state.width[positionIdx];
+          for (let x = -1; x <= 1; x++) {
+            for (let y = -1; y <= 1; y++) {
+              if (x === -1 && y === -1) {
+                continue;
+              }
+              // const targetIdx = rowIdx + y *
+              // clusterMatrix[rowIdx]
+            }
+          }
+          return relation;
+        };
+
+        // state.pointToNearCausals[0] = {
+        //   pointRowIdx: rowIdx,
+        //   data: getNearRelation(),
+        // };
         subject.onNext({ state });
         break;
       }
