@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { selectCluster } from '../../../intents/intent';
+import * as drawingTool from '../../../utils/drawing-tool';
 
 export default class NetworkView extends React.Component {
   constructor(props) {
@@ -38,6 +39,7 @@ export default class NetworkView extends React.Component {
         default-node-width="50"
         default-node-height="50"
         default-node-label-font-size="30"
+        default-link-stroke-width="5"
         // node-label-property="index"
         node-fill-color-property="color"
         node-width-property="nodeWidth"
