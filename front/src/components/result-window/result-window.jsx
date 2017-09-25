@@ -37,11 +37,11 @@ export default class ResultWindow extends React.Component {
   }
 
   renderNetworkView() {
-    const top = 250;
-    const left = [50, 310];
+    const top = 0;
+    const left = [600, 930];
     return this.props.networks.map((network, idx) => {
       return (
-        <div style={{ position: 'absolute', top: top, left: left[idx], border: '1px solid' }} >
+        <div style={{ position: 'absolute', top: top, left: left[idx], border: '1px solid gray' }} >
           <NetworkView
             network={this.props.networks[idx]}
             positionIdx={idx}
@@ -53,11 +53,11 @@ export default class ResultWindow extends React.Component {
   }
 
   renderGraphContainer() {
-    const top = 600;
-    const left = [550, 760];
+    const top = 640;
+    const left = [600, 920];
     return this.props.selectedTimeSeriesLists.map((selectedTimeSeriesList, idx) => {
       return (
-        <div style={{ position: 'absolute', top: 600, left: left[idx] }} >
+        <div style={{ position: 'absolute', top: top, left: left[idx] }} >
           <GraphContainer
             dataContainer={selectedTimeSeriesList.averageData}
             rawContainer={selectedTimeSeriesList.rawData}
@@ -77,7 +77,7 @@ export default class ResultWindow extends React.Component {
         }
         <div>
           <ClusterMatrix
-            style={{ position: 'absolute', top: 4, left: 550 }}
+            style={{ position: 'absolute', top: 244, left: 50 }}
             id={0}
             allTiffList={this.props.allTiffList[0]}
             allTimeSeries={this.props.allTimeSeries[0]}
@@ -99,7 +99,7 @@ export default class ResultWindow extends React.Component {
           />
 
           <ClusterMatrix
-            style={{ position: 'absolute', top: 0, left: 810 }}
+            style={{ position: 'absolute', top: 240, left: 316 }}
             id={1}
             allTiffList={this.props.allTiffList[0]}
             allTimeSeries={this.props.allTimeSeries[1]}
@@ -128,7 +128,7 @@ export default class ResultWindow extends React.Component {
         }
         <div>
           <ClusterHeatmap
-            style={{ position: 'absolute', top: 250, left: 550 }}
+            style={{ position: 'absolute', top: 300, left: 580 }}
             id={0}
             allTiffList={this.props.allTiffList[0]}
             allTimeSeries={this.props.allTimeSeries[0]}
@@ -150,7 +150,7 @@ export default class ResultWindow extends React.Component {
           />
 
           <ClusterHeatmap
-            style={{ position: 'absolute', top: 250, left: 850 }}
+            style={{ position: 'absolute', top: 300, left: 900 }}
             id={1}
             allTiffList={this.props.allTiffList[0]}
             allTimeSeries={this.props.allTimeSeries[1]}
@@ -180,13 +180,13 @@ export default class ResultWindow extends React.Component {
 
         <div>
           <PointToNearView
-            style={{ position: 'absolute', top: 600, left: 50 }}
+            style={{ position: 'absolute', top: 780, left: 100 }}
             id={0}
             positionIdx={0}
             pointToNearCausal={this.props.pointToNearCausals[0]}
           />
           <PointToNearView
-            style={{ position: 'absolute', top: 600, left: 260 }}
+            style={{ position: 'absolute', top: 780, left: 340 }}
             id={1}
             positionIdx={1}
             pointToNearCausal={this.props.pointToNearCausals[1]}
@@ -194,7 +194,7 @@ export default class ResultWindow extends React.Component {
         </div>
         <div>
           <PointToAllView
-            style={{ position: 'absolute', top: 800, left: 550 }}
+            style={{ position: 'absolute', top: 550, left: 50 }}
             id={0}
             allTiffList={this.props.allTiffList[0]}
             allTimeSeries={this.props.allTimeSeries[0]}
@@ -215,7 +215,7 @@ export default class ResultWindow extends React.Component {
             pointToAllCausal={this.props.pointToAllCausals[0]}
           />
           <PointToAllView
-            style={{ position: 'absolute', top: 800, left: 850 }}
+            style={{ position: 'absolute', top: 550, left: 316 }}
             id={1}
             allTiffList={this.props.allTiffList[0]}
             allTimeSeries={this.props.allTimeSeries[1]}
