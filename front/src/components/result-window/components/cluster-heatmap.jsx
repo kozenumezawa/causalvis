@@ -160,7 +160,8 @@ export default class ClusterMatrix extends React.Component {
       }
 
       // draw row color to the heatmap
-      this.heatmapCtx.fillStyle = color[clusterIdx];
+      // this.heatmapCtx.fillStyle = color[clusterIdx];
+      this.heatmapCtx.fillStyle = 'gray';
       row.forEach((cell, cellIdx) => {
         if (cell === true) {
           this.heatmapCtx.fillRect(cellIdx * props.cellScale + this.legendWidth, rowIdx * props.cellScale + this.legendWidth, props.cellScale, props.cellScale);
