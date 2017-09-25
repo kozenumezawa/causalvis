@@ -55,7 +55,7 @@ export default class SideMenu extends React.Component {
           Causal Vis
         </Menu.Item>
         <Menu.Item>
-          <Menu.Header>Upper Data</Menu.Header>
+          <Menu.Header>Left Data</Menu.Header>
           <Menu.Menu>
             {(() => {
               return this.renderCheckBoxes.bind(this)();
@@ -64,7 +64,7 @@ export default class SideMenu extends React.Component {
         </Menu.Item>
 
         <Menu.Item>
-          <Menu.Header>Lower Data</Menu.Header>
+          <Menu.Header>Rightr Data</Menu.Header>
           <Menu.Menu>
             {(() => {
               return this.renderCheckBoxes.bind(this)();
