@@ -4,9 +4,6 @@
     "browser": true,
     "node": true
   },
-  "ecmaFeatures": {
-    "modules": true
-  },
   "globals": {
     "Tiff": false,
     "API_ENDPOINT": true
