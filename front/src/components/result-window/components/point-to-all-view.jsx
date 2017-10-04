@@ -32,12 +32,12 @@ export default class PointToAllView extends React.Component {
     drawingTool.drawFrame(this.canvas, this.ctx);
 
     pointToAllCausal.data.forEach((causal, rowIdx) => {
-      this.ctx.fillStyle = 'gray';
+      this.ctx.fillStyle = 'black';
       if (causal === false && pointToAllCausal.pointRowIdx !== rowIdx) {
         return;
       }
       if (pointToAllCausal.pointRowIdx === rowIdx) {
-        this.ctx.fillStyle = 'blue';
+        this.ctx.fillStyle = 'red';
       }
       const x = clusterSampledCoords[rowIdx].x * scale;
       const y = clusterSampledCoords[rowIdx].y * scale;

@@ -25,30 +25,30 @@ export default class PointToNearView extends React.Component {
 
     const getRenderItem = (idx) => {
       if (pointToNearCausal.data[idx].fromCenter === true) {
-        return 'from';
+        return 'effect';
       } else if (pointToNearCausal.data[idx].toCenter === true) {
-        return 'to';
+        return 'cause';
       }
-      return '';
+      return ' ';
     };
 
     return (
       <table style={{ border: '1px solid' }}>
         <tbody>
           <tr style={{ border: '1px solid' }}>
-            <th style={{ width: 50, border: '1px solid' }}>{ getRenderItem(0) }</th>
-            <th style={{ width: 50, border: '1px solid' }}>{ getRenderItem(1) }</th>
-            <th style={{ width: 50, border: '1px solid' }}>{ getRenderItem(2) }</th>
+            <th style={{ width: 50, height: 30, border: '1px solid' }}>{ getRenderItem(0) }</th>
+            <th style={{ width: 50, height: 30, border: '1px solid' }}>{ getRenderItem(1) }</th>
+            <th style={{ width: 50, height: 30, border: '1px solid' }}>{ getRenderItem(2) }</th>
           </tr>
           <tr style={{ align: 'center', border: '1px solid' }}>
-            <th style={{ width: 50, border: '1px solid' }}>{ getRenderItem(3) }</th>
-            <th style={{ width: 50, border: '1px solid' }}></th>
-            <th style={{ width: 50, border: '1px solid' }}>{ getRenderItem(5) }</th>
+            <th style={{ width: 50, height: 30, border: '1px solid' }}>{ getRenderItem(3) }</th>
+            <th style={{ width: 50, height: 30, border: '1px solid' }}></th>
+            <th style={{ width: 50, height: 30, border: '1px solid' }}>{ getRenderItem(5) }</th>
           </tr>
           <tr style={{ align: 'center', border: '1px solid' }}>
-            <th style={{ width: 50, border: '1px solid' }}>{ getRenderItem(6) }</th>
-            <th style={{ width: 50, border: '1px solid' }}>{ getRenderItem(7) }</th>
-            <th style={{ width: 50, border: '1px solid' }}>{ getRenderItem(8) }</th>
+            <th style={{ width: 50, height: 30, border: '1px solid' }}>{ getRenderItem(6) }</th>
+            <th style={{ width: 50, height: 30, border: '1px solid' }}>{ getRenderItem(7) }</th>
+            <th style={{ width: 50, height: 30, border: '1px solid' }}>{ getRenderItem(8) }</th>
           </tr>
         </tbody>
       </table>

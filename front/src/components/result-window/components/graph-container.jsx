@@ -28,7 +28,7 @@ export default class GraphContainer extends React.Component {
         return {
           label: `${selectedTimeSeries.label}`,
           fill: false,
-          borderColor: hexToRGBA(selectedTimeSeries.color, 0.2),
+          borderColor: hexToRGBA(selectedTimeSeries.color, 0),
           pointBackgroundColor: '#fff',
           borderWidth: 0.4,
           pointBorderWidth: 0,
@@ -46,7 +46,8 @@ export default class GraphContainer extends React.Component {
         fill: false,
         backgroundColor: `${selectedTimeSeries.color}`,
         borderColor: `${selectedTimeSeries.color}`,
-        pointBorderColor: 'black',
+        pointBorderColor: `${selectedTimeSeries.color}`,
+        // pointBorderColor: 'black',
         pointBackgroundColor: '#fff',
         pointBorderWidth: 1,
         pointHoverRadius: 5,

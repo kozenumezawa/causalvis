@@ -84,9 +84,10 @@ export default class ClusterMatrix extends React.Component {
   drawSelectedCluster(props) {
     this.heatmapOverlayCtx.clearRect(0, 0, this.heatmapOverlayCanvas.width, this.heatmapOverlayCanvas.height);
 
-    this.heatmapOverlayCtx.strokeStyle = 'gray';
-    this.heatmapOverlayCtx.fillStyle = 'rgba(240,248,255,0.5)';
-    this.heatmapOverlayCtx.lineWidth = 3;
+    // this.heatmapOverlayCtx.strokeStyle = 'gray';
+    this.heatmapOverlayCtx.strokeStyle = 'black';
+    this.heatmapOverlayCtx.fillStyle = 'rgba(240,248,255,0.3)';
+    this.heatmapOverlayCtx.lineWidth = 2;
 
     // draw heatmap and canvas
     this.heatmapOverlayCtx.beginPath();
