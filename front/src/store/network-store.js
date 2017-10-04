@@ -51,7 +51,7 @@ const store = (intentSubject, clusteringSubject) => {
                 links.push({
                   source: clusterRangeIdx.get(causalClusterRange),
                   target: clusterRangeIdx.get(effectClusterRange),
-                  intensity: (1 - 0) / (1 - 0.95) * (causalCnt / area - 1) + 1,
+                  intensity: 1,
                 });
               }
             }
