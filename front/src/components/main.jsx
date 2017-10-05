@@ -58,6 +58,7 @@ export default class Main extends React.Component {
                   <SideMenu />
 
                   <Sidebar.Pusher>
+                    <ControlWindow />
                     <div>
                       <ResultWindow
                         allTiffList={this.state.data.allTiffList}
