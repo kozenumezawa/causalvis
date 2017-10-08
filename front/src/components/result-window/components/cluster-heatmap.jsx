@@ -87,7 +87,8 @@ export default class ClusterMatrix extends React.Component {
       const startX = this.legendWidth;
       const startY = this.legendWidth + this.clusterRangeList[belongCluster].start * props.cellScale;
       const width = this.heatmapOverlayCanvas.width - this.legendWidth;
-      const height = (this.clusterRangeList[belongCluster].end - this.clusterRangeList[belongCluster].start) * props.cellScale;
+      const height =
+        (this.clusterRangeList[belongCluster].end - this.clusterRangeList[belongCluster].start) * props.cellScale;
 
       this.heatmapOverlayCtx.fillRect(startX, startY, width, height);
       this.heatmapOverlayCtx.fillRect(startY, startX, height, width);
@@ -157,7 +158,10 @@ export default class ClusterMatrix extends React.Component {
       this.heatmapCtx.fillStyle = 'gray';
       row.forEach((cell, cellIdx) => {
         if (cell === true) {
-          this.heatmapCtx.fillRect(cellIdx * props.cellScale + this.legendWidth, rowIdx * props.cellScale + this.legendWidth, props.cellScale, props.cellScale);
+          this.heatmapCtx.fillRect(
+            cellIdx * props.cellScale + this.legendWidth,
+            rowIdx * props.cellScale + this.legendWidth,
+            props.cellScale, props.cellScale);
         }
       });
     });

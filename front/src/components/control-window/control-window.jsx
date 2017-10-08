@@ -27,7 +27,13 @@ export default class ControlWindow extends React.Component {
   renderSteps(steps, position) {
     const renderSteps = steps.map((data) => {
       return (
-        <Step icon={data.icon} title={data.title} description={data.description} key={`${position}${data.title}`} onClick={this.handleClick.bind(this, position, data.icon)} />
+        <Step
+          key={`${position}${data.title}`}
+          icon={data.icon}
+          title={data.title}
+          description={data.description}
+          onClick={this.handleClick.bind(this, position, data.icon)}
+        />
       );
     });
     return (

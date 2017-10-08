@@ -20,7 +20,10 @@ function createTimeSeriesInverse(tiffCanvas, legendCanvas) {
       const b = tiffRGBA[i * 4 + 2];
       const a = tiffRGBA[i * 4 + 3];
       for (let j = 0; j < colorMap.length / 4; j++) {
-        if (r === colorMap[j * 4 + 0] && g === colorMap[j * 4 + 1] && b === colorMap[j * 4 + 2] && a === colorMap[j * 4 + 3]) {
+        if (r === colorMap[j * 4 + 0]
+          && g === colorMap[j * 4 + 1]
+          && b === colorMap[j * 4 + 2]
+          && a === colorMap[j * 4 + 3]) {
           scalar = j;
           break;
         }

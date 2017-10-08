@@ -51,7 +51,10 @@ const store = (intentSubject, dataSubject) => {
         }
 
         for (let dataIndex = 0; dataIndex < 2; dataIndex++) {
-          const removedData = removeUselessTimeSeries(data.state.allTimeSeries[dataIndex], data.state.width[dataIndex], state.meanR[dataIndex]);
+          const removedData = removeUselessTimeSeries(
+            data.state.allTimeSeries[dataIndex],
+            data.state.width[dataIndex],
+            state.meanR[dataIndex]);
           state.allTimeSeries[dataIndex] = removedData.newAllTimeSeries;
           state.sampledCoords[dataIndex] = removedData.sampledCoords;
         }

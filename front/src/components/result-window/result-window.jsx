@@ -39,7 +39,10 @@ export default class ResultWindow extends React.Component {
     const left = [600, 930];
     return this.props.networks.map((network, idx) => {
       return (
-        <div key={`network list${idx}`} style={{ position: 'absolute', top: top, left: left[idx], border: '1px solid gray' }} >
+        <div
+          key={`network list${idx}`}
+          style={{ position: 'absolute', top: top, left: left[idx], border: '1px solid gray' }}
+        >
           <NetworkView
             network={this.props.networks[idx]}
             positionIdx={idx}

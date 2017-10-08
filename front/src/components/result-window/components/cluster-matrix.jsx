@@ -46,7 +46,9 @@ export default class ClusterMatrix extends React.Component {
     this.clusterOverlayCtx.fillStyle = 'black';
     // draw heatmap and canvas
     props.selectedClusterList.forEach((belongCluster) => {
-      for (let cellIdx = this.clusterRangeList[belongCluster].start; cellIdx < this.clusterRangeList[belongCluster].end; cellIdx++) {
+      for (let cellIdx = this.clusterRangeList[belongCluster].start;
+        cellIdx < this.clusterRangeList[belongCluster].end;
+        cellIdx++) {
         const x = this.clusterSampledCoords[cellIdx].x * props.scale;
         const y = this.clusterSampledCoords[cellIdx].y * props.scale;
         const sideLength = props.meanStep * props.scale;
@@ -126,7 +128,6 @@ export default class ClusterMatrix extends React.Component {
     drawingTool.drawFrame(this.clusterCanvas, this.clusterCtx);
     this.clusterOverlayCanvas.width = this.clusterCanvas.width;
     this.clusterOverlayCanvas.height = this.clusterCanvas.height;
-    // this.clusterCtx.drawImage(canvas, 0, 0, canvas.width, canvas.height, 0, 0, this.clusterCanvas.width, this.clusterCanvas.height);
 
     this.clusterRangeList = props.clusterRangeList;
     // draw heatmap and fill canvas

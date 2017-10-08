@@ -10,9 +10,9 @@
   },
   "rules": {
     "no-console": "off",
-    "eqeqeq": "error",
     "arrow-body-style": "off",
-    "max-len": "off",
+    "max-len": ["error", 120],
+    //
     "no-mixed-operators": "off",
     "no-shadow": "off",
     "no-plusplus": "off",
@@ -25,11 +25,7 @@
     "object-shorthand": "off",
     "import/prefer-default-export": "off",
     "react/jsx-no-bind": "off",
-//    "react/jsx-max-props-per-line": "warn",
     "react/prop-types": "off",
-//    "react/prefer-stateless-function": "off",
-//    "react/no-string-refs": "off",
-//    "react/no-find-dom-node": "off",
     "react/no-array-index-key": "off",
     "jsx-a11y/href-no-hash": "off",
     "jsx-a11y/anchor-is-valid": ["warn", { "aspects": ["invalidHref"] }]
