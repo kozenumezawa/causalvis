@@ -48,11 +48,11 @@ export default class ClusterMatrix extends React.Component {
     props.selectedClusterList.forEach((belongCluster) => {
       for (let cellIdx = this.clusterRangeList[belongCluster].start;
         cellIdx < this.clusterRangeList[belongCluster].end;
-        cellIdx++) {
+        cellIdx += 1) {
         const x = this.clusterSampledCoords[cellIdx].x * props.scale;
         const y = this.clusterSampledCoords[cellIdx].y * props.scale;
         const sideLength = props.meanStep * props.scale;
-        const r = (props.meanStep - 1) * props.scale / 2;
+        const r = ((props.meanStep - 1) * props.scale) / 2;
         this.clusterOverlayCtx.fillRect(x - r, y - r, sideLength, sideLength);
       }
     });
@@ -60,7 +60,7 @@ export default class ClusterMatrix extends React.Component {
 
   searchBelongCluster(selectedIdx) {
     let sum = 0;
-    for (let i = 0; i < this.nClusterList.length; i++) {
+    for (let i = 0; i < this.nClusterList.length; i += 1) {
       sum += this.nClusterList[i];
       if (selectedIdx < sum) {
         return i;
@@ -90,7 +90,7 @@ export default class ClusterMatrix extends React.Component {
   drawCausalArrowToCanvas(causeIdx, effectIdx) {
     this.clusterOverlayCtx.clearRect(0, 0, this.clusterOverlayCanvas.width, this.clusterOverlayCanvas.height);
     const sideLength = this.props.meanStep * this.props.scale;
-    const r = (this.props.meanStep - 1) * this.props.scale / 2;
+    const r = ((this.props.meanStep - 1) * this.props.scale) / 2;
 
     this.clusterOverlayCtx.fillStyle = 'black';
     const causeX = this.clusterSampledCoords[causeIdx].x * this.props.scale;
@@ -124,7 +124,7 @@ export default class ClusterMatrix extends React.Component {
 
     // draw a canvas
     this.clusterCanvas.width = props.width * props.scale;
-    this.clusterCanvas.height = props.allTimeSeries.length / props.width * props.scale;
+    this.clusterCanvas.height = (props.allTimeSeries.length / props.width) * props.scale;
     drawingTool.drawFrame(this.clusterCanvas, this.clusterCtx);
     this.clusterOverlayCanvas.width = this.clusterCanvas.width;
     this.clusterOverlayCanvas.height = this.clusterCanvas.height;
@@ -134,7 +134,7 @@ export default class ClusterMatrix extends React.Component {
     let clusterIdx = 0;
     this.graphSorted.forEach((row, rowIdx) => {
       if (rowIdx >= this.clusterRangeList[clusterIdx].end) {
-        clusterIdx++;
+        clusterIdx += 1;
       }
 
       // draw the canvas according to the cluster
@@ -143,7 +143,7 @@ export default class ClusterMatrix extends React.Component {
       const x = this.clusterSampledCoords[rowIdx].x * props.scale;
       const y = this.clusterSampledCoords[rowIdx].y * props.scale;
       const sideLength = props.meanStep * props.scale;
-      const r = (props.meanStep - 1) * props.scale / 2;
+      const r = ((props.meanStep - 1) * props.scale) / 2;
       this.clusterCtx.fillRect(x - r, y - r, sideLength, sideLength);
     });
   }
@@ -158,7 +158,7 @@ export default class ClusterMatrix extends React.Component {
   arrow(ctx, startX, startY, endX, endY, controlPoints) {
     const dx = endX - startX;
     const dy = endY - startY;
-    const len = Math.sqrt(dx * dx + dy * dy);
+    const len = Math.sqrt((dx * dx) + (dy * dy));
     const sin = dy / len;
     const cos = dx / len;
     const a = [];
@@ -176,8 +176,8 @@ export default class ClusterMatrix extends React.Component {
     }
     a.push(0, 0);
     for (let i = 0; i < a.length; i += 2) {
-      const x = a[i] * cos - a[i + 1] * sin + startX;
-      const y = a[i] * sin + a[i + 1] * cos + startY;
+      const x = ((a[i] * cos) - (a[i + 1] * sin)) + startX;
+      const y = (a[i] * sin) + (a[i + 1] * cos) + startY;
       if (i === 0) ctx.moveTo(x, y);
       else ctx.lineTo(x, y);
     }

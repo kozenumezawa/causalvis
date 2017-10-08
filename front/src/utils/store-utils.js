@@ -13,17 +13,17 @@ function createTimeSeriesInverse(tiffCanvas, legendCanvas) {
     const colorMap = legendRGBA.slice(0, legendRGBA.length / legendCanvas.height);
 
     // get scalar from data
-    for (let i = 0; i < tiffRGBA.length / 4; i++) {
+    for (let i = 0; i < tiffRGBA.length / 4; i += 1) {
       let scalar = 0;
-      const r = tiffRGBA[i * 4 + 0];
-      const g = tiffRGBA[i * 4 + 1];
-      const b = tiffRGBA[i * 4 + 2];
-      const a = tiffRGBA[i * 4 + 3];
-      for (let j = 0; j < colorMap.length / 4; j++) {
-        if (r === colorMap[j * 4 + 0]
-          && g === colorMap[j * 4 + 1]
-          && b === colorMap[j * 4 + 2]
-          && a === colorMap[j * 4 + 3]) {
+      const r = tiffRGBA[(i * 4) + 0];
+      const g = tiffRGBA[(i * 4) + 1];
+      const b = tiffRGBA[(i * 4) + 2];
+      const a = tiffRGBA[(i * 4) + 3];
+      for (let j = 0; j < colorMap.length / 4; j += 1) {
+        if (r === colorMap[(j * 4) + 0]
+          && g === colorMap[(j * 4) + 1]
+          && b === colorMap[(j * 4) + 2]
+          && a === colorMap[(j * 4) + 3]) {
           scalar = j;
           break;
         }
@@ -32,9 +32,9 @@ function createTimeSeriesInverse(tiffCanvas, legendCanvas) {
     }
   } else {
     // get scalar from data
-    for (let i = 0; i < tiffRGBA.length / 4; i++) {
+    for (let i = 0; i < tiffRGBA.length / 4; i += 1) {
       let scalar = 0;
-      const r = tiffRGBA[i * 4 + 0];
+      const r = tiffRGBA[(i * 4) + 0];
       scalar = r;
       timeSeriesInverse.push(scalar);
     }
@@ -45,9 +45,9 @@ function createTimeSeriesInverse(tiffCanvas, legendCanvas) {
 
 function transposeTimeSeries(allTimeSeriesInverse) {
   const timeSeries = [];
-  for (let i = 0; i < allTimeSeriesInverse[0].length; i++) {
+  for (let i = 0; i < allTimeSeriesInverse[0].length; i += 1) {
     timeSeries[i] = [];
-    for (let j = 0; j < allTimeSeriesInverse.length; j++) {
+    for (let j = 0; j < allTimeSeriesInverse.length; j += 1) {
       timeSeries[i][j] = allTimeSeriesInverse[j][i];
     }
   }
@@ -65,10 +65,10 @@ export const createAllTimeSeriesFromTiff = (legendCanvas, allTiffList) => {
 
 export const toTwoDimensions = (allTimeSeries, canvasWidth, canvasHeight) => {
   const twoDimensions = [];
-  for (let y = 0; y < canvasHeight; y++) {
+  for (let y = 0; y < canvasHeight; y += 1) {
     twoDimensions[y] = [];
     const yIdx = y * canvasWidth;
-    for (let x = 0; x < canvasWidth; x++) {
+    for (let x = 0; x < canvasWidth; x += 1) {
       twoDimensions[y].push(allTimeSeries[x + yIdx]);
     }
   }
@@ -82,7 +82,7 @@ export const isSamplingPoint = (idx, width, meanR) => {
   }
   const x = idx % width;
   const y = Math.floor(idx / width);
-  if (x % (meanR * 2 + 1) === meanR && y % (meanR * 2 + 1) === meanR) {
+  if (x % ((meanR * 2) + 1) === meanR && y % ((meanR * 2) + 1) === meanR) {
     return true;
   }
   return false;

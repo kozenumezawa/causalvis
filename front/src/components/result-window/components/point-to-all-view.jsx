@@ -27,7 +27,7 @@ export default class PointToAllView extends React.Component {
   drawData(props) {
     const { clusterSampledCoords, meanStep, width, allTimeSeries, scale, pointToAllCausal } = props;
     this.canvas.width = width * scale;
-    this.canvas.height = allTimeSeries.length / width * scale;
+    this.canvas.height = (allTimeSeries.length / width) * scale;
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     drawingTool.drawFrame(this.canvas, this.ctx);
 
@@ -42,7 +42,7 @@ export default class PointToAllView extends React.Component {
       const x = clusterSampledCoords[rowIdx].x * scale;
       const y = clusterSampledCoords[rowIdx].y * scale;
       const sideLength = meanStep * scale;
-      const r = (meanStep - 1) * scale / 2;
+      const r = ((meanStep - 1) * scale) / 2;
       this.ctx.fillRect(x - r, y - r, sideLength, sideLength);
     });
   }

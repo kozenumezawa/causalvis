@@ -19,9 +19,9 @@ const getArrayAverage = (arr) => {
 
 const get2DArrayAverage = (arr) => {
   const arr2D = [];
-  for (let i = 0; i < arr[0].length; i++) {
+  for (let i = 0; i < arr[0].length; i += 1) {
     const arrTemp = [];
-    for (let j = 0; j < arr.length; j++) {
+    for (let j = 0; j < arr.length; j += 1) {
       arrTemp.push(arr[j][i]);
     }
     arr2D.push(getArrayAverage(arrTemp));
@@ -64,7 +64,7 @@ const store = (intentSubject, dataSubject, filterSubject, clusteringSubject) => 
 
             const selectedTimeSeries = [];
             for (let rowIdx = clusterRangeList[clusterNumber].start;
-              rowIdx < clusterRangeList[clusterNumber].end; rowIdx++) {
+              rowIdx < clusterRangeList[clusterNumber].end; rowIdx += 1) {
               selectedTimeSeries.push(allTimeSeries[clusterSampledCoords[rowIdx].idx]);
             }
 
@@ -105,11 +105,11 @@ const store = (intentSubject, dataSubject, filterSubject, clusteringSubject) => 
           // set nearCoordsList
           const nearCoordsList = [];
           const pixelInterval = 3;
-          for (let i = -1; i <= 1; i++) {
-            for (let j = -1; j <= 1; j++) {
+          for (let i = -1; i <= 1; i += 1) {
+            for (let j = -1; j <= 1; j += 1) {
               nearCoordsList.push({
-                x: x + j * pixelInterval,
-                y: y + i * pixelInterval,
+                x: x + (j * pixelInterval),
+                y: y + (i * pixelInterval),
                 rowIdx: -1,
               });
             }

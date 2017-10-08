@@ -49,7 +49,7 @@ export default class ClusterMatrix extends React.Component {
     const causeIdx = Math.floor((y - this.legendWidth) / this.props.cellScale);
     const effectIdx = Math.floor((x - this.legendWidth) / this.props.cellScale);
 
-    if (causeIdx > 0 && effectIdx > 0 || causeIdx < 0 && effectIdx < 0) {
+    if ((causeIdx > 0 && effectIdx > 0) || (causeIdx < 0 && effectIdx < 0)) {
       return;
     }
 
@@ -85,7 +85,7 @@ export default class ClusterMatrix extends React.Component {
     this.heatmapOverlayCtx.beginPath();
     props.selectedClusterList.forEach((belongCluster) => {
       const startX = this.legendWidth;
-      const startY = this.legendWidth + this.clusterRangeList[belongCluster].start * props.cellScale;
+      const startY = this.legendWidth + (this.clusterRangeList[belongCluster].start * props.cellScale);
       const width = this.heatmapOverlayCanvas.width - this.legendWidth;
       const height =
         (this.clusterRangeList[belongCluster].end - this.clusterRangeList[belongCluster].start) * props.cellScale;
@@ -102,7 +102,7 @@ export default class ClusterMatrix extends React.Component {
 
   searchBelongCluster(selectedIdx) {
     let sum = 0;
-    for (let i = 0; i < this.nClusterList.length; i++) {
+    for (let i = 0; i < this.nClusterList.length; i += 1) {
       sum += this.nClusterList[i];
       if (selectedIdx < sum) {
         return i;
@@ -140,8 +140,8 @@ export default class ClusterMatrix extends React.Component {
 
     const color = drawingTool.getColorCategory(this.nClusterList.length);
 
-    this.heatmapCanvas.width = this.graphSorted.length * props.cellScale + this.legendWidth;
-    this.heatmapCanvas.height = this.graphSorted.length * props.cellScale + this.legendWidth;
+    this.heatmapCanvas.width = (this.graphSorted.length * props.cellScale) + this.legendWidth;
+    this.heatmapCanvas.height = (this.graphSorted.length * props.cellScale) + this.legendWidth;
     this.heatmapOverlayCanvas.width = this.heatmapCanvas.width;
     this.heatmapOverlayCanvas.height = this.heatmapCanvas.height;
 
@@ -150,7 +150,7 @@ export default class ClusterMatrix extends React.Component {
     let clusterIdx = 0;
     this.graphSorted.forEach((row, rowIdx) => {
       if (rowIdx >= this.clusterRangeList[clusterIdx].end) {
-        clusterIdx++;
+        clusterIdx += 1;
       }
 
       // draw row color to the heatmap
@@ -159,9 +159,10 @@ export default class ClusterMatrix extends React.Component {
       row.forEach((cell, cellIdx) => {
         if (cell === true) {
           this.heatmapCtx.fillRect(
-            cellIdx * props.cellScale + this.legendWidth,
-            rowIdx * props.cellScale + this.legendWidth,
-            props.cellScale, props.cellScale);
+            (cellIdx * props.cellScale) + this.legendWidth,
+            (rowIdx * props.cellScale) + this.legendWidth,
+            props.cellScale,
+            props.cellScale);
         }
       });
     });
@@ -218,41 +219,6 @@ export default class ClusterMatrix extends React.Component {
     //     }
     //   });
     // });
-  }
-
-  sum(arr) {
-    return arr.reduce((prev, current) => {
-      return prev + current;
-    });
-  }
-
-  // ref: http://qiita.com/frogcat/items/2f94b095b4c2d8581ff6
-  arrow(ctx, startX, startY, endX, endY, controlPoints) {
-    const dx = endX - startX;
-    const dy = endY - startY;
-    const len = Math.sqrt(dx * dx + dy * dy);
-    const sin = dy / len;
-    const cos = dx / len;
-    const a = [];
-    a.push(0, 0);
-    for (let i = 0; i < controlPoints.length; i += 2) {
-      const x = controlPoints[i];
-      const y = controlPoints[i + 1];
-      a.push(x < 0 ? len + x : x, y);
-    }
-    a.push(len, 0);
-    for (let i = controlPoints.length; i > 0; i -= 2) {
-      const x = controlPoints[i - 2];
-      const y = controlPoints[i - 1];
-      a.push(x < 0 ? len + x : x, -y);
-    }
-    a.push(0, 0);
-    for (let i = 0; i < a.length; i += 2) {
-      const x = a[i] * cos - a[i + 1] * sin + startX;
-      const y = a[i] * sin + a[i + 1] * cos + startY;
-      if (i === 0) ctx.moveTo(x, y);
-      else ctx.lineTo(x, y);
-    }
   }
 
   render() {

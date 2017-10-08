@@ -36,7 +36,7 @@ export default class OriginalCanvas extends React.Component {
     }
 
     this.canvas.width = props.width * props.scale;
-    this.canvas.height = props.allTimeSeries.length / props.width * props.scale;
+    this.canvas.height = (props.allTimeSeries.length / props.width) * props.scale;
 
 
     // let playTimerOn = true;
@@ -63,19 +63,20 @@ export default class OriginalCanvas extends React.Component {
     // }, 50);
     let playIndex = 0;
     setInterval(() => {
-      if (++playIndex === props.allTimeSeries[0].length - 1) {
+      playIndex += 1;
+      if (playIndex === props.allTimeSeries[0].length - 1) {
         playIndex = (playIndex === props.allTimeSeries[0].length - 1) ? 0 : playIndex;
       }
       props.allTimeSeries.forEach((timeSeries, idx) => {
         const scalar = timeSeries[playIndex];
         if (scalar > 0 && scalar <= 1) {
-          this.ctx.fillStyle = this.colormap[Math.floor(scalar * 255 - 0.000001)];
+          this.ctx.fillStyle = this.colormap[Math.floor((scalar * 255) - 0.000001)];
         } else {
           this.ctx.fillStyle = this.colormap[scalar];
         }
 
-        const x = idx % props.width * props.scale;
-        const y = idx / props.width * props.scale;
+        const x = (idx % props.width) * props.scale;
+        const y = (idx / props.width) * props.scale;
         this.ctx.fillRect(x - 1, y - 1, props.scale, props.scale);
       });
       drawingTool.drawFrame(this.canvas, this.ctx);

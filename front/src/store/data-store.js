@@ -22,21 +22,21 @@ const store = (intentSubject) => {
               const allTiffList = [];
               const tiff = new Tiff({ buffer });
               const tiffLen = tiff.countDirectory();
-              for (let i = 0; i < tiffLen; i++) {
+              for (let i = 0; i < tiffLen; i += 1) {
                 tiff.setDirectory(i);
                 const canvas = tiff.toCanvas();
                 allTiffList.push(canvas);
               }
 
               window.fetch(payload.legendName)
-                .then((response) => {
-                  return response;
+                .then((legendResponse) => {
+                  return legendResponse;
                 })
-                .then((response) => {
-                  response.arrayBuffer().then((buffer) => {
-                    const tiff = new Tiff({ buffer });
-                    tiff.setDirectory(0);
-                    const legendTiff = tiff.toCanvas();
+                .then((legenedRes) => {
+                  legenedRes.arrayBuffer().then((legendBuffer) => {
+                    const innerTiff = new Tiff({ legendBuffer });
+                    innerTiff.setDirectory(0);
+                    const legendTiff = innerTiff.toCanvas();
 
                     state.allTiffList[0] = allTiffList;
                     state.legendTiff[0] = legendTiff;
@@ -44,8 +44,8 @@ const store = (intentSubject) => {
                     state.width[0] = state.allTiffList[0][0].width;
 
                     window.fetch('NagumoInterpolate.json')
-                      .then((response) => {
-                        return response.json();
+                      .then((nagumoResponse) => {
+                        return nagumoResponse.json();
                       })
                       .then((json) => {
                         state.allTimeSeries[1] = json.allTimeSeries;

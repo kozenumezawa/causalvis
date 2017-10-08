@@ -42,15 +42,15 @@ const store = (intentSubject, dataSubject) => {
       case FETCH_TIFF:
         state.meanR[0] = 1;
         state.meanR[1] = 1;
-        state.meanStep[0] = state.meanR[0] * 2 + 1;
-        state.meanStep[1] = state.meanR[1] * 2 + 1;
+        state.meanStep[0] = (state.meanR[0] * 2) + 1;
+        state.meanStep[1] = (state.meanR[1] * 2) + 1;
 
         if (data.state.allTimeSeries[0] == null) {
           subject.onNext({ state });
           return;
         }
 
-        for (let dataIndex = 0; dataIndex < 2; dataIndex++) {
+        for (let dataIndex = 0; dataIndex < 2; dataIndex += 1) {
           const removedData = removeUselessTimeSeries(
             data.state.allTimeSeries[dataIndex],
             data.state.width[dataIndex],

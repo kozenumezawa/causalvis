@@ -39,10 +39,10 @@ const store = (intentSubject, clusteringSubject) => {
                 continue;
               }
               let causalCnt = 0;
-              for (let causalIdx = causalClusterRange.start; causalIdx < causalClusterRange.end; causalIdx++) {
-                for (let effectIdx = effectClusterRange.start; effectIdx < effectClusterRange.end; effectIdx++) {
+              for (let causalIdx = causalClusterRange.start; causalIdx < causalClusterRange.end; causalIdx += 1) {
+                for (let effectIdx = effectClusterRange.start; effectIdx < effectClusterRange.end; effectIdx += 1) {
                   if (clusterMatrices[dataIdx][causalIdx][effectIdx] === true) {
-                    causalCnt++;
+                    causalCnt += 1;
                   }
                 }
               }
