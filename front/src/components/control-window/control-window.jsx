@@ -55,13 +55,16 @@ export default class ControlWindow extends React.Component {
     ];
     return (
       <div>
-        {(() => {
-          return this.renderSteps(steps, 'upper');
-        })()}
-        {(() => {
-          return this.renderSteps(steps2, 'below');
-        })()}
-
+        <div>
+          {(() => {
+            return this.renderSteps(steps, 'upper');
+          })()}
+        </div>
+        <div style={{ marginTop: 10 }}>
+          {(() => {
+            return this.renderSteps(steps2, 'below');
+          })()}
+        </div>
         <ModalContainer
           openModal={this.props.openModal}
           icon={this.state.icon}
