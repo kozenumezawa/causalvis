@@ -22,13 +22,14 @@ const store = (intentSubject, clusteringSubject) => {
           const color = drawingTool.getColorCategory(nClusterList.length);
           const sizeCoeff = 3;
           const nodes = nClusterList.map((nCluster, idx) => {
-            return {
+            const node = {
               index: `${idx}`,
               color: color[idx],
               nodeWidth: nCluster * sizeCoeff,
               nodeHeight: nCluster * sizeCoeff,
               fontSize: nCluster * sizeCoeff * 0.7,
             };
+            return node;
           });
 
           const links = [];

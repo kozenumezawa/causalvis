@@ -15,7 +15,6 @@
     "max-len": ["error", 120],
     "class-methods-use-this": "off",
     "react/jsx-no-bind": "off",
-    //
     "react/prop-types": "off",
     "react/no-array-index-key": "off",
     "jsx-a11y/href-no-hash": "off",

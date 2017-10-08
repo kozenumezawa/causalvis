@@ -29,7 +29,7 @@ const store = () => {
     modalSubject,
     canvasEventSubject,
     (data, filter, causal, clustering, network, modal, canvasEvent) => {
-      return {
+      const states = {
         data: data.state,
         filter: filter.state,
         causal: causal.state,
@@ -38,6 +38,7 @@ const store = () => {
         modal: modal.state,
         canvasEvent: canvasEvent.state,
       };
+      return states;
     },
   );
 };

@@ -18,7 +18,7 @@ const store = (intentSubject, filterSubject) => {
         }
         const dataNames = ['real', 'sim'];
         const fetchPromises = filter.state.allTimeSeries.map((allTimeSeries, idx) => {
-          return fetch('http://localhost:3000/api/v1/causal', {
+          const causalFetch = fetch('http://localhost:3000/api/v1/causal', {
             mode: 'cors',
             method: 'POST',
             headers: {
@@ -32,18 +32,13 @@ const store = (intentSubject, filterSubject) => {
               dataName: dataNames[idx],
             }),
           })
-            .then((response) => {
-              return response.json();
-            })
-            .then((json) => {
-              return json;
-            });
+            .then(response => response.json())
+            .then(json => json);
+          return causalFetch;
         });
 
         Promise.all(fetchPromises).then((responseJSONS) => {
-          state.causalMatrices = responseJSONS.map((json) => {
-            return json.causalMatrix;
-          });
+          state.causalMatrices = responseJSONS.map(json => json.causalMatrix);
           subject.onNext({ state });
         });
         break;

@@ -11,9 +11,7 @@ const isClusterContained = (selectedClusterLists, positionIdx, clusterNumber) =>
 };
 
 const getArrayAverage = (arr) => {
-  const sum = arr.reduce((prev, current) => {
-    return prev + current;
-  });
+  const sum = arr.reduce((prev, current) => prev + current);
   return sum / arr.length;
 };
 
@@ -73,25 +71,28 @@ const store = (intentSubject, dataSubject, filterSubject, clusteringSubject) => 
               label: clusterNumber,
               color: color[clusterNumber],
               data: averageTimeSeries.map((value, x) => {
-                return {
+                const oneData = {
                   x,
                   y: value,
                 };
+                return oneData;
               }),
             });
 
             state.selectedTimeSeriesLists[positionIdx].rawData.push(
               selectedTimeSeries.map((timeSeries, rowIdx) => {
-                return {
+                const lineData = {
                   label: `${clusterNumber}_${rowIdx}`,
                   color: color[clusterNumber],
                   data: timeSeries.map((value, x) => {
-                    return {
+                    const oneData = {
                       x,
                       y: value,
                     };
+                    return oneData;
                   }),
                 };
+                return lineData;
               }));
           }
 

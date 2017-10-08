@@ -23,7 +23,7 @@ const store = (intentSubject, causalSubject, filterSubject) => {
 
         const dataNames = ['real', 'sim'];
         const fetchPromises = causal.state.causalMatrices.map((causalMatrix, idx) => {
-          return fetch('http://localhost:3000/api/v1/clustering', {
+          const clusteringFetch = fetch('http://localhost:3000/api/v1/clustering', {
             mode: 'cors',
             method: 'POST',
             headers: {
@@ -37,12 +37,9 @@ const store = (intentSubject, causalSubject, filterSubject) => {
               dataName: dataNames[idx],
             }),
           })
-            .then((response) => {
-              return response.json();
-            })
-            .then((json) => {
-              return json;
-            });
+            .then(response => response.json())
+            .then(json => json);
+          return clusteringFetch;
         });
 
         Promise.all(fetchPromises).then((responseJSONS) => {

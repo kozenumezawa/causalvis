@@ -29,9 +29,7 @@ const store = (intentSubject) => {
               }
 
               window.fetch(payload.legendName)
-                .then((legendResponse) => {
-                  return legendResponse;
-                })
+                .then(legendResponse => legendResponse)
                 .then((legendRes) => {
                   legendRes.arrayBuffer().then((legendBuffer) => {
                     const legTiff = new Tiff({ buffer: legendBuffer });
@@ -44,9 +42,7 @@ const store = (intentSubject) => {
                     state.width[0] = state.allTiffList[0][0].width;
 
                     window.fetch('NagumoInterpolate.json')
-                      .then((nagumoResponse) => {
-                        return nagumoResponse.json();
-                      })
+                      .then(nagumoResponse => nagumoResponse.json())
                       .then((json) => {
                         state.allTimeSeries[1] = json.allTimeSeries;
                         state.width[1] = json.width;

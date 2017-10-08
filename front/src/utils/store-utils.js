@@ -56,9 +56,7 @@ function transposeTimeSeries(allTimeSeriesInverse) {
 
 export const createAllTimeSeriesFromTiff = (legendCanvas, allTiffList) => {
   // create time series data from each time step data
-  const allTimeSeriesInverse = allTiffList.map((tiffCanvas) => {
-    return createTimeSeriesInverse(tiffCanvas, legendCanvas);
-  });
+  const allTimeSeriesInverse = allTiffList.map(tiffCanvas => createTimeSeriesInverse(tiffCanvas, legendCanvas));
 
   return transposeTimeSeries(allTimeSeriesInverse);
 };
@@ -88,8 +86,4 @@ export const isSamplingPoint = (idx, width, meanR) => {
   return false;
 };
 
-export const arraySum = (arr) => {
-  return arr.reduce((prev, current) => {
-    return prev + current;
-  });
-};
+export const arraySum = arr => arr.reduce((prev, current) => prev + current);
