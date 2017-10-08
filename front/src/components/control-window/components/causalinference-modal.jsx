@@ -1,22 +1,38 @@
 import React from 'react';
 
-import { Modal, Header } from 'semantic-ui-react';
+import { Modal, Header, Tab } from 'semantic-ui-react';
 
 export default class CausalinferenceModal extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      activeIndex: 1,
+    };
+  }
+
+  handleTabChange(e, { activeIndex }) {
+    this.setState({ activeIndex });
   }
 
   render() {
+    const panes = [
+      { menuItem: 'Granger Causality', render: () => <Tab.Pane>Tab 1 Content</Tab.Pane> },
+      { menuItem: 'Convergent Cross Mapping', render: () => <Tab.Pane>Tab 2 Content</Tab.Pane> },
+      { menuItem: 'Cross Correlation', render: () => <Tab.Pane>Tab 3 Content</Tab.Pane> },
+    ];
+
     return (
       <Modal.Content>
         <Modal.Description>
           <Header>
             Default Profile Image
           </Header>
-          <p>
-            aaaaaa
-          </p>
+          <Tab
+            panes={panes}
+            activeIndex={this.state.activeIndex}
+            onTabChange={this.handleTabChange.bind(this)}
+          />
         </Modal.Description>
       </Modal.Content>
     );
