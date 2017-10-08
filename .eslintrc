@@ -13,9 +13,6 @@
     "arrow-body-style": "off",
     "max-len": ["error", 120],
     //
-    "no-param-reassign": "off",
-    "no-useless-constructor": "off",
-    "no-restricted-syntax": "off",
     "no-unused-vars": "warn",
     "no-continue": "off",
     "class-methods-use-this": "off",

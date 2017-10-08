@@ -4,10 +4,6 @@ import colormap from 'colormap';
 import * as drawingTool from '../../../utils/drawing-tool';
 
 export default class OriginalCanvas extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     const options = {
       colormap: 'bone',

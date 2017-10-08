@@ -2,10 +2,6 @@ import React from 'react';
 import { Scatter } from 'react-chartjs-2';
 
 export default class GraphContainer extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     // [[{}, {},][{}, {}]]  => [{}, {},{}, {}]
     const hexToRGBA = (hex, alpha) => {

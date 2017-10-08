@@ -3,10 +3,6 @@ import React from 'react';
 import * as drawingTool from '../../../utils/drawing-tool';
 
 export default class PointToAllView extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     this.canvas = document.getElementById(`detail_causal_shape_${this.props.id}`);
     this.ctx = this.canvas.getContext('2d');

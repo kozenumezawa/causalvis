@@ -1,10 +1,6 @@
 import React from 'react';
 
 export default class PointToNearView extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   renderTable() {
     const { pointToNearCausal } = this.props;
     if (pointToNearCausal.data.length === 0) {

@@ -3,10 +3,6 @@ import React from 'react';
 import { selectCluster } from '../../../intents/intent';
 
 export default class NetworkView extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     this.network.addEventListener('nodeclick', this.nodeClick.bind(this));
     this.network.load(this.props.network);

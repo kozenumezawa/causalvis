@@ -32,11 +32,11 @@ const store = (intentSubject, clusteringSubject) => {
           });
 
           const links = [];
-          for (const causalClusterRange of clusterRangeList) {
+          clusterRangeList.forEach((causalClusterRange) => {
             const height = causalClusterRange.end - causalClusterRange.start;
-            for (const effectClusterRange of clusterRangeList) {
+            clusterRangeList.forEach((effectClusterRange) => {
               if (causalClusterRange === effectClusterRange) {
-                continue;
+                return;
               }
               let causalCnt = 0;
               for (let causalIdx = causalClusterRange.start; causalIdx < causalClusterRange.end; causalIdx += 1) {
@@ -55,9 +55,8 @@ const store = (intentSubject, clusteringSubject) => {
                   intensity: 1,
                 });
               }
-            }
-          }
-
+            });
+          });
           return { nodes, links };
         });
 

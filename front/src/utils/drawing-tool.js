@@ -19,7 +19,8 @@ export function hslToRgb(h, s, l) {
     g = l;
     b = l;
   } else {
-    const hue2rgb = (p, q, t) => {
+    const hue2rgb = (p, q, tt) => {
+      let t = tt;
       if (t < 0) {
         t += 1;
       }

@@ -117,13 +117,14 @@ const store = (intentSubject, dataSubject, filterSubject, clusteringSubject) => 
 
           // search each row index from the coordinate
           clustering.state.clusterSampledCoords[positionIdx].forEach((sampledCoord, rowIdx) => {
-            for (const obj of nearCoordsList) {
+            nearCoordsList.forEach((obj) => {
               if (obj.x >= sampledCoord.x - meanR
                 && obj.x <= sampledCoord.x + meanR && obj.y >= sampledCoord.y - meanR
                 && obj.y <= sampledCoord.y + meanR) {
-                obj.rowIdx = rowIdx;
+                const targetObject = obj;
+                targetObject.rowIdx = rowIdx;
               }
-            }
+            });
           });
 
           // console.log(nearCoordsList);

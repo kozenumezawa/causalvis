@@ -32,11 +32,11 @@ const store = (intentSubject) => {
                 .then((legendResponse) => {
                   return legendResponse;
                 })
-                .then((legenedRes) => {
-                  legenedRes.arrayBuffer().then((legendBuffer) => {
-                    const innerTiff = new Tiff({ legendBuffer });
-                    innerTiff.setDirectory(0);
-                    const legendTiff = innerTiff.toCanvas();
+                .then((legendRes) => {
+                  legendRes.arrayBuffer().then((legendBuffer) => {
+                    const legTiff = new Tiff({ buffer: legendBuffer });
+                    legTiff.setDirectory(0);
+                    const legendTiff = legTiff.toCanvas();
 
                     state.allTiffList[0] = allTiffList;
                     state.legendTiff[0] = legendTiff;
