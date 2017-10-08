@@ -41,7 +41,7 @@ export default class ResultWindow extends React.Component {
       return (
         <div
           key={`network list${idx}`}
-          style={{ position: 'absolute', top: top, left: left[idx], border: '1px solid gray' }}
+          style={{ position: 'absolute', top, left: left[idx], border: '1px solid gray' }}
         >
           <NetworkView
             network={this.props.networks[idx]}
@@ -58,7 +58,7 @@ export default class ResultWindow extends React.Component {
     const left = [600, 920];
     return this.props.selectedTimeSeriesLists.map((selectedTimeSeriesList, idx) => {
       return (
-        <div key={`graph list${idx}`} style={{ position: 'absolute', top: top, left: left[idx] }} >
+        <div key={`graph list${idx}`} style={{ position: 'absolute', top, left: left[idx] }} >
           <GraphContainer
             dataContainer={selectedTimeSeriesList.averageData}
             rawContainer={selectedTimeSeriesList.rawData}

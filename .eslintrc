@@ -9,13 +9,13 @@
     "API_ENDPOINT": true
   },
   "rules": {
+    "no-unused-vars": "warn",
     "no-console": "off",
     "arrow-body-style": "off",
     "max-len": ["error", 120],
-    "no-unused-vars": "warn",
     "class-methods-use-this": "off",
-    "import/prefer-default-export": "off",
     "react/jsx-no-bind": "off",
+    //
     "react/prop-types": "off",
     "react/no-array-index-key": "off",
     "jsx-a11y/href-no-hash": "off",

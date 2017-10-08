@@ -2,13 +2,15 @@ import React from 'react';
 
 import { Modal, Header, Tab } from 'semantic-ui-react';
 
-export default class CausalinferenceModal extends React.Component {
+export default class CausalModal extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       activeIndex: 1,
     };
+
+    this.handleTabChange = this.handleTabChange.bind(this);
   }
 
   handleTabChange(e, { activeIndex }) {
@@ -31,7 +33,7 @@ export default class CausalinferenceModal extends React.Component {
           <Tab
             panes={panes}
             activeIndex={this.state.activeIndex}
-            onTabChange={this.handleTabChange.bind(this)}
+            onTabChange={this.handleTabChange}
           />
         </Modal.Description>
       </Modal.Content>

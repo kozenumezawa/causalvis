@@ -3,7 +3,7 @@ import { Modal, Button } from 'semantic-ui-react';
 
 import { closeModal } from '../../../intents/intent';
 
-import CausalinferenceModal from './causalinference-modal.jsx';
+import CausalModal from './causal-modal.jsx';
 
 export default class ModalContainer extends React.Component {
   constructor(props) {
@@ -13,6 +13,10 @@ export default class ModalContainer extends React.Component {
       modalContent: '',
       modalHeader: '',
     };
+
+    this.close = this.close.bind(this);
+    this.onCancelClick = this.onCancelClick.bind(this);
+    this.onOKClick = this.onOKClick.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -53,13 +57,13 @@ export default class ModalContainer extends React.Component {
 
   renderModalContent() {
     return (
-      <CausalinferenceModal />
+      <CausalModal />
     );
   }
 
   render() {
     return (
-      <Modal dimmer={'inverted'} open={this.props.openModal} onClose={this.close.bind(this)}>
+      <Modal dimmer={'inverted'} open={this.props.openModal} onClose={this.close}>
         <Modal.Header>
           { this.state.modalHeader }
         </Modal.Header>
@@ -67,10 +71,10 @@ export default class ModalContainer extends React.Component {
           return this.renderModalContent();
         })()}
         <Modal.Actions>
-          <Button color="black" onClick={this.onCancelClick.bind(this)}>
+          <Button color="black" onClick={this.onCancelClick}>
             Cancel
           </Button>
-          <Button positive onClick={this.onOKClick.bind(this)}>
+          <Button positive onClick={this.onOKClick}>
             OK
           </Button>
         </Modal.Actions>

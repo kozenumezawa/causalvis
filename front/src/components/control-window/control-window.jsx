@@ -19,14 +19,15 @@ export default class ControlWindow extends React.Component {
   handleClick(position, icon) {
     openModal();
     this.setState({
-      icon: icon,
-      position: position,
+      icon,
+      position,
     });
   }
 
   renderSteps(steps, position) {
     const renderSteps = steps.map((data) => {
       return (
+
         <Step
           key={`${position}${data.title}`}
           icon={data.icon}

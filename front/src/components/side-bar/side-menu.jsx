@@ -10,6 +10,8 @@ export default class SideMenu extends React.Component {
 
     this.state = { visible: true };
     this.handleItemClick = this.handleItemClick.bind(this);
+    this.handleCheckClick = this.handleCheckClick.bind(this);
+    this.renderCheckBoxes = this.renderCheckBoxes.bind(this);
   }
 
   handleItemClick(event, data) {
@@ -40,7 +42,7 @@ export default class SideMenu extends React.Component {
               {`${dataName}`}
             </div>
             <div style={{ width: 10 }} />
-            <Checkbox value={`${dataName}`} onClick={this.handleCheckClick.bind(this)} />
+            <Checkbox value={`${dataName}`} onClick={this.handleCheckClick} />
           </Menu.Item>
         </div>
       );
@@ -58,7 +60,7 @@ export default class SideMenu extends React.Component {
           <Menu.Header>Left Data</Menu.Header>
           <Menu.Menu>
             {(() => {
-              return this.renderCheckBoxes.bind(this)();
+              return this.renderCheckBoxes();
             })()}
           </Menu.Menu>
         </Menu.Item>
@@ -67,7 +69,7 @@ export default class SideMenu extends React.Component {
           <Menu.Header>Rightr Data</Menu.Header>
           <Menu.Menu>
             {(() => {
-              return this.renderCheckBoxes.bind(this)();
+              return this.renderCheckBoxes();
             })()}
           </Menu.Menu>
         </Menu.Item>

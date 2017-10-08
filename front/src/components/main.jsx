@@ -17,6 +17,8 @@ export default class Main extends React.Component {
     this.state = {
       activateIndex: 0,
     };
+
+    this.onAccordionClick = this.onAccordionClick.bind(this);
   }
 
   componentWillMount() {
@@ -58,7 +60,7 @@ export default class Main extends React.Component {
                   <SideMenu />
 
                   <Sidebar.Pusher>
-                    <Accordion activeIndex={this.state.activateIndex} onTitleClick={this.onAccordionClick.bind(this)}>
+                    <Accordion activeIndex={this.state.activateIndex} onTitleClick={this.onAccordionClick}>
                       <Accordion.Title>
                         <Icon name="dropdown" />
                         Analysis Methods window
