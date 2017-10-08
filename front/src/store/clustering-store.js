@@ -30,7 +30,7 @@ const store = (intentSubject, causalSubject, filterSubject) => {
               'content-type': 'application/json',
             },
             body: JSON.stringify({
-              causalMatrix: causalMatrix,
+              causalMatrix,
               method: 'IRM',
               threshold: 0.7,
               sampledCoords: filter.state.sampledCoords[idx],

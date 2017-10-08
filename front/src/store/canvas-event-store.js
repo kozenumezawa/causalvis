@@ -74,7 +74,7 @@ const store = (intentSubject, dataSubject, filterSubject, clusteringSubject) => 
               color: color[clusterNumber],
               data: averageTimeSeries.map((value, x) => {
                 return {
-                  x: x,
+                  x,
                   y: value,
                 };
               }),
@@ -87,7 +87,7 @@ const store = (intentSubject, dataSubject, filterSubject, clusteringSubject) => 
                   color: color[clusterNumber],
                   data: timeSeries.map((value, x) => {
                     return {
-                      x: x,
+                      x,
                       y: value,
                     };
                   }),

@@ -35,8 +35,8 @@ export const closeModal = () => {
 export const selectCluster = (clusterNumber, positionIdx) => {
   intentSubject.onNext({
     type: SELECT_CLUSTER,
-    clusterNumber: clusterNumber,
-    positionIdx: positionIdx,
+    clusterNumber,
+    positionIdx,
   });
 };
 

@@ -25,7 +25,7 @@ const store = (intentSubject, filterSubject) => {
               'content-type': 'application/json',
             },
             body: JSON.stringify({
-              allTimeSeries: allTimeSeries,
+              allTimeSeries,
               maxLag: 20,
               lagStep: 2,
               method: 'CROSS',
