@@ -1,20 +1,8 @@
 import React from 'react';
 
-import * as drawingTool from '../../../utils/drawing-tool';
-
 export default class PointToNearView extends React.Component {
   constructor(props) {
     super(props);
-  }
-
-  componentDidMount() {
-    // this.canvas = document.getElementById(`point_to_detail_canvas_${this.props.id}`);
-    // this.ctx = this.canvas.getContext('2d');
-    //
-    // this.canvas.width = 200;
-    // this.canvas.height = 200;
-    // this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    // drawingTool.drawFrame(this.canvas, this.ctx);
   }
 
   renderTable() {
@@ -42,7 +30,7 @@ export default class PointToNearView extends React.Component {
           </tr>
           <tr style={{ align: 'center', border: '1px solid' }}>
             <th style={{ width: 50, height: 30, border: '1px solid' }}>{ getRenderItem(3) }</th>
-            <th style={{ width: 50, height: 30, border: '1px solid' }}></th>
+            <th style={{ width: 50, height: 30, border: '1px solid' }} />
             <th style={{ width: 50, height: 30, border: '1px solid' }}>{ getRenderItem(5) }</th>
           </tr>
           <tr style={{ align: 'center', border: '1px solid' }}>
@@ -63,7 +51,6 @@ export default class PointToNearView extends React.Component {
             return this.renderTable();
           })()
         }
-        {/*<canvas id={`point_to_detail_canvas_${this.props.id}`} style={this.props.style} />*/}
       </div>
     );
   }

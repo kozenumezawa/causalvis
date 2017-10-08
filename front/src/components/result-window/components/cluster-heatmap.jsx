@@ -39,14 +39,6 @@ export default class ClusterMatrix extends React.Component {
 
     // draw cross line according to coordinates
     this.drawCrossLine(x, y);
-
-    const causeIdx = Math.floor((y - this.legendWidth) / this.props.cellScale);
-    const effectIdx = Math.floor((x - this.legendWidth) / this.props.cellScale);
-
-    if (this.isOnLegend(causeIdx, effectIdx)) {
-      return;
-    }
-    // this.drawCausalArrowToCanvas(causeIdx, effectIdx);
   }
 
   onMouseUpHeatmap(e) {
