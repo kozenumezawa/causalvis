@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import { Sidebar, Segment, Accordion, Icon, Modal } from 'semantic-ui-react';
+import { Sidebar, Segment, Accordion, Icon } from 'semantic-ui-react';
 
 import { loadTiff } from '../intents/intent';
 
@@ -58,7 +58,17 @@ export default class Main extends React.Component {
                   <SideMenu />
 
                   <Sidebar.Pusher>
-                    <ControlWindow />
+                    <Accordion activeIndex={this.state.activateIndex} onTitleClick={this.onAccordionClick.bind(this)}>
+                      <Accordion.Title>
+                        <Icon name="dropdown" />
+                        Analysis Methods window
+                      </Accordion.Title>
+                      <Accordion.Content>
+                        <ControlWindow
+                          openModal={this.state.modal.openModal}
+                        />
+                      </Accordion.Content>
+                    </Accordion>
                     <div>
                       <ResultWindow
                         allTiffList={this.state.data.allTiffList}
