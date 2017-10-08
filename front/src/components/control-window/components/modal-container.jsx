@@ -1,7 +1,7 @@
 import React from 'react';
-import { Modal, Header, Button } from 'semantic-ui-react';
+import { Modal, Button } from 'semantic-ui-react';
 
-import { openModal, closeModal } from '../../../intents/intent';
+import { closeModal } from '../../../intents/intent';
 
 import CausalinferenceModal from './causalinference-modal.jsx';
 

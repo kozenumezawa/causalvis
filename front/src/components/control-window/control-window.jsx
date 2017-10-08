@@ -16,7 +16,7 @@ export default class ControlWindow extends React.Component {
     };
   }
 
-  handleClick(position, icon, e) {
+  handleClick(position, icon) {
     openModal();
     this.setState({
       icon: icon,

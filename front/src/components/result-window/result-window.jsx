@@ -1,12 +1,10 @@
 import React from 'react';
-import { Segment } from 'semantic-ui-react';
 
 import ClusterMatrix from './components/cluster-matrix.jsx';
 import ClusterHeatmap from './components/cluster-heatmap.jsx';
 import OriginalCanvas from './components/original-canvas.jsx';
 import NetworkView from './components/network-view.jsx';
 import GraphContainer from './components/graph-container.jsx';
-import DetailGraphContainer from './components/detail-graph-container.jsx';
 import PointToAllView from './components/point-to-all-view.jsx';
 import PointToNearView from './components/point-to-near-view.jsx';
 
@@ -24,7 +22,7 @@ export default class ResultWindow extends React.Component {
     const left = [50, 316];
     return this.props.allTimeSeries.map((id, idx) => {
       return (
-        <div style={{ position: 'absolute', left: left[idx] }} >
+        <div key={`canvas list${idx}`} style={{ position: 'absolute', left: left[idx] }} >
           <OriginalCanvas
             id={idx}
             allTimeSeries={this.props.allTimeSeries[idx]}
@@ -41,7 +39,7 @@ export default class ResultWindow extends React.Component {
     const left = [600, 930];
     return this.props.networks.map((network, idx) => {
       return (
-        <div style={{ position: 'absolute', top: top, left: left[idx], border: '1px solid gray' }} >
+        <div key={`network list${idx}`} style={{ position: 'absolute', top: top, left: left[idx], border: '1px solid gray' }} >
           <NetworkView
             network={this.props.networks[idx]}
             positionIdx={idx}
@@ -57,7 +55,7 @@ export default class ResultWindow extends React.Component {
     const left = [600, 920];
     return this.props.selectedTimeSeriesLists.map((selectedTimeSeriesList, idx) => {
       return (
-        <div style={{ position: 'absolute', top: top, left: left[idx] }} >
+        <div key={`graph list${idx}`} style={{ position: 'absolute', top: top, left: left[idx] }} >
           <GraphContainer
             dataContainer={selectedTimeSeriesList.averageData}
             rawContainer={selectedTimeSeriesList.rawData}
@@ -71,9 +69,11 @@ export default class ResultWindow extends React.Component {
     return (
       <div style={{ position: 'relative', top: 50, height: 1200 }}>
         {
+          /*
           (() => {
             return this.renderOriginalCanvas();
           })()
+          */
         }
         <div>
           <ClusterMatrix
@@ -122,9 +122,11 @@ export default class ResultWindow extends React.Component {
         </div>
 
         {
+          /*
           (() => {
             return this.renderNetworkView();
           })()
+          */
         }
         <div>
           <ClusterHeatmap

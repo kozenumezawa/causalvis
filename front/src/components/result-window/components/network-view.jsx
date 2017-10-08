@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { selectCluster } from '../../../intents/intent';
-import * as drawingTool from '../../../utils/drawing-tool';
 
 export default class NetworkView extends React.Component {
   constructor(props) {
@@ -9,8 +8,8 @@ export default class NetworkView extends React.Component {
   }
 
   componentDidMount() {
-    this.refs.network.addEventListener('nodeclick', this.nodeClick.bind(this));
-    this.refs.network.load(this.props.network);
+    this.network.addEventListener('nodeclick', this.nodeClick.bind(this));
+    this.network.load(this.props.network);
   }
 
   shouldComponentUpdate(nextProps) {
@@ -30,7 +29,7 @@ export default class NetworkView extends React.Component {
   render() {
     return (
       <eg-renderer-ogdf
-        ref="network"
+        ref={(ref) => { this.network = ref; }}
         width="250"
         height="250"
         default-link-target-marker-shape="triangle"

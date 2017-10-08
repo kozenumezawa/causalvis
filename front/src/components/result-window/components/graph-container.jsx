@@ -1,14 +1,9 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Scatter } from 'react-chartjs-2';
 
 export default class GraphContainer extends React.Component {
   constructor(props) {
     super(props);
-  }
-
-  componentDidMount() {
-    ReactDOM.findDOMNode(this.refs.chart).style.display = 'inline';
   }
 
   render() {
@@ -87,7 +82,7 @@ export default class GraphContainer extends React.Component {
 
     return (
       <Scatter
-        ref="chart"
+        ref={(ref) => { this.chart = ref; }}
         data={chartData}
         options={options}
         width={250}

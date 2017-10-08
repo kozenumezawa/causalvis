@@ -40,13 +40,31 @@ export default class OriginalCanvas extends React.Component {
 
 
     // let playTimerOn = true;
-    const playTimerOn = true;
+    // let playIndex = 0;
+    // const playTiff = setInterval(() => {
+    //   if (++playIndex === props.allTimeSeries[0].length - 1 || playTimerOn === false) {
+    //     playIndex = (playIndex === props.allTimeSeries[0].length - 1) ? 0 : playIndex;
+    //     clearInterval(playTiff);
+    //     playTimerOn = false;
+    //   }
+    //   props.allTimeSeries.forEach((timeSeries, idx) => {
+    //     const scalar = timeSeries[playIndex];
+    //     if (scalar > 0 && scalar <= 1) {
+    //       this.ctx.fillStyle = this.colormap[Math.floor(scalar * 255 - 0.000001)];
+    //     } else {
+    //       this.ctx.fillStyle = this.colormap[scalar];
+    //     }
+    //
+    //     const x = idx % props.width * props.scale;
+    //     const y = idx / props.width * props.scale;
+    //     this.ctx.fillRect(x - 1, y - 1, props.scale, props.scale);
+    //   });
+    //   drawingTool.drawFrame(this.canvas, this.ctx);
+    // }, 50);
     let playIndex = 0;
-    const playTiff = setInterval(() => {
-      if (++playIndex === props.allTimeSeries[0].length - 1 || playTimerOn === false) {
+    setInterval(() => {
+      if (++playIndex === props.allTimeSeries[0].length - 1) {
         playIndex = (playIndex === props.allTimeSeries[0].length - 1) ? 0 : playIndex;
-        // clearInterval(playTiff);
-        // playTimerOn = false;
       }
       props.allTimeSeries.forEach((timeSeries, idx) => {
         const scalar = timeSeries[playIndex];
