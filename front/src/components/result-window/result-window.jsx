@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ClusterMatrix from './components/cluster-matrix.jsx';
+import ClusterShape from './components/cluster-shape.jsx';
 import ClusterHeatmap from './components/cluster-heatmap.jsx';
 import OriginalCanvas from './components/original-canvas.jsx';
 import NetworkView from './components/network-view.jsx';
@@ -79,7 +79,7 @@ export default class ResultWindow extends React.Component {
           */
         }
         <div>
-          <ClusterMatrix
+          <ClusterShape
             style={{ position: 'absolute', top: 244, left: 50 }}
             id={0}
             allTiffList={this.props.allTiffList[0]}
@@ -101,7 +101,7 @@ export default class ResultWindow extends React.Component {
             pointToAllCausal={this.props.pointToAllCausals[0]}
           />
 
-          <ClusterMatrix
+          <ClusterShape
             style={{ position: 'absolute', top: 240, left: 316 }}
             id={1}
             allTiffList={this.props.allTiffList[0]}

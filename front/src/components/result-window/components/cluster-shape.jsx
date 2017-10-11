@@ -3,7 +3,7 @@ import React from 'react';
 import { selectOnePoint } from '../../../intents/intent';
 import * as drawingTool from '../../../utils/drawing-tool';
 
-export default class ClusterMatrix extends React.Component {
+export default class ClusterShape extends React.Component {
   constructor(props) {
     super(props);
 
