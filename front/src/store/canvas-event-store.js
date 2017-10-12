@@ -27,6 +27,13 @@ const get2DArrayAverage = (arr) => {
   return arr2D;
 };
 
+const isOutside = (rowIdx) => {
+  if (rowIdx === -1) {
+    return true;
+  }
+  return false;
+};
+
 const store = (intentSubject, dataSubject, filterSubject, clusteringSubject) => {
   const state = {
     selectedClusterLists: [[], []],
@@ -115,7 +122,6 @@ const store = (intentSubject, dataSubject, filterSubject, clusteringSubject) => 
               });
             }
           }
-
           // search each row index from the coordinate
           clustering.state.clusterSampledCoords[positionIdx].forEach((sampledCoord, rowIdx) => {
             nearCoordsList.forEach((obj) => {
@@ -128,31 +134,42 @@ const store = (intentSubject, dataSubject, filterSubject, clusteringSubject) => 
             });
           });
 
-          // console.log(nearCoordsList);
           const clusterMatrix = clustering.state.clusterMatrices[positionIdx];
           const centerRowIdx = nearCoordsList[4].rowIdx;
+
+          if (isOutside(centerRowIdx)) {
+            subject.onNext({ state });
+            break;
+          }
+
           state.pointToAllCausals[positionIdx] = {
             pointRowIdx: centerRowIdx,
             data: clusterMatrix[centerRowIdx],
           };
 
-          const getNearRelation = () => {
-            const relation = nearCoordsList.map((nearCoords) => {
-              const targetRowIdx = nearCoords.rowIdx;
+          const nearRelation = nearCoordsList.map((nearCoords) => {
+            const targetRowIdx = nearCoords.rowIdx;
+            if (isOutside(targetRowIdx)) {
               return {
                 x: nearCoords.x,
                 y: nearCoords.y,
                 rowIdx: nearCoords.rowIdx,
-                fromCenter: clusterMatrix[centerRowIdx][targetRowIdx],
-                toCenter: clusterMatrix[targetRowIdx][centerRowIdx],
+                fromCenter: false,
+                toCenter: false,
               };
-            });
-            return relation;
-          };
+            }
+            return {
+              x: nearCoords.x,
+              y: nearCoords.y,
+              rowIdx: nearCoords.rowIdx,
+              fromCenter: clusterMatrix[centerRowIdx][targetRowIdx],
+              toCenter: clusterMatrix[targetRowIdx][centerRowIdx],
+            };
+          });
 
           state.pointToNearCausals[positionIdx] = {
             pointRowIdx: centerRowIdx,
-            data: getNearRelation(),
+            data: nearRelation,
           };
           subject.onNext({ state });
           break;
