@@ -11,10 +11,17 @@ export default class CausalModal extends React.Component {
       activeIndex: 2,
     };
 
+    this.methodParams = {
+      stepsPerLag: 1,
+      maxLag: 20,
+    };
+
     this.handleTabChange = this.handleTabChange.bind(this);
+    this.handleDropDownChange = this.handleDropDownChange.bind(this);
     this.close = this.close.bind(this);
     this.onCancelClick = this.onCancelClick.bind(this);
     this.onOKClick = this.onOKClick.bind(this);
+    this.renderCross = this.renderCross.bind(this);
   }
 
   onCancelClick() {
@@ -22,6 +29,7 @@ export default class CausalModal extends React.Component {
   }
 
   onOKClick() {
+    console.log(this.methodParams);
     closeModal();
   }
 
@@ -31,6 +39,12 @@ export default class CausalModal extends React.Component {
 
   handleTabChange(e, { activeIndex }) {
     this.setState({ activeIndex });
+  }
+
+  handleDropDownChange(e, { name, value }) {
+    Object.assign(this.methodParams, {
+      [name]: value,
+    });
   }
 
   renderCCM() {
@@ -46,34 +60,30 @@ export default class CausalModal extends React.Component {
   }
 
   renderCross() {
+    const stepsPerLagList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    const maxLagList = stepsPerLagList.map((stepsPerLag) => {
+      return stepsPerLag * 10;
+    });
     const selectionList = [
       {
         paramText: 'time steps per lag',
         paramName: 'stepsPerLag',
-        options: [
-          {
-            text: 0,
-            value: 0,
-          },
-          {
-            text: 1,
-            value: 1,
-          },
-        ],
+        options: stepsPerLagList.map((stepsPerLag) => {
+          return {
+            text: stepsPerLag,
+            value: stepsPerLag,
+          };
+        }),
       },
       {
         paramText: 'max lag',
         paramName: 'maxLag',
-        options: [
-          {
-            text: 0,
-            value: 0,
-          },
-          {
-            text: 1,
-            value: 1,
-          },
-        ],
+        options: maxLagList.map((maxLag) => {
+          return {
+            text: maxLag,
+            value: maxLag,
+          };
+        }),
       },
     ];
     return (
@@ -90,7 +100,7 @@ export default class CausalModal extends React.Component {
                       name={selection.paramName}
                       options={selection.options}
                       defaultValue={0}
-                      onChange={(e, d) => { console.log(d.name, d.value); }}
+                      onChange={this.handleDropDownChange}
                     />
                   </div>
                 );
