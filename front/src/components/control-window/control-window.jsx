@@ -4,7 +4,7 @@ import { Step } from 'semantic-ui-react';
 
 import { openModal } from '../../intents/intent';
 
-import ModalContainer from './components/modal-container.jsx';
+import CausalModal from './components/causal-modal.jsx';
 
 export default class ControlWindow extends React.Component {
   constructor(props) {
@@ -72,7 +72,7 @@ export default class ControlWindow extends React.Component {
             return this.renderSteps(steps2, 'below');
           })()}
         </div>
-        <ModalContainer
+        <CausalModal
           openModal={this.props.openModal}
           icon={this.state.icon}
           position={this.state.position}
