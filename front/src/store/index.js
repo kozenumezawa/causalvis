@@ -11,12 +11,12 @@ import modalStore from './modal-store';
 import { intentSubject } from '../intents/intent';
 
 const store = () => {
+  const modalSubject = modalStore(intentSubject);
   const dataSubject = dataStore(intentSubject);
   const filterSubject = filterStore(intentSubject, dataSubject);
-  const causalSubject = causalStore(intentSubject, filterSubject);
+  const causalSubject = causalStore(intentSubject, filterSubject, modalSubject);
   const clusteringSubject = clusteringStore(intentSubject, causalSubject, filterSubject);
   const networkSubject = networkStore(intentSubject, clusteringSubject);
-  const modalSubject = modalStore(intentSubject);
   const canvasEventSubject =
     canvasEventStore(intentSubject, dataSubject, filterSubject, clusteringSubject);
 

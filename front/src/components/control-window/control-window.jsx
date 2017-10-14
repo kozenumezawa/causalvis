@@ -74,6 +74,7 @@ export default class ControlWindow extends React.Component {
         </div>
         <CausalModal
           openModal={this.props.openModal}
+          causalMethodParams={this.props.causalMethodParamsList[0]}
           icon={this.state.icon}
           position={this.state.position}
         />

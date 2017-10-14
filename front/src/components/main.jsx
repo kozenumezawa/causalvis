@@ -68,6 +68,7 @@ export default class Main extends React.Component {
                       <Accordion.Content>
                         <ControlWindow
                           openModal={this.state.modal.openModal}
+                          causalMethodParamsList={this.state.modal.causalMethodParamsList}
                         />
                       </Accordion.Content>
                     </Accordion>

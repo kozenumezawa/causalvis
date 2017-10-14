@@ -2,20 +2,22 @@ import Rx from 'rx';
 
 import { FETCH_TIFF } from '../constants/event-constants';
 
-const store = (intentSubject, filterSubject) => {
+const store = (intentSubject, filterSubject, modalSubject) => {
   const state = {
     causalMatrices: new Array(2),
   };
 
   const subject = new Rx.BehaviorSubject({ state });
 
-  Rx.Observable.zip(intentSubject, filterSubject).subscribe(([payload, filter]) => {
+  Rx.Observable.zip(intentSubject, filterSubject, modalSubject).subscribe(([payload, filter, modal]) => {
     switch (payload.type) {
       case FETCH_TIFF: {
         if (filter.state.allTimeSeries[0] == null) {
           subject.onNext({ state });
           return;
         }
+
+        // const { causalMethodParamsList } = modal.state;
         const dataNames = ['real', 'sim'];
         const fetchPromises = filter.state.allTimeSeries.map((allTimeSeries, idx) => {
           const causalFetch = fetch('http://localhost:3000/api/v1/causal', {

@@ -8,20 +8,21 @@ export default class CausalModal extends React.Component {
     super(props);
 
     this.state = {
-      activeIndex: 2,
+      activeIndex: 0,
     };
 
-    this.methodParams = {
-      stepsPerLag: 1,
-      maxLag: 20,
-    };
+    this.causalMethodParams = props.causalMethodParams;
 
     this.handleTabChange = this.handleTabChange.bind(this);
-    this.handleDropDownChange = this.handleDropDownChange.bind(this);
+    this.handleCrossDropDownChange = this.handleCrossDropDownChange.bind(this);
+    this.handleCCMDropDownChange = this.handleCCMDropDownChange.bind(this);
+    this.handleGrangerDropDownChange = this.handleGrangerDropDownChange.bind(this);
     this.close = this.close.bind(this);
     this.onCancelClick = this.onCancelClick.bind(this);
     this.onOKClick = this.onOKClick.bind(this);
     this.renderCross = this.renderCross.bind(this);
+    this.renderCCM = this.renderCCM.bind(this);
+    this.renderGranger = this.renderGranger.bind(this);
   }
 
   onCancelClick() {
@@ -29,7 +30,7 @@ export default class CausalModal extends React.Component {
   }
 
   onOKClick() {
-    console.log(this.methodParams);
+    console.log(this.causalMethodParams);
     closeModal();
   }
 
@@ -41,34 +42,128 @@ export default class CausalModal extends React.Component {
     this.setState({ activeIndex });
   }
 
-  handleDropDownChange(e, { name, value }) {
-    Object.assign(this.methodParams, {
+  handleCrossDropDownChange(e, { name, value }) {
+    Object.assign(this.causalMethodParams.cross, {
+      [name]: value,
+    });
+  }
+
+  handleCCMDropDownChange(e, { name, value }) {
+    Object.assign(this.causalMethodParams.ccm, {
+      [name]: value,
+    });
+  }
+
+  handleGrangerDropDownChange(e, { name, value }) {
+    Object.assign(this.causalMethodParams.granger, {
       [name]: value,
     });
   }
 
   renderCCM() {
+    const selectionList = [
+      {
+        paramText: 'Embedding Dimension',
+        paramName: 'E',
+        options: this.props.causalMethodParams.ccm.EList.map((E) => {
+          return {
+            text: E,
+            value: E,
+          };
+        }),
+      },
+      {
+        paramText: 'tau',
+        paramName: 'tau',
+        options: this.props.causalMethodParams.ccm.tauList.map((tau) => {
+          return {
+            text: tau,
+            value: tau,
+          };
+        }),
+      },
+    ];
     return (
-      <Tab.Pane>CCM</Tab.Pane>
+      <Tab.Pane>
+        <form name="pramsForm">
+          <div style={{ marginLeft: '20%', marginRight: '20%' }} >
+            {(() => {
+              return selectionList.map((selection, idx) => {
+                return (
+                  <div key={`ccmSelection_${idx}`} style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <div>{selection.paramText}</div>
+                    <Dropdown
+                      selection
+                      name={selection.paramName}
+                      options={selection.options}
+                      defaultValue={this.props.causalMethodParams.ccm[selection.paramName]}
+                      onChange={this.handleCCMDropDownChange}
+                    />
+                  </div>
+                );
+              });
+            })()}
+          </div>
+        </form>
+      </Tab.Pane>
     );
   }
 
   renderGranger() {
+    const selectionList = [
+      {
+        paramText: 'k',
+        paramName: 'k',
+        options: this.props.causalMethodParams.granger.kList.map((k) => {
+          return {
+            text: k,
+            value: k,
+          };
+        }),
+      },
+      {
+        paramText: 'm',
+        paramName: 'm',
+        options: this.props.causalMethodParams.granger.mList.map((m) => {
+          return {
+            text: m,
+            value: m,
+          };
+        }),
+      },
+    ];
     return (
-      <Tab.Pane>Granger</Tab.Pane>
+      <Tab.Pane>
+        <form name="pramsForm">
+          <div style={{ marginLeft: '20%', marginRight: '20%' }} >
+            {(() => {
+              return selectionList.map((selection, idx) => {
+                return (
+                  <div key={`grangerSelection_${idx}`} style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <div>{selection.paramText}</div>
+                    <Dropdown
+                      selection
+                      name={selection.paramName}
+                      options={selection.options}
+                      defaultValue={this.props.causalMethodParams.granger[selection.paramName]}
+                      onChange={this.handleGrangerDropDownChange}
+                    />
+                  </div>
+                );
+              });
+            })()}
+          </div>
+        </form>
+      </Tab.Pane>
     );
   }
 
   renderCross() {
-    const stepsPerLagList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    const maxLagList = stepsPerLagList.map((stepsPerLag) => {
-      return stepsPerLag * 10;
-    });
     const selectionList = [
       {
         paramText: 'time steps per lag',
         paramName: 'stepsPerLag',
-        options: stepsPerLagList.map((stepsPerLag) => {
+        options: this.props.causalMethodParams.cross.stepsPerLagList.map((stepsPerLag) => {
           return {
             text: stepsPerLag,
             value: stepsPerLag,
@@ -78,7 +173,7 @@ export default class CausalModal extends React.Component {
       {
         paramText: 'max lag',
         paramName: 'maxLag',
-        options: maxLagList.map((maxLag) => {
+        options: this.props.causalMethodParams.cross.maxLagList.map((maxLag) => {
           return {
             text: maxLag,
             value: maxLag,
@@ -93,14 +188,14 @@ export default class CausalModal extends React.Component {
             {(() => {
               return selectionList.map((selection, idx) => {
                 return (
-                  <div key={`selection_${idx}`} style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <div key={`crossSelection_${idx}`} style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <div>{selection.paramText}</div>
                     <Dropdown
                       selection
                       name={selection.paramName}
                       options={selection.options}
-                      defaultValue={0}
-                      onChange={this.handleDropDownChange}
+                      defaultValue={this.props.causalMethodParams.cross[selection.paramName]}
+                      onChange={this.handleCrossDropDownChange}
                     />
                   </div>
                 );
@@ -114,9 +209,9 @@ export default class CausalModal extends React.Component {
 
   render() {
     const panes = [
-      { menuItem: 'Granger Causality', render: this.renderCCM },
-      { menuItem: 'Convergent Cross Mapping', render: this.renderGranger },
       { menuItem: 'Cross Correlation', render: this.renderCross },
+      { menuItem: 'Convergent Cross Mapping', render: this.renderCCM },
+      { menuItem: 'Granger Causality', render: this.renderGranger },
     ];
 
     return (
