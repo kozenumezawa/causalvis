@@ -55,11 +55,11 @@ const options = {
 };
 
 if (process.env.NODE_ENV === 'production') {
-  options.plugins.push(new webpack.optimize.UglifyJsPlugin({
-    compress: {
-      warnings: false
-    }
-  }));
+  // options.plugins.push(new webpack.optimize.UglifyJsPlugin({
+  //   compress: {
+  //     warnings: false
+  //   }
+  // }));
 } else {
   Object.assign(options, {
     devtool: 'inline-source-map'
