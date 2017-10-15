@@ -23,7 +23,7 @@ const store = (intentSubject, causalSubject, filterSubject) => {
 
         const dataNames = ['real', 'sim'];
         const fetchPromises = causal.state.causalMatrices.map((causalMatrix, idx) => {
-          const clusteringFetch = fetch('http://localhost:3000/api/v1/clustering', {
+          const clusteringFetch = fetch(`${API_ENDPOINT}/api/v1/clustering`, {
             mode: 'cors',
             method: 'POST',
             headers: {

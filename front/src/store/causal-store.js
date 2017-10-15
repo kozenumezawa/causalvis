@@ -20,7 +20,7 @@ const store = (intentSubject, filterSubject, modalSubject) => {
         // const { causalMethodParamsList } = modal.state;
         const dataNames = ['real', 'sim'];
         const fetchPromises = filter.state.allTimeSeries.map((allTimeSeries, idx) => {
-          const causalFetch = fetch('http://localhost:3000/api/v1/causal', {
+          const causalFetch = fetch(`${API_ENDPOINT}/api/v1/causal`, {
             mode: 'cors',
             method: 'POST',
             headers: {

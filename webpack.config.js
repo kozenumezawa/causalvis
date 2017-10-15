@@ -49,7 +49,7 @@ const options = {
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV)
       },
-      API_ENDPOINT: `'https://${process.env.NODE_ENV === 'production' ? 'production' : 'develop'}'`,
+      API_ENDPOINT: `'http://${process.env.NODE_ENV === 'production' ? 'production' : 'localhost:3000'}'`,
     })
   ]
 };
