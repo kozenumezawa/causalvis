@@ -1,6 +1,6 @@
 import Rx from 'rx';
 
-import { FETCH_TIFF } from '../constants/event-constants';
+import { FETCH_TIFF, SET_NEWDATA } from '../constants/event-constants';
 import { createAllTimeSeriesFromTiff } from '../utils/store-utils';
 
 const store = (intentSubject) => {
@@ -55,6 +55,8 @@ const store = (intentSubject) => {
           });
         break;
       }
+      case SET_NEWDATA:
+        break;
       default:
         subject.onNext({ state });
         break;

@@ -97,12 +97,12 @@ export default class ControlWindow extends React.Component {
       <div>
         <div>
           {(() => {
-            return this.renderSteps(steps, 'upper');
+            return this.renderSteps(steps, 0);
           })()}
         </div>
         <div style={{ marginTop: 10 }}>
           {(() => {
-            return this.renderSteps(steps2, 'below');
+            return this.renderSteps(steps2, 1);
           })()}
         </div>
         <di>
