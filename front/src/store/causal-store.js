@@ -1,6 +1,6 @@
 import Rx from 'rx';
 
-import { FETCH_TIFF } from '../constants/event-constants';
+import { FETCH_TIFF, SET_NEWDATA } from '../constants/event-constants';
 
 const store = (intentSubject, filterSubject, modalSubject) => {
   const state = {
@@ -45,6 +45,10 @@ const store = (intentSubject, filterSubject, modalSubject) => {
         });
         break;
       }
+      case SET_NEWDATA:
+        console.log('aaa');
+        subject.onNext({ state });
+        break;
       default:
         subject.onNext({ state });
     }

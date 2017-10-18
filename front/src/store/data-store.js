@@ -2,6 +2,7 @@ import Rx from 'rx';
 
 import { FETCH_TIFF, SET_NEWDATA } from '../constants/event-constants';
 import { createAllTimeSeriesFromTiff } from '../utils/store-utils';
+import { DATA_SIM, DATA_TRP3, DATA_WILD } from '../constants/general-constants';
 
 const store = (intentSubject) => {
   const state = {
@@ -16,7 +17,7 @@ const store = (intentSubject) => {
   intentSubject.subscribe((payload) => {
     switch (payload.type) {
       case FETCH_TIFF: {
-        window.fetch(payload.dataName)
+        const trp3Fetch = fetch(payload.dataName)
           .then((response) => {
             response.arrayBuffer().then((buffer) => {
               const allTiffList = [];
@@ -40,23 +41,77 @@ const store = (intentSubject) => {
                     state.legendTiff[0] = legendTiff;
                     state.allTimeSeries[0] = createAllTimeSeriesFromTiff(state.legendTiff[0], state.allTiffList[0]);
                     state.width[0] = state.allTiffList[0][0].width;
-
-                    window.fetch('NagumoInterpolate.json')
-                      .then(nagumoResponse => nagumoResponse.json())
-                      .then((json) => {
-                        state.allTimeSeries[1] = json.allTimeSeries;
-                        state.width[1] = json.width;
-
-                        subject.onNext({ state });
-                      });
                   });
                 });
             });
           });
+        const simFetch = fetch('NagumoInterpolate.json')
+          .then(nagumoResponse => nagumoResponse.json())
+          .then((json) => {
+            state.allTimeSeries[1] = json.allTimeSeries;
+            state.width[1] = json.width;
+          });
+
+        const fetchPromises = [trp3Fetch, simFetch];
+        Promise.all(fetchPromises).then(() => {
+          subject.onNext({ state });
+        });
         break;
       }
-      case SET_NEWDATA:
+      case SET_NEWDATA: {
+        const { dataType, position } = payload;
+        switch (dataType) {
+          case DATA_SIM:
+            window.fetch('NagumoInterpolate.json')
+              .then(nagumoResponse => nagumoResponse.json())
+              .then((json) => {
+                state.allTimeSeries[position] = json.allTimeSeries;
+                state.width[position] = json.width;
+                subject.onNext({ state });
+              });
+            break;
+          case DATA_TRP3:
+            window.fetch('trp-3-masked8b_color_mean-sub.tif')
+              .then((response) => {
+                response.arrayBuffer().then((buffer) => {
+                  const allTiffList = [];
+                  const tiff = new Tiff({ buffer });
+                  const tiffLen = tiff.countDirectory();
+                  for (let i = 0; i < tiffLen; i += 1) {
+                    tiff.setDirectory(i);
+                    const canvas = tiff.toCanvas();
+                    allTiffList.push(canvas);
+                  }
+
+                  window.fetch('2E2_GFB.tif')
+                    .then(legendResponse => legendResponse)
+                    .then((legendRes) => {
+                      legendRes.arrayBuffer().then((legendBuffer) => {
+                        const legTiff = new Tiff({ buffer: legendBuffer });
+                        legTiff.setDirectory(0);
+                        const legendTiff = legTiff.toCanvas();
+
+                        state.allTiffList[position] = allTiffList;
+                        state.legendTiff[position] = legendTiff;
+                        state.allTimeSeries[position] =
+                          createAllTimeSeriesFromTiff(state.legendTiff[0], state.allTiffList[0]);
+                        state.width[position] = state.allTiffList[0][0].width;
+                        console.log('b');
+                        subject.onNext({ state });
+                      });
+                    });
+                });
+              });
+            break;
+          case DATA_WILD:
+            subject.onNext({ state });
+            break;
+          default:
+            subject.onNext({ state });
+            break;
+        }
         break;
+      }
       default:
         subject.onNext({ state });
         break;

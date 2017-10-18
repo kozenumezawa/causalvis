@@ -21,9 +21,7 @@ export default class DataModal extends React.Component {
   }
 
   onOKClick() {
-    console.log(this.props.position);
     setNewData(this.state.value, this.props.position);
-    closeModal();
   }
 
   close() {

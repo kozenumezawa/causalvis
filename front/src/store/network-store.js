@@ -1,6 +1,6 @@
 import Rx from 'rx';
 
-import { FETCH_TIFF } from '../constants/event-constants';
+import { FETCH_TIFF, SET_NEWDATA } from '../constants/event-constants';
 import * as drawingTool from '../utils/drawing-tool';
 
 const store = (intentSubject, clusteringSubject) => {
@@ -65,6 +65,10 @@ const store = (intentSubject, clusteringSubject) => {
         subject.onNext({ state });
         break;
       }
+      case SET_NEWDATA:
+        console.log('aaa');
+        subject.onNext({ state });
+        break;
       default:
         subject.onNext({ state });
     }
