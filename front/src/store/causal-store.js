@@ -1,6 +1,7 @@
 import Rx from 'rx';
 
 import { FETCH_TIFF, SET_NEWDATA } from '../constants/event-constants';
+import { DATA_SIM, DATA_WILD, DATA_TRP3 } from '../constants/general-constants';
 
 const store = (intentSubject, filterSubject, modalSubject) => {
   const state = {
@@ -18,7 +19,7 @@ const store = (intentSubject, filterSubject, modalSubject) => {
         }
 
         // const { causalMethodParamsList } = modal.state;
-        const dataNames = ['real', 'sim'];
+        const dataNames = [DATA_TRP3, DATA_SIM];
         const fetchPromises = filter.state.allTimeSeries.map((allTimeSeries, idx) => {
           const causalFetch = fetch(`${API_ENDPOINT}/api/v1/causal`, {
             mode: 'cors',
@@ -45,10 +46,24 @@ const store = (intentSubject, filterSubject, modalSubject) => {
         });
         break;
       }
-      case SET_NEWDATA:
-        console.log('aaa');
-        subject.onNext({ state });
+      case SET_NEWDATA: {
+        const { dataType, position } = payload;
+        switch (dataType) {
+          case DATA_SIM:
+            subject.onNext({ state });
+            break;
+          case DATA_TRP3:
+            subject.onNext({ state });
+            break;
+          case DATA_WILD:
+            subject.onNext({ state });
+            break;
+          default:
+            subject.onNext({ state });
+            break;
+        }
         break;
+      }
       default:
         subject.onNext({ state });
     }

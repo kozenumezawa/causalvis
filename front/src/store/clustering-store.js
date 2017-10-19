@@ -1,6 +1,7 @@
 import Rx from 'rx';
 
 import { FETCH_TIFF, SET_NEWDATA } from '../constants/event-constants';
+import { DATA_SIM, DATA_WILD, DATA_TRP3 } from '../constants/general-constants';
 
 const store = (intentSubject, causalSubject, filterSubject) => {
   const state = {
@@ -21,7 +22,7 @@ const store = (intentSubject, causalSubject, filterSubject) => {
           return;
         }
 
-        const dataNames = ['real', 'sim'];
+        const dataNames = [DATA_TRP3, DATA_SIM];
         const fetchPromises = causal.state.causalMatrices.map((causalMatrix, idx) => {
           const clusteringFetch = fetch(`${API_ENDPOINT}/api/v1/clustering`, {
             mode: 'cors',
@@ -65,10 +66,22 @@ const store = (intentSubject, causalSubject, filterSubject) => {
         });
         break;
       }
-      case SET_NEWDATA:
-        console.log('aaa');
-        subject.onNext({ state });
+      case SET_NEWDATA: {
+        const { dataType, position } = payload;
+        switch (dataType) {
+          case DATA_SIM:
+            break;
+          case DATA_TRP3:
+            break;
+          case DATA_WILD:
+            subject.onNext({ state });
+            break;
+          default:
+            subject.onNext({ state });
+            break;
+        }
         break;
+      }
       default:
         subject.onNext({ state });
         break;

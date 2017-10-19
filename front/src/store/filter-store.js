@@ -68,7 +68,6 @@ const store = (intentSubject, dataSubject) => {
           state.meanR[position]);
         state.allTimeSeries[position] = removedData.newAllTimeSeries;
         state.sampledCoords[position] = removedData.sampledCoords;
-        console.log(state);
         subject.onNext({ state });
         break;
       }
