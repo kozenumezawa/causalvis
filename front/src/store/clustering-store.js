@@ -68,18 +68,41 @@ const store = (intentSubject, causalSubject, filterSubject) => {
       }
       case SET_NEWDATA: {
         const { dataType, position } = payload;
-        switch (dataType) {
-          case DATA_SIM:
-            break;
-          case DATA_TRP3:
-            break;
-          case DATA_WILD:
+        const dataName = dataType;
+        window.fetch(`${API_ENDPOINT}/api/v1/clustering`, {
+          mode: 'cors',
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+          },
+          body: JSON.stringify({
+            causalMatrix: causal.state.causalMatrices[position],
+            method: 'IRM',
+            threshold: 0.7,
+            sampledCoords: filter.state.sampledCoords[position],
+            dataName,
+          }),
+        })
+          .then(response => response.json())
+          .then((json) => {
+            state.clusterMatrices[position] = json.clusterMatrix;
+            state.clusterSampledCoords[position] = json.clusterSampledCoords;
+            state.nClusterLists[position] = json.nClusterList;
+            state.ordering[position] = json.ordering;
+
+            // save start and stop index of each cluster
+            const clusterRangeList = [];
+            json.nClusterList.reduce((prev, current) => {
+              const endPixel = prev + current;
+              clusterRangeList.push({
+                start: prev,
+                end: endPixel,
+              });
+              return endPixel;
+            }, 0);
+            state.clusterRangeLists[position] = clusterRangeList;
             subject.onNext({ state });
-            break;
-          default:
-            subject.onNext({ state });
-            break;
-        }
+          });
         break;
       }
       default:

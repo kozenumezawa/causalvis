@@ -11,6 +11,7 @@ const store = (intentSubject, clusteringSubject) => {
   const subject = new Rx.BehaviorSubject({ state });
   Rx.Observable.zip(intentSubject, clusteringSubject).subscribe(([payload, clustering]) => {
     switch (payload.type) {
+      case SET_NEWDATA:
       case FETCH_TIFF: {
         const { clusterMatrices, nClusterLists, clusterRangeLists } = clustering.state;
 
@@ -65,10 +66,6 @@ const store = (intentSubject, clusteringSubject) => {
         subject.onNext({ state });
         break;
       }
-      case SET_NEWDATA:
-        console.log('aaa');
-        subject.onNext({ state });
-        break;
       default:
         subject.onNext({ state });
     }

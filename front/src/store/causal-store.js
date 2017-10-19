@@ -48,20 +48,26 @@ const store = (intentSubject, filterSubject, modalSubject) => {
       }
       case SET_NEWDATA: {
         const { dataType, position } = payload;
-        switch (dataType) {
-          case DATA_SIM:
+        const dataName = dataType;
+        window.fetch(`${API_ENDPOINT}/api/v1/causal`, {
+          mode: 'cors',
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+          },
+          body: JSON.stringify({
+            allTimeSeries: filter.state.allTimeSeries[position],
+            maxLag: 20,
+            lagStep: 2,
+            method: 'CROSS',
+            dataName,
+          }),
+        })
+          .then(response => response.json())
+          .then((json) => {
+            state.causalMatrices[position] = json.causalMatrix;
             subject.onNext({ state });
-            break;
-          case DATA_TRP3:
-            subject.onNext({ state });
-            break;
-          case DATA_WILD:
-            subject.onNext({ state });
-            break;
-          default:
-            subject.onNext({ state });
-            break;
-        }
+          });
         break;
       }
       default:
