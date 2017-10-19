@@ -1,6 +1,6 @@
 import Rx from 'rx';
 
-import { SELECT_CLUSTER, SELECT_ONE_POINT } from '../constants/event-constants';
+import { SELECT_CLUSTER, SELECT_ONE_POINT, SET_NEWDATA } from '../constants/event-constants';
 import * as drawingTool from '../utils/drawing-tool';
 
 const isClusterContained = (selectedClusterLists, positionIdx, clusterNumber) => {
@@ -171,6 +171,15 @@ const store = (intentSubject, dataSubject, filterSubject, clusteringSubject) => 
             pointRowIdx: centerRowIdx,
             data: nearRelation,
           };
+          subject.onNext({ state });
+          break;
+        }
+        case SET_NEWDATA: {
+          const { position } = payload;
+          state.selectedClusterLists[position] = [];
+          state.selectedTimeSeriesLists[position] = { averageData: [], rawData: [] };
+          state.pointToAllCausals[position] = { pointRowIdx: -1, data: [] };
+          state.pointToNearCausals[position] = { pointRowIdx: -1, data: [] };
           subject.onNext({ state });
           break;
         }

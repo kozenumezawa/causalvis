@@ -9,12 +9,12 @@ export default class PointToAllView extends React.Component {
 
     this.canvas.width = 100;
     this.canvas.height = 100;
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    drawingTool.drawFrame(this.canvas, this.ctx);
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.pointToAllCausal.data.length === 0) {
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      drawingTool.drawFrame(this.canvas, this.ctx);
       return;
     }
     this.drawData(nextProps);
