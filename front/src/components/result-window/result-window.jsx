@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { DATA_SIM, DATA_TRP3, DATA_WILD } from '../../constants/general-constants';
+
 import ClusterShape from './components/cluster-shape.jsx';
 import ClusterHeatmap from './components/cluster-heatmap.jsx';
 import OriginalCanvas from './components/original-canvas.jsx';
@@ -12,7 +14,37 @@ export default class ResultWindow extends React.Component {
   constructor(props) {
     super(props);
 
-    this.scale = [2, 4];
+    this.state = {
+      scale: [2, 4],
+      cellScale: [0.5, 1],
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const newScale = [];
+    const newCellScale = [];
+    nextProps.dataType.forEach((dataType) => {
+      switch (dataType) {
+        case DATA_SIM:
+          newScale.push(4);
+          newCellScale.push(1);
+          break;
+        case DATA_TRP3:
+          newScale.push(2);
+          newCellScale.push(0.5);
+          break;
+        case DATA_WILD:
+          newScale.push(2);
+          newCellScale.push(0.5);
+          break;
+        default:
+          break;
+      }
+    });
+    this.setState({
+      scale: newScale,
+      cellScale: newCellScale,
+    });
   }
 
   renderOriginalCanvas() {
@@ -27,7 +59,7 @@ export default class ResultWindow extends React.Component {
             id={idx}
             allTimeSeries={this.props.allTimeSeries[idx]}
             width={this.props.width[idx]}
-            scale={this.scale[idx]}
+            scale={this.state.scale[idx]}
           />
         </div>
       );
@@ -92,8 +124,8 @@ export default class ResultWindow extends React.Component {
             clusterRangeList={this.props.clusterRangeLists[0]}
             nClusterList={this.props.nClusterLists[0]}
             width={this.props.width[0]}
-            scale={2}
-            cellScale={0.5}
+            scale={this.state.scale[0]}
+            cellScale={this.state.cellScale[0]}
             network={this.props.networks[0]}
             positionIdx={0}
             selectedClusterList={this.props.selectedClusterLists[0]}
@@ -114,8 +146,8 @@ export default class ResultWindow extends React.Component {
             clusterRangeList={this.props.clusterRangeLists[1]}
             nClusterList={this.props.nClusterLists[1]}
             width={this.props.width[1]}
-            scale={4}
-            cellScale={1}
+            scale={this.state.scale[1]}
+            cellScale={this.state.cellScale[1]}
             network={this.props.networks[1]}
             positionIdx={1}
             selectedClusterList={this.props.selectedClusterLists[1]}
@@ -145,8 +177,8 @@ export default class ResultWindow extends React.Component {
             clusterRangeList={this.props.clusterRangeLists[0]}
             nClusterList={this.props.nClusterLists[0]}
             width={this.props.width[0]}
-            scale={2}
-            cellScale={0.5}
+            scale={this.state.scale[0]}
+            cellScale={this.state.cellScale[0]}
             network={this.props.networks[0]}
             positionIdx={0}
             selectedClusterList={this.props.selectedClusterLists[0]}
@@ -167,8 +199,8 @@ export default class ResultWindow extends React.Component {
             clusterRangeList={this.props.clusterRangeLists[1]}
             nClusterList={this.props.nClusterLists[1]}
             width={this.props.width[1]}
-            scale={4}
-            cellScale={1}
+            scale={this.state.scale[1]}
+            cellScale={this.state.cellScale[1]}
             network={this.props.networks[1]}
             positionIdx={1}
             selectedClusterList={this.props.selectedClusterLists[1]}
@@ -211,8 +243,8 @@ export default class ResultWindow extends React.Component {
             clusterRangeList={this.props.clusterRangeLists[0]}
             nClusterList={this.props.nClusterLists[0]}
             width={this.props.width[0]}
-            scale={2}
-            cellScale={0.5}
+            scale={this.state.scale[0]}
+            cellScale={this.state.cellScale[0]}
             network={this.props.networks[0]}
             positionIdx={0}
             selectedClusterList={this.props.selectedClusterLists[0]}
@@ -232,8 +264,8 @@ export default class ResultWindow extends React.Component {
             clusterRangeList={this.props.clusterRangeLists[1]}
             nClusterList={this.props.nClusterLists[1]}
             width={this.props.width[1]}
-            scale={4}
-            cellScale={1}
+            scale={this.state.scale[1]}
+            cellScale={this.state.cellScale[1]}
             network={this.props.networks[1]}
             positionIdx={1}
             selectedClusterList={this.props.selectedClusterLists[1]}

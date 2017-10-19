@@ -7,6 +7,7 @@ import { DATA_SIM, DATA_TRP3, DATA_WILD } from '../constants/general-constants';
 const store = (intentSubject) => {
   const state = {
     allTiffList: new Array(2),
+    dataType: new Array(2),
     legendTiff: new Array(2),
     allTimeSeries: new Array(2),
     width: new Array(2),
@@ -17,6 +18,7 @@ const store = (intentSubject) => {
   intentSubject.subscribe((payload) => {
     switch (payload.type) {
       case FETCH_TIFF: {
+        state.dataType = [DATA_TRP3, DATA_SIM];
         const trp3Fetch = fetch(payload.dataName)
           .then((response) => {
             response.arrayBuffer().then((buffer) => {
@@ -60,6 +62,7 @@ const store = (intentSubject) => {
       }
       case SET_NEWDATA: {
         const { dataType, position } = payload;
+        state.dataType[position] = dataType;
         switch (dataType) {
           case DATA_SIM:
             window.fetch('NagumoInterpolate.json')
@@ -96,7 +99,6 @@ const store = (intentSubject) => {
                         state.allTimeSeries[position] =
                           createAllTimeSeriesFromTiff(state.legendTiff[0], state.allTiffList[0]);
                         state.width[position] = state.allTiffList[0][0].width;
-                        console.log('b');
                         subject.onNext({ state });
                       });
                     });
