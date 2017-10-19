@@ -2,7 +2,7 @@ import Rx from 'rx';
 
 import { FETCH_TIFF, SET_NEWDATA } from '../constants/event-constants';
 import { createAllTimeSeriesFromTiff } from '../utils/store-utils';
-import { DATA_SIM, DATA_TRP3, DATA_WILD } from '../constants/general-constants';
+import { DATA_SIM, DATA_TRP3, DATA_WILD, DATA_TRP3_RAW } from '../constants/general-constants';
 
 const store = (intentSubject) => {
   const state = {
@@ -97,8 +97,8 @@ const store = (intentSubject) => {
                         state.allTiffList[position] = allTiffList;
                         state.legendTiff[position] = legendTiff;
                         state.allTimeSeries[position] =
-                          createAllTimeSeriesFromTiff(state.legendTiff[0], state.allTiffList[0]);
-                        state.width[position] = state.allTiffList[0][0].width;
+                          createAllTimeSeriesFromTiff(state.legendTiff[position], state.allTiffList[position]);
+                        state.width[position] = state.allTiffList[position][0].width;
                         subject.onNext({ state });
                       });
                     });
@@ -106,7 +106,67 @@ const store = (intentSubject) => {
               });
             break;
           case DATA_WILD:
-            subject.onNext({ state });
+            window.fetch('GFBratio-mask-64-255_mean-sub.tif')
+              .then((response) => {
+                response.arrayBuffer().then((buffer) => {
+                  const allTiffList = [];
+                  const tiff = new Tiff({ buffer });
+                  const tiffLen = tiff.countDirectory();
+                  for (let i = 0; i < tiffLen; i += 1) {
+                    tiff.setDirectory(i);
+                    const canvas = tiff.toCanvas();
+                    allTiffList.push(canvas);
+                  }
+                  window.fetch('2E2_GFB.tif')
+                    .then(legendResponse => legendResponse)
+                    .then((legendRes) => {
+                      legendRes.arrayBuffer().then((legendBuffer) => {
+                        const legTiff = new Tiff({ buffer: legendBuffer });
+                        legTiff.setDirectory(0);
+                        const legendTiff = legTiff.toCanvas();
+
+                        state.allTiffList[position] = allTiffList;
+                        state.legendTiff[position] = legendTiff;
+                        state.allTimeSeries[position] =
+                          createAllTimeSeriesFromTiff(state.legendTiff[position], state.allTiffList[position]);
+                        state.width[position] = state.allTiffList[position][0].width;
+                        subject.onNext({ state });
+                      });
+                    });
+                });
+              });
+
+            break;
+          case DATA_TRP3_RAW:
+            window.fetch('trp3-original-sub-color.tif')
+              .then((response) => {
+                response.arrayBuffer().then((buffer) => {
+                  const allTiffList = [];
+                  const tiff = new Tiff({ buffer });
+                  const tiffLen = tiff.countDirectory();
+                  for (let i = 0; i < tiffLen; i += 1) {
+                    tiff.setDirectory(i);
+                    const canvas = tiff.toCanvas();
+                    allTiffList.push(canvas);
+                  }
+                  window.fetch('2E2_GFB.tif')
+                    .then(legendResponse => legendResponse)
+                    .then((legendRes) => {
+                      legendRes.arrayBuffer().then((legendBuffer) => {
+                        const legTiff = new Tiff({ buffer: legendBuffer });
+                        legTiff.setDirectory(0);
+                        const legendTiff = legTiff.toCanvas();
+
+                        state.allTiffList[position] = allTiffList;
+                        state.legendTiff[position] = legendTiff;
+                        state.allTimeSeries[position] =
+                          createAllTimeSeriesFromTiff(state.legendTiff[position], state.allTiffList[position]);
+                        state.width[position] = state.allTiffList[position][0].width;
+                        subject.onNext({ state });
+                      });
+                    });
+                });
+              });
             break;
           default:
             subject.onNext({ state });

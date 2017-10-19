@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal, Button, Header, Form, Checkbox } from 'semantic-ui-react';
 
 import { closeModal, setNewData } from '../../../intents/intent';
-import { DATA_SIM, DATA_TRP3, DATA_WILD } from '../../../constants/general-constants';
+import { DATA_SIM, DATA_TRP3, DATA_WILD, DATA_TRP3_RAW } from '../../../constants/general-constants';
 
 export default class DataModal extends React.Component {
   constructor(props) {
@@ -73,6 +73,16 @@ export default class DataModal extends React.Component {
                   name="checkboxRadioGroup"
                   value={DATA_TRP3}
                   checked={this.state.value === DATA_TRP3}
+                  onChange={this.handleRadioChange}
+                />
+              </Form.Field>
+              <Form.Field>
+                <Checkbox
+                  radio
+                  label="TRP-3 mutant Raw Data"
+                  name="checkboxRadioGroup"
+                  value={DATA_TRP3_RAW}
+                  checked={this.state.value === DATA_TRP3_RAW}
                   onChange={this.handleRadioChange}
                 />
               </Form.Field>
