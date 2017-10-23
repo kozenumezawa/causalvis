@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { DATA_SIM, DATA_TRP3, DATA_WILD } from '../../constants/general-constants';
+import { DATA_SIM, DATA_TRP3, DATA_WILD, DATA_TRP3_RAW } from '../../constants/general-constants';
 
 import ClusterShape from './components/cluster-shape.jsx';
 import ClusterHeatmap from './components/cluster-heatmap.jsx';
@@ -34,6 +34,10 @@ export default class ResultWindow extends React.Component {
           newCellScale.push(0.5);
           break;
         case DATA_WILD:
+          newScale.push(1);
+          newCellScale.push(0.25);
+          break;
+        case DATA_TRP3_RAW:
           newScale.push(2);
           newCellScale.push(0.5);
           break;
@@ -104,11 +108,9 @@ export default class ResultWindow extends React.Component {
     return (
       <div style={{ position: 'relative', top: 50, height: 1200 }}>
         {
-          /*
           (() => {
             return this.renderOriginalCanvas();
           })()
-          */
         }
         <div>
           <ClusterShape
@@ -136,7 +138,7 @@ export default class ResultWindow extends React.Component {
           <ClusterShape
             style={{ position: 'absolute', top: 240, left: 316 }}
             id={1}
-            allTiffList={this.props.allTiffList[0]}
+            allTiffList={this.props.allTiffList[1]}
             allTimeSeries={this.props.allTimeSeries[1]}
             filterAllTimeSeries={this.props.filterAllTimeSeries[1]}
             meanR={this.props.meanR[1]}
@@ -157,11 +159,9 @@ export default class ResultWindow extends React.Component {
         </div>
 
         {
-          /*
           (() => {
             return this.renderNetworkView();
           })()
-          */
         }
         <div>
           <ClusterHeatmap
@@ -189,7 +189,7 @@ export default class ResultWindow extends React.Component {
           <ClusterHeatmap
             style={{ position: 'absolute', top: 300, left: 900 }}
             id={1}
-            allTiffList={this.props.allTiffList[0]}
+            allTiffList={this.props.allTiffList[1]}
             allTimeSeries={this.props.allTimeSeries[1]}
             filterAllTimeSeries={this.props.filterAllTimeSeries[1]}
             meanR={this.props.meanR[1]}
@@ -254,7 +254,7 @@ export default class ResultWindow extends React.Component {
           <PointToAllView
             style={{ position: 'absolute', top: 550, left: 316 }}
             id={1}
-            allTiffList={this.props.allTiffList[0]}
+            allTiffList={this.props.allTiffList[1]}
             allTimeSeries={this.props.allTimeSeries[1]}
             filterAllTimeSeries={this.props.filterAllTimeSeries[1]}
             meanR={this.props.meanR[1]}

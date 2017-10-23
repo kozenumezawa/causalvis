@@ -49,7 +49,7 @@ const options = {
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV)
       },
-      API_ENDPOINT: `'http://${process.env.NODE_ENV === 'production' ? '13.115.75.29' : 'localhost:3000'}'`,
+      API_ENDPOINT: `'http://${process.env.NODE_ENV === 'production' ? '13.113.252.63' : 'localhost:3000'}'`,
     })
   ]
 };
@@ -60,6 +60,9 @@ if (process.env.NODE_ENV === 'production') {
   //     warnings: false
   //   }
   // }));
+  Object.assign(options, {
+    devtool: 'inline-source-map'
+  });
 } else {
   Object.assign(options, {
     devtool: 'inline-source-map'

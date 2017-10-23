@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --inline",
+    "start": "webpack-dev-server --hot",
     "deploy": "NODE_ENV=production webpack && gh-pages -d front/dist"
   },
   "repository": {
@@ -31,7 +31,7 @@
     "eslint-plugin-react": "^7.3.0",
     "gh-pages": "^1.0.0",
     "semantic-ui": "^2.2.13",
-    "webpack": "^3.5.5",
+    "webpack": "^3.8.1",
     "webpack-dev-server": "^2.7.1"
   },
   "dependencies": {
