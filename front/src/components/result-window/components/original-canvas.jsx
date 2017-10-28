@@ -22,6 +22,9 @@ export default class OriginalCanvas extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.allTimeSeries !== this.props.allTimeSeries) {
+      if (this.playTiff != null) {
+        clearInterval(this.playTiff);
+      }
       this.drawData(nextProps);
     }
   }
@@ -58,8 +61,7 @@ export default class OriginalCanvas extends React.Component {
     //   drawingTool.drawFrame(this.canvas, this.ctx);
     // }, 50);
     let playIndex = 0;
-    setInterval(() => {
-      playIndex += 1;
+    this.playTiff = setInterval(() => {
       if (playIndex === props.allTimeSeries[0].length - 1) {
         playIndex = (playIndex === props.allTimeSeries[0].length - 1) ? 0 : playIndex;
       }
@@ -76,6 +78,7 @@ export default class OriginalCanvas extends React.Component {
         this.ctx.fillRect(x - 1, y - 1, props.scale, props.scale);
       });
       drawingTool.drawFrame(this.canvas, this.ctx);
+      playIndex += 1;
     }, 50);
   }
 

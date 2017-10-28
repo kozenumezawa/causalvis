@@ -108,9 +108,11 @@ export default class ResultWindow extends React.Component {
     return (
       <div style={{ position: 'relative', top: 50, height: 1200 }}>
         {
+          /*
           (() => {
             return this.renderOriginalCanvas();
           })()
+          */
         }
         <div>
           <ClusterShape
@@ -159,9 +161,11 @@ export default class ResultWindow extends React.Component {
         </div>
 
         {
+          /*
           (() => {
             return this.renderNetworkView();
           })()
+          */
         }
         <div>
           <ClusterHeatmap
