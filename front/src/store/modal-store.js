@@ -1,6 +1,6 @@
 import Rx from 'rx';
 
-import { OPEN_MODAL, CLOSE_MODAL, SET_NEWDATA } from '../constants/event-constants';
+import { OPEN_MODAL, CLOSE_MODAL, SET_NEWDATA, SET_NEWFILTER } from '../constants/event-constants';
 
 const getInitialParamsState = (state) => {
   const stepsPerLagList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -53,6 +53,7 @@ const store = (intentSubject) => {
         break;
       }
       case SET_NEWDATA:
+      case SET_NEWFILTER:
       case CLOSE_MODAL: {
         state.openModal = false;
         subject.onNext({ state });
