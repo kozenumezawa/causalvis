@@ -4,8 +4,9 @@ import { Step } from 'semantic-ui-react';
 
 import { openModal } from '../../intents/intent';
 
-import CausalModal from './components/causal-modal.jsx';
 import DataModal from './components/data-modal.jsx';
+import FilterModal from './components/filter-modal.jsx';
+import CausalModal from './components/causal-modal.jsx';
 
 const CHANGE_DATA = Symbol('change_data');
 const CHANGE_FILTER = Symbol('change_filter');
@@ -58,7 +59,14 @@ export default class ControlWindow extends React.Component {
         return (
           <DataModal
             openModal={this.props.openModal}
-            causalMethodParams={this.props.causalMethodParamsList[0]}
+            icon={this.state.icon}
+            position={this.state.position}
+          />
+        );
+      case CHANGE_FILTER:
+        return (
+          <FilterModal
+            openModal={this.props.openModal}
             icon={this.state.icon}
             position={this.state.position}
           />
