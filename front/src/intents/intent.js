@@ -9,6 +9,7 @@ import {
   SELECT_ONE_POINT,
   CHECK_CLICK,
   SET_NEWDATA,
+  SET_NEWFILTER,
 } from '../constants/event-constants';
 
 export const intentSubject = new Rx.BehaviorSubject({ type: DATA_INIT });
@@ -60,6 +61,14 @@ export const setNewData = (dataType, position) => {
   intentSubject.onNext({
     type: SET_NEWDATA,
     dataType,
+    position,
+  });
+};
+
+export const setNewFilter = (filterType, position) => {
+  intentSubject.onNext({
+    type: SET_NEWFILTER,
+    filterType,
     position,
   });
 };

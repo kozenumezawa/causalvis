@@ -1,6 +1,6 @@
 import Rx from 'rx';
 
-import { FETCH_TIFF, SET_NEWDATA } from '../constants/event-constants';
+import { FETCH_TIFF, SET_NEWDATA, SET_NEWFILTER } from '../constants/event-constants';
 import { isSamplingPoint, arraySum } from '../utils/store-utils';
 
 const removeUselessTimeSeries = (allTimeSeries, width, meanR) => {
@@ -30,6 +30,7 @@ const removeUselessTimeSeries = (allTimeSeries, width, meanR) => {
 const store = (intentSubject, dataSubject) => {
   const state = {
     allTimeSeries: new Array(2),
+    filterTypes: new Array(2),
     sampledCoords: new Array(2),
     meanR: new Array(2),
     meanStep: new Array(2),
@@ -68,6 +69,14 @@ const store = (intentSubject, dataSubject) => {
           state.meanR[position]);
         state.allTimeSeries[position] = removedData.newAllTimeSeries;
         state.sampledCoords[position] = removedData.sampledCoords;
+        subject.onNext({ state });
+        break;
+      }
+      case SET_NEWFILTER: {
+        const { filterType, position } = payload;
+        const { windowSize } = filterType.params;
+        console.log(windowSize, position);
+        // state.dataType[position] = dataType;
         subject.onNext({ state });
         break;
       }
