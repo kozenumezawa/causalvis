@@ -10,7 +10,7 @@ export default class FilteraModal extends React.Component {
     this.state = {
       type: 'meanFilter',
       params: {
-        windowSize: 1,
+        windowSize: 3,
       },
     };
 
@@ -41,7 +41,7 @@ export default class FilteraModal extends React.Component {
   }
 
   render() {
-    const windowSizes = [0, 1, 2, 3, 4];
+    const windowSizes = [1, 3, 5, 7, 9];
     return (
       <Modal dimmer={'inverted'} open={this.props.openModal} onClose={this.close}>
         <Modal.Header>

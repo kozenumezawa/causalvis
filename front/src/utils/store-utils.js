@@ -54,6 +54,11 @@ function transposeTimeSeries(allTimeSeriesInverse) {
   return timeSeries;
 }
 
+function getArrayAverage(arr) {
+  const sum = arr.reduce((prev, current) => prev + current);
+  return sum / arr.length;
+}
+
 export const createAllTimeSeriesFromTiff = (legendCanvas, allTiffList) => {
   // create time series data from each time step data
   const allTimeSeriesInverse = allTiffList.map(tiffCanvas => createTimeSeriesInverse(tiffCanvas, legendCanvas));
@@ -87,3 +92,40 @@ export const isSamplingPoint = (idx, width, meanR) => {
 };
 
 export const arraySum = arr => arr.reduce((prev, current) => prev + current);
+
+export const applyMeanFilter = (allTimeSeries, width, windowSize) => {
+  const meanR = (windowSize - 1) / 2;
+  const newTimeSeries = allTimeSeries.map((timeSeries) => {
+    const lenTimeSeries = timeSeries.length;
+
+    const meanTimeSeries = timeSeries.map((scalar, centerIdx) => {
+      // apply mean filter to one pixel
+      const valueList = [];
+      const yCenter = Math.floor(centerIdx / width);
+
+      for (let y = -meanR; y <= meanR; y += 1) {
+        for (let x = -meanR; x <= meanR; x += 1) {
+          const targetIdx = centerIdx + x + (y * width);
+          if (targetIdx >= 0 && targetIdx < lenTimeSeries) {
+            const xTarget = targetIdx % width;
+            const yTarget = Math.floor(targetIdx / width);
+            const yDiff = yTarget - yCenter;
+            // yDiff is used to handle calculation of edge correctly
+            if (xTarget >= 0 && xTarget < width && yDiff === y) {
+              // remove the value within 0
+              if (timeSeries[targetIdx] > 0) {
+                valueList.push(timeSeries[targetIdx]);
+              }
+            }
+          }
+        }
+      }
+      if (valueList.length === 0) {
+        return 0;
+      }
+      return getArrayAverage(valueList);
+    });
+    return meanTimeSeries;
+  });
+  return newTimeSeries;
+};
