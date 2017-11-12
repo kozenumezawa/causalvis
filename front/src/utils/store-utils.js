@@ -95,19 +95,21 @@ export const arraySum = arr => arr.reduce((prev, current) => prev + current);
 
 export const applyMeanFilter = (allTimeSeries, width, windowSize) => {
   const meanR = (windowSize - 1) / 2;
-  const newTimeSeries = allTimeSeries.map((timeSeries) => {
-    const lenTimeSeries = timeSeries.length;
+  const lenAllArea = allTimeSeries.length;
 
-    // apply mean filter to data of one time step
-    const meanTimeSeries = timeSeries.map((scalar, centerIdx) => {
-      // apply mean filter to one pixel
+  const newTimeSeries = allTimeSeries.map((timeSeries, centerIdx) => {
+    const yCenter = Math.floor(centerIdx / width);
+
+    // apply mean filter to data of one point through all time
+    const meanTimeSeries = timeSeries.map((scalar, timeIdx) => {
+      if (scalar === 0) {
+        return 0;
+      }
       const valueList = [];
-      const yCenter = Math.floor(centerIdx / width);
-
       for (let y = -meanR; y <= meanR; y += 1) {
         for (let x = -meanR; x <= meanR; x += 1) {
           const targetIdx = centerIdx + x + (y * width);
-          if (targetIdx >= 0 && targetIdx < lenTimeSeries) {
+          if (targetIdx >= 0 && targetIdx < lenAllArea) {
             const xTarget = targetIdx % width;
             const yTarget = Math.floor(targetIdx / width);
             const yDiff = yTarget - yCenter;
@@ -115,8 +117,8 @@ export const applyMeanFilter = (allTimeSeries, width, windowSize) => {
             // yDiff is used to handle calculation of edge correctly
             if (xTarget >= 0 && xTarget < width && yDiff === y) {
               // remove the value within 0
-              if (timeSeries[targetIdx] > 0) {
-                valueList.push(timeSeries[targetIdx]);
+              if (allTimeSeries[targetIdx][timeIdx] > 0) {
+                valueList.push(allTimeSeries[targetIdx][timeIdx]);
               }
             }
           }
