@@ -122,7 +122,7 @@ export default class ResultWindow extends React.Component {
             allTimeSeries={this.props.allTimeSeries[0]}
             filterAllTimeSeries={this.props.filterAllTimeSeries[0]}
             meanR={this.props.meanR[0]}
-            meanStep={this.props.meanStep[0]}
+            windowSize={this.props.windowSize[0]}
             clusterMatrix={this.props.clusterMatrices[0]}
             clusterSampledCoords={this.props.clusterSampledCoords[0]}
             clusterRangeList={this.props.clusterRangeLists[0]}
@@ -144,7 +144,7 @@ export default class ResultWindow extends React.Component {
             allTimeSeries={this.props.allTimeSeries[1]}
             filterAllTimeSeries={this.props.filterAllTimeSeries[1]}
             meanR={this.props.meanR[1]}
-            meanStep={this.props.meanStep[1]}
+            windowSize={this.props.windowSize[1]}
             clusterMatrix={this.props.clusterMatrices[1]}
             clusterSampledCoords={this.props.clusterSampledCoords[1]}
             clusterRangeList={this.props.clusterRangeLists[1]}
@@ -175,7 +175,7 @@ export default class ResultWindow extends React.Component {
             allTimeSeries={this.props.allTimeSeries[0]}
             filterAllTimeSeries={this.props.filterAllTimeSeries[0]}
             meanR={this.props.meanR[0]}
-            meanStep={this.props.meanStep[0]}
+            windowSize={this.props.windowSize[0]}
             clusterMatrix={this.props.clusterMatrices[0]}
             clusterSampledCoords={this.props.clusterSampledCoords[0]}
             clusterRangeList={this.props.clusterRangeLists[0]}
@@ -197,7 +197,7 @@ export default class ResultWindow extends React.Component {
             allTimeSeries={this.props.allTimeSeries[1]}
             filterAllTimeSeries={this.props.filterAllTimeSeries[1]}
             meanR={this.props.meanR[1]}
-            meanStep={this.props.meanStep[1]}
+            windowSize={this.props.windowSize[1]}
             clusterMatrix={this.props.clusterMatrices[1]}
             clusterSampledCoords={this.props.clusterSampledCoords[1]}
             clusterRangeList={this.props.clusterRangeLists[1]}
@@ -241,7 +241,7 @@ export default class ResultWindow extends React.Component {
             allTimeSeries={this.props.allTimeSeries[0]}
             filterAllTimeSeries={this.props.filterAllTimeSeries[0]}
             meanR={this.props.meanR[0]}
-            meanStep={this.props.meanStep[0]}
+            windowSize={this.props.windowSize[0]}
             clusterMatrix={this.props.clusterMatrices[0]}
             clusterSampledCoords={this.props.clusterSampledCoords[0]}
             clusterRangeList={this.props.clusterRangeLists[0]}
@@ -262,7 +262,7 @@ export default class ResultWindow extends React.Component {
             allTimeSeries={this.props.allTimeSeries[1]}
             filterAllTimeSeries={this.props.filterAllTimeSeries[1]}
             meanR={this.props.meanR[1]}
-            meanStep={this.props.meanStep[1]}
+            windowSize={this.props.windowSize[1]}
             clusterMatrix={this.props.clusterMatrices[1]}
             clusterSampledCoords={this.props.clusterSampledCoords[1]}
             clusterRangeList={this.props.clusterRangeLists[1]}

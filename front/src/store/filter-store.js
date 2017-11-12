@@ -1,7 +1,7 @@
 import Rx from 'rx';
 
 import { FETCH_TIFF, SET_NEWDATA, SET_NEWFILTER } from '../constants/event-constants';
-import { isSamplingPoint, arraySum } from '../utils/store-utils';
+import { isSamplingPoint, arraySum, applyMeanFilter } from '../utils/store-utils';
 
 const removeUselessTimeSeries = (allTimeSeries, width, meanR) => {
   const newAllTimeSeries = [];
@@ -30,10 +30,9 @@ const removeUselessTimeSeries = (allTimeSeries, width, meanR) => {
 const store = (intentSubject, dataSubject) => {
   const state = {
     allTimeSeries: new Array(2),
-    filterTypes: new Array(2),
     sampledCoords: new Array(2),
     meanR: new Array(2),
-    meanStep: new Array(2),
+    windowSize: new Array(2),
   };
 
   const subject = new Rx.BehaviorSubject({ state });
@@ -43,8 +42,8 @@ const store = (intentSubject, dataSubject) => {
       case FETCH_TIFF:
         state.meanR[0] = 1;
         state.meanR[1] = 1;
-        state.meanStep[0] = (state.meanR[0] * 2) + 1;
-        state.meanStep[1] = (state.meanR[1] * 2) + 1;
+        state.windowSize[0] = (state.meanR[0] * 2) + 1;
+        state.windowSize[1] = (state.meanR[1] * 2) + 1;
 
         if (data.state.allTimeSeries[0] == null) {
           subject.onNext({ state });
@@ -75,8 +74,11 @@ const store = (intentSubject, dataSubject) => {
       case SET_NEWFILTER: {
         const { filterType, position } = payload;
         const { windowSize } = filterType.params;
-        console.log(windowSize, position);
-        // state.dataType[position] = dataType;
+        state.windowSize[position] = windowSize;
+
+        const allTimeSeries = data.state.allTimeSeries[position];
+        const width = data.state.width[position];
+        const meanAllTimeSeries = applyMeanFilter(allTimeSeries, width, windowSize);
         subject.onNext({ state });
         break;
       }

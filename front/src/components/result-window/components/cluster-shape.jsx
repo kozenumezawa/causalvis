@@ -51,8 +51,8 @@ export default class ClusterShape extends React.Component {
         cellIdx += 1) {
         const x = this.clusterSampledCoords[cellIdx].x * props.scale;
         const y = this.clusterSampledCoords[cellIdx].y * props.scale;
-        const sideLength = props.meanStep * props.scale;
-        const r = ((props.meanStep - 1) * props.scale) / 2;
+        const sideLength = props.windowSize * props.scale;
+        const r = ((props.windowSize - 1) * props.scale) / 2;
         this.clusterOverlayCtx.fillRect(x - r, y - r, sideLength, sideLength);
       }
     });
@@ -89,8 +89,8 @@ export default class ClusterShape extends React.Component {
 
   drawCausalArrowToCanvas(causeIdx, effectIdx) {
     this.clusterOverlayCtx.clearRect(0, 0, this.clusterOverlayCanvas.width, this.clusterOverlayCanvas.height);
-    const sideLength = this.props.meanStep * this.props.scale;
-    const r = ((this.props.meanStep - 1) * this.props.scale) / 2;
+    const sideLength = this.props.windowSize * this.props.scale;
+    const r = ((this.props.windowSize - 1) * this.props.scale) / 2;
 
     this.clusterOverlayCtx.fillStyle = 'black';
     const causeX = this.clusterSampledCoords[causeIdx].x * this.props.scale;
@@ -142,8 +142,8 @@ export default class ClusterShape extends React.Component {
 
       const x = this.clusterSampledCoords[rowIdx].x * props.scale;
       const y = this.clusterSampledCoords[rowIdx].y * props.scale;
-      const sideLength = props.meanStep * props.scale;
-      const r = ((props.meanStep - 1) * props.scale) / 2;
+      const sideLength = props.windowSize * props.scale;
+      const r = ((props.windowSize - 1) * props.scale) / 2;
       this.clusterCtx.fillRect(x - r, y - r, sideLength, sideLength);
     });
   }
