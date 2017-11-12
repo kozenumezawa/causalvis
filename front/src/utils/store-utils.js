@@ -98,6 +98,7 @@ export const applyMeanFilter = (allTimeSeries, width, windowSize) => {
   const newTimeSeries = allTimeSeries.map((timeSeries) => {
     const lenTimeSeries = timeSeries.length;
 
+    // apply mean filter to data of one time step
     const meanTimeSeries = timeSeries.map((scalar, centerIdx) => {
       // apply mean filter to one pixel
       const valueList = [];
@@ -110,6 +111,7 @@ export const applyMeanFilter = (allTimeSeries, width, windowSize) => {
             const xTarget = targetIdx % width;
             const yTarget = Math.floor(targetIdx / width);
             const yDiff = yTarget - yCenter;
+
             // yDiff is used to handle calculation of edge correctly
             if (xTarget >= 0 && xTarget < width && yDiff === y) {
               // remove the value within 0
