@@ -109,10 +109,10 @@ const store = (intentSubject, dataSubject, filterSubject, clusteringSubject) => 
         case SELECT_ONE_POINT: {
           const { x, y, positionIdx } = payload;
           const meanR = filter.state.meanR[positionIdx];
+          const pixelInterval = filter.state.windowSize[positionIdx];
 
           // set nearCoordsList
           const nearCoordsList = [];
-          const pixelInterval = 3;
           for (let i = -1; i <= 1; i += 1) {
             for (let j = -1; j <= 1; j += 1) {
               nearCoordsList.push({
