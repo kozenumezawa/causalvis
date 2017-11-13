@@ -75,7 +75,7 @@ export default class OriginalCanvas extends React.Component {
 
         const x = (idx % props.width) * props.scale;
         const y = (idx / props.width) * props.scale;
-        this.ctx.fillRect(x - 1, y - 1, props.scale, props.scale);
+        this.ctx.fillRect(x - (props.scale / 2), y - (props.scale / 2), props.scale, props.scale);
       });
       drawingTool.drawFrame(this.canvas, this.ctx);
       playIndex += 1;
