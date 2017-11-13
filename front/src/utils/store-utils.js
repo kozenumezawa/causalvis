@@ -110,12 +110,10 @@ export const applyMeanFilter = (allTimeSeries, width, windowSize) => {
         for (let x = -meanR; x <= meanR; x += 1) {
           const targetIdx = centerIdx + x + (y * width);
           if (targetIdx >= 0 && targetIdx < lenAllArea) {
-            const xTarget = targetIdx % width;
             const yTarget = Math.floor(targetIdx / width);
             const yDiff = yTarget - yCenter;
-
             // yDiff is used to handle calculation of edge correctly
-            if (xTarget >= 0 && xTarget < width && yDiff === y) {
+            if (yDiff === y) {
               // remove the value within 0
               if (allTimeSeries[targetIdx][timeIdx] > 0) {
                 valueList.push(allTimeSeries[targetIdx][timeIdx]);
