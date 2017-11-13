@@ -39,7 +39,7 @@ const store = (intentSubject, dataSubject) => {
 
   Rx.Observable.zip(intentSubject, dataSubject).subscribe(([payload, data]) => {
     switch (payload.type) {
-      case FETCH_TIFF:
+      case FETCH_TIFF: {
         state.meanR[0] = 1;
         state.meanR[1] = 1;
         state.windowSize[0] = (state.meanR[0] * 2) + 1;
@@ -60,6 +60,7 @@ const store = (intentSubject, dataSubject) => {
         }
         subject.onNext({ state });
         break;
+      }
       case SET_NEWDATA: {
         const { position } = payload;
         const removedData = removeUselessTimeSeries(
