@@ -42,7 +42,7 @@ export default class SideMenu extends React.Component {
               {`${dataName}`}
             </div>
             <div style={{ width: 10 }} />
-            <Checkbox value={`${dataName}`} onClick={this.handleCheckClick} />
+            <Checkbox value={`${dataName}`} onClick={this.handleCheckClick} checked />
           </Menu.Item>
         </div>
       );
