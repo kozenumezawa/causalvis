@@ -31,20 +31,9 @@ const store = (intentSubject) => {
                 allTiffList.push(canvas);
               }
 
-              window.fetch(payload.legendName)
-                .then(legendResponse => legendResponse)
-                .then((legendRes) => {
-                  legendRes.arrayBuffer().then((legendBuffer) => {
-                    const legTiff = new Tiff({ buffer: legendBuffer });
-                    legTiff.setDirectory(0);
-                    const legendTiff = legTiff.toCanvas();
-
-                    state.allTiffList[0] = allTiffList;
-                    state.legendTiff[0] = legendTiff;
-                    state.allTimeSeries[0] = createAllTimeSeriesFromTiff(null, allTiffList);
-                    state.width[0] = state.allTiffList[0][0].width;
-                  });
-                });
+              state.allTiffList[0] = allTiffList;
+              state.allTimeSeries[0] = createAllTimeSeriesFromTiff(null, allTiffList);
+              state.width[0] = state.allTiffList[0][0].width;
             });
           });
         const simFetch = fetch('NagumoInterpolate.json')
