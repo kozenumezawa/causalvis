@@ -28,7 +28,7 @@ export default class Main extends React.Component {
   }
 
   componentDidMount() {
-    loadTiff('trp-3-masked8b_color_mean-sub.tif', '2E2_GFB.tif');
+    loadTiff('trp-3-masked8b_60-259.tif', '2E2_GFB.tif');
   }
 
   componentWillUnmount() {

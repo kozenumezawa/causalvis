@@ -41,7 +41,7 @@ const store = (intentSubject) => {
 
                     state.allTiffList[0] = allTiffList;
                     state.legendTiff[0] = legendTiff;
-                    state.allTimeSeries[0] = createAllTimeSeriesFromTiff(state.legendTiff[0], state.allTiffList[0]);
+                    state.allTimeSeries[0] = createAllTimeSeriesFromTiff(null, allTiffList);
                     state.width[0] = state.allTiffList[0][0].width;
                   });
                 });
