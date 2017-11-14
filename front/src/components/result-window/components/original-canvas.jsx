@@ -77,7 +77,7 @@ export default class OriginalCanvas extends React.Component {
         if (scalar > 0 && scalar <= 1) {
           this.ctx.fillStyle = this.colormap[Math.floor((scalar * 255) - 0.000001)];
         } else {
-          this.ctx.fillStyle = this.colormap[scalar];
+          this.ctx.fillStyle = this.colormap[Math.floor(scalar)];
         }
 
         const x = (idx % props.width) * props.scale;
