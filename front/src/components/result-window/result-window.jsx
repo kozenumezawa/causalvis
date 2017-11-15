@@ -118,10 +118,7 @@ export default class ResultWindow extends React.Component {
           <ClusterShape
             style={{ position: 'absolute', top: 244, left: 50 }}
             id={0}
-            allTiffList={this.props.allTiffList[0]}
             allTimeSeries={this.props.allTimeSeries[0]}
-            filterAllTimeSeries={this.props.filterAllTimeSeries[0]}
-            meanR={this.props.meanR[0]}
             windowSize={this.props.windowSize[0]}
             clusterMatrix={this.props.clusterMatrices[0]}
             clusterSampledCoords={this.props.clusterSampledCoords[0]}
@@ -129,21 +126,14 @@ export default class ResultWindow extends React.Component {
             nClusterList={this.props.nClusterLists[0]}
             width={this.props.width[0]}
             scale={this.state.scale[0]}
-            cellScale={this.state.cellScale[0]}
-            network={this.props.networks[0]}
             positionIdx={0}
             selectedClusterList={this.props.selectedClusterLists[0]}
-            selectedTimeSeriesList={this.props.selectedTimeSeriesLists[0]}
-            pointToAllCausal={this.props.pointToAllCausals[0]}
           />
 
           <ClusterShape
             style={{ position: 'absolute', top: 240, left: 316 }}
             id={1}
-            allTiffList={this.props.allTiffList[1]}
             allTimeSeries={this.props.allTimeSeries[1]}
-            filterAllTimeSeries={this.props.filterAllTimeSeries[1]}
-            meanR={this.props.meanR[1]}
             windowSize={this.props.windowSize[1]}
             clusterMatrix={this.props.clusterMatrices[1]}
             clusterSampledCoords={this.props.clusterSampledCoords[1]}
@@ -151,12 +141,8 @@ export default class ResultWindow extends React.Component {
             nClusterList={this.props.nClusterLists[1]}
             width={this.props.width[1]}
             scale={this.state.scale[1]}
-            cellScale={this.state.cellScale[1]}
-            network={this.props.networks[1]}
             positionIdx={1}
             selectedClusterList={this.props.selectedClusterLists[1]}
-            selectedTimeSeriesList={this.props.selectedTimeSeriesLists[1]}
-            pointToAllCausal={this.props.pointToAllCausals[1]}
           />
         </div>
 
@@ -173,21 +159,13 @@ export default class ResultWindow extends React.Component {
             id={0}
             allTiffList={this.props.allTiffList[0]}
             allTimeSeries={this.props.allTimeSeries[0]}
-            filterAllTimeSeries={this.props.filterAllTimeSeries[0]}
-            meanR={this.props.meanR[0]}
-            windowSize={this.props.windowSize[0]}
             clusterMatrix={this.props.clusterMatrices[0]}
             clusterSampledCoords={this.props.clusterSampledCoords[0]}
             clusterRangeList={this.props.clusterRangeLists[0]}
             nClusterList={this.props.nClusterLists[0]}
-            width={this.props.width[0]}
-            scale={this.state.scale[0]}
             cellScale={this.state.cellScale[0]}
-            network={this.props.networks[0]}
             positionIdx={0}
             selectedClusterList={this.props.selectedClusterLists[0]}
-            selectedTimeSeriesList={this.props.selectedTimeSeriesLists[0]}
-            pointToAllCausal={this.props.pointToAllCausals[0]}
           />
 
           <ClusterHeatmap
@@ -195,21 +173,13 @@ export default class ResultWindow extends React.Component {
             id={1}
             allTiffList={this.props.allTiffList[1]}
             allTimeSeries={this.props.allTimeSeries[1]}
-            filterAllTimeSeries={this.props.filterAllTimeSeries[1]}
-            meanR={this.props.meanR[1]}
-            windowSize={this.props.windowSize[1]}
             clusterMatrix={this.props.clusterMatrices[1]}
             clusterSampledCoords={this.props.clusterSampledCoords[1]}
             clusterRangeList={this.props.clusterRangeLists[1]}
             nClusterList={this.props.nClusterLists[1]}
-            width={this.props.width[1]}
-            scale={this.state.scale[1]}
             cellScale={this.state.cellScale[1]}
-            network={this.props.networks[1]}
             positionIdx={1}
             selectedClusterList={this.props.selectedClusterLists[1]}
-            selectedTimeSeriesList={this.props.selectedTimeSeriesLists[1]}
-            pointToAllCausal={this.props.pointToAllCausals[1]}
           />
         </div>
 
@@ -237,43 +207,23 @@ export default class ResultWindow extends React.Component {
           <PointToAllView
             style={{ position: 'absolute', top: 550, left: 50 }}
             id={0}
-            allTiffList={this.props.allTiffList[0]}
             allTimeSeries={this.props.allTimeSeries[0]}
-            filterAllTimeSeries={this.props.filterAllTimeSeries[0]}
-            meanR={this.props.meanR[0]}
             windowSize={this.props.windowSize[0]}
-            clusterMatrix={this.props.clusterMatrices[0]}
             clusterSampledCoords={this.props.clusterSampledCoords[0]}
-            clusterRangeList={this.props.clusterRangeLists[0]}
-            nClusterList={this.props.nClusterLists[0]}
             width={this.props.width[0]}
             scale={this.state.scale[0]}
-            cellScale={this.state.cellScale[0]}
-            network={this.props.networks[0]}
             positionIdx={0}
-            selectedClusterList={this.props.selectedClusterLists[0]}
-            selectedTimeSeriesList={this.props.selectedTimeSeriesLists[0]}
             pointToAllCausal={this.props.pointToAllCausals[0]}
           />
           <PointToAllView
             style={{ position: 'absolute', top: 550, left: 316 }}
             id={1}
-            allTiffList={this.props.allTiffList[1]}
             allTimeSeries={this.props.allTimeSeries[1]}
-            filterAllTimeSeries={this.props.filterAllTimeSeries[1]}
-            meanR={this.props.meanR[1]}
             windowSize={this.props.windowSize[1]}
-            clusterMatrix={this.props.clusterMatrices[1]}
             clusterSampledCoords={this.props.clusterSampledCoords[1]}
-            clusterRangeList={this.props.clusterRangeLists[1]}
-            nClusterList={this.props.nClusterLists[1]}
             width={this.props.width[1]}
             scale={this.state.scale[1]}
-            cellScale={this.state.cellScale[1]}
-            network={this.props.networks[1]}
             positionIdx={1}
-            selectedClusterList={this.props.selectedClusterLists[1]}
-            selectedTimeSeriesList={this.props.selectedTimeSeriesLists[1]}
             pointToAllCausal={this.props.pointToAllCausals[1]}
           />
         </div>

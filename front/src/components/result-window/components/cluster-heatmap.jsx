@@ -130,7 +130,7 @@ export default class ClusterMatrix extends React.Component {
   }
 
   drawData(props) {
-    if (props.filterAllTimeSeries == null) {
+    if (props.allTimeSeries == null) {
       return;
     }
     // draw heatmap and canvas according to the graph
