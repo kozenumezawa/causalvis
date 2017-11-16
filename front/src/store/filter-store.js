@@ -51,9 +51,16 @@ const store = (intentSubject, dataSubject) => {
           return;
         }
 
+        // apply filter
+        state.filterAllTimeSeries[0] = applyMeanFilter(
+          data.state.allTimeSeries[0],
+          data.state.width[0],
+          state.windowSize[0]);
+        state.filterAllTimeSeries[1] = data.state.allTimeSeries[1];
+
         for (let dataIndex = 0; dataIndex < 2; dataIndex += 1) {
           const removedData = removeUselessTimeSeries(
-            data.state.allTimeSeries[dataIndex],
+            state.filterAllTimeSeries[dataIndex],
             data.state.width[dataIndex],
             state.meanR[dataIndex]);
           state.sampledAllTimeSeries[dataIndex] = removedData.newAllTimeSeries;
@@ -64,8 +71,12 @@ const store = (intentSubject, dataSubject) => {
       }
       case SET_NEWDATA: {
         const { position } = payload;
+
+        // Todo: apply filter
+        state.filterAllTimeSeries[position] = data.state.allTimeSeries[position];
+
         const removedData = removeUselessTimeSeries(
-          data.state.allTimeSeries[position],
+          state.filterAllTimeSeries[position],
           data.state.width[position],
           state.meanR[position]);
         state.sampledAllTimeSeries[position] = removedData.newAllTimeSeries;

@@ -52,16 +52,16 @@ export default class ResultWindow extends React.Component {
   }
 
   renderOriginalCanvas() {
-    if (this.props.allTimeSeries[0] == null) {
+    if (this.props.filterAllTimeSeries[0] == null) {
       return [];
     }
     const left = [50, 316];
-    return this.props.allTimeSeries.map((id, idx) => {
+    return this.props.filterAllTimeSeries.map((id, idx) => {
       return (
         <div key={`canvas list${idx}`} style={{ position: 'absolute', left: left[idx] }} >
           <OriginalCanvas
             id={idx}
-            allTimeSeries={this.props.allTimeSeries[idx]}
+            allTimeSeries={this.props.filterAllTimeSeries[idx]}
             width={this.props.width[idx]}
             scale={this.state.scale[idx]}
           />
@@ -108,17 +108,15 @@ export default class ResultWindow extends React.Component {
     return (
       <div style={{ position: 'relative', top: 50, height: 1200 }}>
         {
-          /*
           (() => {
             return this.renderOriginalCanvas();
           })()
-          */
         }
         <div>
           <ClusterShape
             style={{ position: 'absolute', top: 244, left: 50 }}
             id={0}
-            allTimeSeries={this.props.allTimeSeries[0]}
+            allTimeSeries={this.props.filterAllTimeSeries[0]}
             windowSize={this.props.windowSize[0]}
             clusterMatrix={this.props.clusterMatrices[0]}
             clusterSampledCoords={this.props.clusterSampledCoords[0]}
@@ -133,7 +131,7 @@ export default class ResultWindow extends React.Component {
           <ClusterShape
             style={{ position: 'absolute', top: 240, left: 316 }}
             id={1}
-            allTimeSeries={this.props.allTimeSeries[1]}
+            allTimeSeries={this.props.filterAllTimeSeries[1]}
             windowSize={this.props.windowSize[1]}
             clusterMatrix={this.props.clusterMatrices[1]}
             clusterSampledCoords={this.props.clusterSampledCoords[1]}
@@ -158,7 +156,7 @@ export default class ResultWindow extends React.Component {
             style={{ position: 'absolute', top: 300, left: 580 }}
             id={0}
             allTiffList={this.props.allTiffList[0]}
-            allTimeSeries={this.props.allTimeSeries[0]}
+            allTimeSeries={this.props.filterAllTimeSeries[0]}
             clusterMatrix={this.props.clusterMatrices[0]}
             clusterSampledCoords={this.props.clusterSampledCoords[0]}
             clusterRangeList={this.props.clusterRangeLists[0]}
@@ -172,7 +170,7 @@ export default class ResultWindow extends React.Component {
             style={{ position: 'absolute', top: 300, left: 900 }}
             id={1}
             allTiffList={this.props.allTiffList[1]}
-            allTimeSeries={this.props.allTimeSeries[1]}
+            allTimeSeries={this.props.filterAllTimeSeries[1]}
             clusterMatrix={this.props.clusterMatrices[1]}
             clusterSampledCoords={this.props.clusterSampledCoords[1]}
             clusterRangeList={this.props.clusterRangeLists[1]}
@@ -207,7 +205,7 @@ export default class ResultWindow extends React.Component {
           <PointToAllView
             style={{ position: 'absolute', top: 550, left: 50 }}
             id={0}
-            allTimeSeries={this.props.allTimeSeries[0]}
+            allTimeSeries={this.props.filterAllTimeSeries[0]}
             windowSize={this.props.windowSize[0]}
             clusterSampledCoords={this.props.clusterSampledCoords[0]}
             width={this.props.width[0]}
@@ -218,7 +216,7 @@ export default class ResultWindow extends React.Component {
           <PointToAllView
             style={{ position: 'absolute', top: 550, left: 316 }}
             id={1}
-            allTimeSeries={this.props.allTimeSeries[1]}
+            allTimeSeries={this.props.filterAllTimeSeries[1]}
             windowSize={this.props.windowSize[1]}
             clusterSampledCoords={this.props.clusterSampledCoords[1]}
             width={this.props.width[1]}
