@@ -1,16 +1,16 @@
 import Rx from 'rx';
 
 import { FETCH_TIFF, SET_NEWDATA } from '../constants/event-constants';
-import { DATA_SIM, DATA_WILD, DATA_TRP3 } from '../constants/general-constants';
+import { DATA_SIM, DATA_TRP3 } from '../constants/general-constants';
 
-const store = (intentSubject, filterSubject, modalSubject) => {
+const store = (intentSubject, filterSubject) => {
   const state = {
     causalMatrices: new Array(2),
   };
 
   const subject = new Rx.BehaviorSubject({ state });
 
-  Rx.Observable.zip(intentSubject, filterSubject, modalSubject).subscribe(([payload, filter, modal]) => {
+  Rx.Observable.zip(intentSubject, filterSubject).subscribe(([payload, filter]) => {
     switch (payload.type) {
       case FETCH_TIFF: {
         if (filter.state.sampledAllTimeSeries[0] == null) {
@@ -62,7 +62,7 @@ const store = (intentSubject, filterSubject, modalSubject) => {
             lagStep: 2,
             method: 'CROSS',
             dataName,
-            windowSize: filter.state.windowSize[position]
+            windowSize: filter.state.windowSize[position],
           }),
         })
           .then(response => response.json())

@@ -1,7 +1,7 @@
 import Rx from 'rx';
 
 import { FETCH_TIFF, SET_NEWDATA } from '../constants/event-constants';
-import { DATA_SIM, DATA_WILD, DATA_TRP3 } from '../constants/general-constants';
+import { DATA_SIM, DATA_TRP3 } from '../constants/general-constants';
 
 const store = (intentSubject, causalSubject, filterSubject) => {
   const state = {
