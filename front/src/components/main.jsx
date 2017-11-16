@@ -78,7 +78,7 @@ export default class Main extends React.Component {
                         width={this.state.data.width}
                         allTimeSeries={this.state.data.allTimeSeries}
                         dataType={this.state.data.dataType}
-                        filterAllTimeSeries={this.state.filter.allTimeSeries}
+                        sampledAllTimeSeries={this.state.filter.sampledAllTimeSeries}
                         sampledCoords={this.state.filter.sampledCoords}
                         meanR={this.state.filter.meanR}
                         windowSize={this.state.filter.windowSize}

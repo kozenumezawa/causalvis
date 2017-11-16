@@ -29,7 +29,8 @@ const removeUselessTimeSeries = (allTimeSeries, width, meanR) => {
 
 const store = (intentSubject, dataSubject) => {
   const state = {
-    allTimeSeries: new Array(2),
+    filterAllTimeSeries: new Array(2),
+    sampledAllTimeSeries: new Array(2),
     sampledCoords: new Array(2),
     meanR: new Array(2),
     windowSize: new Array(2),
@@ -55,7 +56,7 @@ const store = (intentSubject, dataSubject) => {
             data.state.allTimeSeries[dataIndex],
             data.state.width[dataIndex],
             state.meanR[dataIndex]);
-          state.allTimeSeries[dataIndex] = removedData.newAllTimeSeries;
+          state.sampledAllTimeSeries[dataIndex] = removedData.newAllTimeSeries;
           state.sampledCoords[dataIndex] = removedData.sampledCoords;
         }
         subject.onNext({ state });
@@ -67,7 +68,7 @@ const store = (intentSubject, dataSubject) => {
           data.state.allTimeSeries[position],
           data.state.width[position],
           state.meanR[position]);
-        state.allTimeSeries[position] = removedData.newAllTimeSeries;
+        state.sampledAllTimeSeries[position] = removedData.newAllTimeSeries;
         state.sampledCoords[position] = removedData.sampledCoords;
         subject.onNext({ state });
         break;

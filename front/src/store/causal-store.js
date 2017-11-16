@@ -13,14 +13,14 @@ const store = (intentSubject, filterSubject, modalSubject) => {
   Rx.Observable.zip(intentSubject, filterSubject, modalSubject).subscribe(([payload, filter, modal]) => {
     switch (payload.type) {
       case FETCH_TIFF: {
-        if (filter.state.allTimeSeries[0] == null) {
+        if (filter.state.sampledAllTimeSeries[0] == null) {
           subject.onNext({ state });
           return;
         }
 
         // const { causalMethodParamsList } = modal.state;
         const dataNames = [DATA_TRP3, DATA_SIM];
-        const fetchPromises = filter.state.allTimeSeries.map((allTimeSeries, idx) => {
+        const fetchPromises = filter.state.sampledAllTimeSeries.map((allTimeSeries, idx) => {
           const causalFetch = fetch(`${API_ENDPOINT}/api/v1/causal`, {
             mode: 'cors',
             method: 'POST',
@@ -56,7 +56,7 @@ const store = (intentSubject, filterSubject, modalSubject) => {
             'content-type': 'application/json',
           },
           body: JSON.stringify({
-            allTimeSeries: filter.state.allTimeSeries[position],
+            allTimeSeries: filter.state.sampledAllTimeSeries[position],
             maxLag: 20,
             lagStep: 2,
             method: 'CROSS',
