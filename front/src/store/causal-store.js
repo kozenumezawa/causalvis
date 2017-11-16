@@ -33,6 +33,7 @@ const store = (intentSubject, filterSubject, modalSubject) => {
               lagStep: 2,
               method: 'CROSS',
               dataName: dataNames[idx],
+              windowSize: filter.state.windowSize[idx],
             }),
           })
             .then(response => response.json())
@@ -61,6 +62,7 @@ const store = (intentSubject, filterSubject, modalSubject) => {
             lagStep: 2,
             method: 'CROSS',
             dataName,
+            windowSize: filter.state.windowSize[position]
           }),
         })
           .then(response => response.json())

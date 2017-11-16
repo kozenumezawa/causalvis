@@ -36,6 +36,7 @@ const store = (intentSubject, causalSubject, filterSubject) => {
               threshold: 0.7,
               sampledCoords: filter.state.sampledCoords[idx],
               dataName: dataNames[idx],
+              windowSize: filter.state.windowSize[idx],
             }),
           })
             .then(response => response.json())
@@ -81,6 +82,7 @@ const store = (intentSubject, causalSubject, filterSubject) => {
             threshold: 0.7,
             sampledCoords: filter.state.sampledCoords[position],
             dataName,
+            windowSize: filter.state.windowSize[position],
           }),
         })
           .then(response => response.json())

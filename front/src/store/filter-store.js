@@ -1,6 +1,7 @@
 import Rx from 'rx';
 
 import { FETCH_TIFF, SET_NEWDATA, SET_NEWFILTER } from '../constants/event-constants';
+import { DATA_SIM } from '../constants/general-constants';
 import { isSamplingPoint, arraySum, applyMeanFilter } from '../utils/store-utils';
 
 const removeUselessTimeSeries = (allTimeSeries, width, meanR) => {
@@ -52,28 +53,37 @@ const store = (intentSubject, dataSubject) => {
         }
 
         // apply filter
-        state.filterAllTimeSeries[0] = applyMeanFilter(
-          data.state.allTimeSeries[0],
-          data.state.width[0],
-          state.windowSize[0]);
-        state.filterAllTimeSeries[1] = data.state.allTimeSeries[1];
+        const dataTypes = data.state.dataType;
+        state.filterAllTimeSeries = data.state.allTimeSeries.map((allTimeSeries, idx) => {
+          if (dataTypes[idx] !== DATA_SIM) {
+            return applyMeanFilter(allTimeSeries, data.state.width[idx], state.windowSize[idx]);
+          }
+          return allTimeSeries;
+        });
 
-        for (let dataIndex = 0; dataIndex < 2; dataIndex += 1) {
+        // remove time series
+        for (let dataIdx = 0; dataIdx < 2; dataIdx += 1) {
           const removedData = removeUselessTimeSeries(
-            state.filterAllTimeSeries[dataIndex],
-            data.state.width[dataIndex],
-            state.meanR[dataIndex]);
-          state.sampledAllTimeSeries[dataIndex] = removedData.newAllTimeSeries;
-          state.sampledCoords[dataIndex] = removedData.sampledCoords;
+            state.filterAllTimeSeries[dataIdx],
+            data.state.width[dataIdx],
+            state.meanR[dataIdx]);
+          state.sampledAllTimeSeries[dataIdx] = removedData.newAllTimeSeries;
+          state.sampledCoords[dataIdx] = removedData.sampledCoords;
         }
         subject.onNext({ state });
         break;
       }
       case SET_NEWDATA: {
         const { position } = payload;
-
-        // Todo: apply filter
-        state.filterAllTimeSeries[position] = data.state.allTimeSeries[position];
+        // apply filter
+        if (data.state.dataType === DATA_SIM) {
+          state.filterAllTimeSeries[position] = data.state.allTimeSeries[position];
+        } else {
+          state.filterAllTimeSeries[position] = applyMeanFilter(
+            data.state.allTimeSeries[position],
+            data.state.width[position],
+            state.windowSize[position]);
+        }
 
         const removedData = removeUselessTimeSeries(
           state.filterAllTimeSeries[position],
@@ -91,7 +101,7 @@ const store = (intentSubject, dataSubject) => {
 
         const allTimeSeries = data.state.allTimeSeries[position];
         const width = data.state.width[position];
-        const meanAllTimeSeries = applyMeanFilter(allTimeSeries, width, windowSize);
+        state.filterAllTimeSeries[position] = applyMeanFilter(allTimeSeries, width, windowSize);
         subject.onNext({ state });
         break;
       }
