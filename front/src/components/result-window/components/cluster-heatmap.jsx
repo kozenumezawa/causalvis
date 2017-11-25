@@ -189,36 +189,6 @@ export default class ClusterMatrix extends React.Component {
     });
     this.heatmapCtx.closePath();
     this.heatmapCtx.stroke();
-
-    // 因果関係を表すcausal matrixを生成
-    // const causalMatrix = [];
-    // this.nClusterList.forEach((nCluster, rowClusterIdx) => {
-    //   causalMatrix.push([]);
-    //   const rowRange = clusterRangeList[rowClusterIdx];
-    //
-    //   clusterRangeList.forEach((range, colClusterIdx) => {
-    //     if (rowClusterIdx === colClusterIdx) {
-    //       causalMatrix[rowClusterIdx][colClusterIdx] = 0;
-    //       return;
-    //     }
-    //     const colRange = range;
-    //     let causalCnt = 0;
-    //     for (let rowIdx = rowRange.start; rowIdx < rowRange.end; rowIdx++) {
-    //       for (let colIdx = colRange.start; colIdx < colRange.end; colIdx++) {
-    //         if (this.graphSorted[rowIdx][colIdx] === true) {
-    //           causalCnt++;
-    //         }
-    //       }
-    //     }
-    //
-    //     const area = nCluster * this.nClusterList[colClusterIdx];
-    //     if (causalCnt > area / 2.5) {
-    //       causalMatrix[rowClusterIdx][colClusterIdx] = 1;
-    //     } else {
-    //       causalMatrix[rowClusterIdx][colClusterIdx] = 0;
-    //     }
-    //   });
-    // });
   }
 
   render() {
