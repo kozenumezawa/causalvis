@@ -5,7 +5,8 @@ import { DATA_SIM, DATA_TRP3 } from '../constants/general-constants';
 
 const store = (intentSubject, filterSubject) => {
   const state = {
-    causalMatrices: [],
+    corrMatrices: [],
+    lagMatrices: [],
     clusterMatrices: [],
     clusterSampledCoords: [],
     clusterRangeLists: [],
@@ -51,7 +52,8 @@ const store = (intentSubject, filterSubject) => {
 
         Promise.all(fetchPromises).then((responseJSONS) => {
           responseJSONS.forEach((json, idx) => {
-            state.causalMatrices[idx] = json.causalMatrix;
+            state.corrMatrices[idx] = json.corrMatrix;
+            state.lagMatrices[idx] = json.lagMatrix;
             state.clusterMatrices[idx] = json.clusterMatrix;
             state.clusterSampledCoords[idx] = json.clusterSampledCoords;
             state.nClusterLists[idx] = json.nClusterList;
