@@ -1,3 +1,5 @@
+import colormap from 'colormap';
+
 /**
  * Converts an HSL color value to RGB. Conversion formula
  * adapted from http://en.wikipedia.org/wiki/HSL_color_space.
@@ -52,7 +54,7 @@ export function getColorCategory(n) {
   const lightness = 0.5;
   const saturation = 0.8;
 
-  const colorCategory = [];
+  let colorCategory = [];
   for (let i = 0; i < n; i += 1) {
     const hue = (1 / (n - 1)) * i;
     const rgb = hslToRgb((2 / 3) * (1 - hue), saturation, lightness);
@@ -65,6 +67,14 @@ export function getColorCategory(n) {
   }
 
   // color_category = d3_scale.schemeCategory20c;
+  const options = {
+    colormap: 'hot',
+    nshades: n,
+    format: 'hex',
+    alpha: 1,
+  };
+
+  colorCategory = colormap(options);
   return colorCategory;
 }
 

@@ -65,7 +65,7 @@ export default class ClusterShape extends React.Component {
     // draw a canvas
     this.clusterCanvas.width = props.width * props.scale;
     this.clusterCanvas.height = (props.allTimeSeries.length / props.width) * props.scale;
-    drawingTool.drawFrame(this.clusterCanvas, this.clusterCtx);
+
     this.clusterOverlayCanvas.width = this.clusterCanvas.width;
     this.clusterOverlayCanvas.height = this.clusterCanvas.height;
 
@@ -86,6 +86,7 @@ export default class ClusterShape extends React.Component {
       const r = ((props.windowSize - 1) * props.scale) / 2;
       this.clusterCtx.fillRect(x - r, y - r, sideLength, sideLength);
     });
+    drawingTool.drawFrame(this.clusterCanvas, this.clusterCtx);
   }
 
   render() {

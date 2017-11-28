@@ -7,8 +7,8 @@ export default class PointToAllView extends React.Component {
     this.canvas = document.getElementById(`detail_causal_shape_${this.props.id}`);
     this.ctx = this.canvas.getContext('2d');
 
-    this.canvas.width = 100;
-    this.canvas.height = 100;
+    this.canvas.width = 200;
+    this.canvas.height = 200;
   }
 
   componentWillReceiveProps(nextProps) {
