@@ -34,13 +34,6 @@ export default class ClusterShape extends React.Component {
     selectOnePoint(Math.floor(x / this.props.scale), Math.floor(y / this.props.scale), this.props.positionIdx);
   }
 
-  getBelongCluster(causeIdx, effectIdx) {
-    if (causeIdx > 0 && effectIdx < 0) {
-      return this.searchBelongCluster(causeIdx);
-    }
-    return this.searchBelongCluster(effectIdx);
-  }
-
   drawSelectedCluster(props) {
     this.clusterOverlayCtx.clearRect(0, 0, this.clusterOverlayCanvas.width, this.clusterOverlayCanvas.height);
     this.clusterOverlayCtx.fillStyle = 'black';
@@ -56,59 +49,6 @@ export default class ClusterShape extends React.Component {
         this.clusterOverlayCtx.fillRect(x - r, y - r, sideLength, sideLength);
       }
     });
-  }
-
-  searchBelongCluster(selectedIdx) {
-    let sum = 0;
-    for (let i = 0; i < this.nClusterList.length; i += 1) {
-      sum += this.nClusterList[i];
-      if (selectedIdx < sum) {
-        return i;
-      }
-    }
-    return this.nClusterList.length - 1;
-  }
-
-  drawCrossLine(x, y) {
-    this.heatmapOverlayCtx.strokeStyle = 'black';
-    this.heatmapOverlayCtx.beginPath();
-    this.heatmapOverlayCtx.moveTo(this.legendWidth, y);
-    this.heatmapOverlayCtx.lineTo(this.heatmapOverlayCanvas.width, y);
-    this.heatmapOverlayCtx.moveTo(x, this.legendWidth);
-    this.heatmapOverlayCtx.lineTo(x, this.heatmapOverlayCanvas.height);
-    this.heatmapOverlayCtx.closePath();
-    this.heatmapOverlayCtx.stroke();
-  }
-
-  isOnLegend(causeIdx, effectIdx) {
-    if (causeIdx < 0 || effectIdx < 0) {
-      return true;
-    }
-    return false;
-  }
-
-  drawCausalArrowToCanvas(causeIdx, effectIdx) {
-    this.clusterOverlayCtx.clearRect(0, 0, this.clusterOverlayCanvas.width, this.clusterOverlayCanvas.height);
-    const sideLength = this.props.windowSize * this.props.scale;
-    const r = ((this.props.windowSize - 1) * this.props.scale) / 2;
-
-    this.clusterOverlayCtx.fillStyle = 'black';
-    const causeX = this.clusterSampledCoords[causeIdx].x * this.props.scale;
-    const causeY = this.clusterSampledCoords[causeIdx].y * this.props.scale;
-    this.clusterOverlayCtx.fillRect(causeX - r, causeY - r, sideLength, sideLength);
-
-    this.clusterOverlayCtx.fillStyle = 'gray';
-    const effectX = this.clusterSampledCoords[effectIdx].x * this.props.scale;
-    const effectY = this.clusterSampledCoords[effectIdx].y * this.props.scale;
-    this.clusterOverlayCtx.fillRect(effectX - r, effectY - r, sideLength, sideLength);
-
-    if (this.graphSorted[causeIdx][effectIdx] === true) {
-      this.clusterOverlayCtx.beginPath();
-      this.clusterOverlayCtx.fillStyle = 'white';
-      this.arrow(this.clusterOverlayCtx, causeX, causeY, effectX, effectY, [0, 3, -20, 3, -20, 12]);
-      this.clusterOverlayCtx.fill();
-      // this.clusterOverlayCtx.closePath();
-    }
   }
 
   drawData(props) {
@@ -146,41 +86,6 @@ export default class ClusterShape extends React.Component {
       const r = ((props.windowSize - 1) * props.scale) / 2;
       this.clusterCtx.fillRect(x - r, y - r, sideLength, sideLength);
     });
-  }
-
-  sum(arr) {
-    return arr.reduce((prev, current) => {
-      return prev + current;
-    });
-  }
-
-  // ref: http://qiita.com/frogcat/items/2f94b095b4c2d8581ff6
-  arrow(ctx, startX, startY, endX, endY, controlPoints) {
-    const dx = endX - startX;
-    const dy = endY - startY;
-    const len = Math.sqrt((dx * dx) + (dy * dy));
-    const sin = dy / len;
-    const cos = dx / len;
-    const a = [];
-    a.push(0, 0);
-    for (let i = 0; i < controlPoints.length; i += 2) {
-      const x = controlPoints[i];
-      const y = controlPoints[i + 1];
-      a.push(x < 0 ? len + x : x, y);
-    }
-    a.push(len, 0);
-    for (let i = controlPoints.length; i > 0; i -= 2) {
-      const x = controlPoints[i - 2];
-      const y = controlPoints[i - 1];
-      a.push(x < 0 ? len + x : x, -y);
-    }
-    a.push(0, 0);
-    for (let i = 0; i < a.length; i += 2) {
-      const x = ((a[i] * cos) - (a[i + 1] * sin)) + startX;
-      const y = (a[i] * sin) + (a[i + 1] * cos) + startY;
-      if (i === 0) ctx.moveTo(x, y);
-      else ctx.lineTo(x, y);
-    }
   }
 
   render() {
