@@ -193,11 +193,9 @@ export default class ClusterMatrix extends React.Component {
 
   render() {
     return (
-      <div>
-        <div style={this.props.style}>
-          <canvas id={`heatmap_canvas_${this.props.id}`} style={{ position: 'absolute', zIndex: 1 }} />
-          <canvas id={`heatmap_canvas_${this.props.id}_overlay`} style={{ position: 'absolute', zIndex: 2 }} />
-        </div>
+      <div style={this.props.style}>
+        <canvas id={`heatmap_canvas_${this.props.id}`} style={{ zIndex: 1 }} />
+        <canvas id={`heatmap_canvas_${this.props.id}_overlay`} style={{ position: 'absolute', zIndex: 2, left: 0 }} />
       </div>
     );
   }

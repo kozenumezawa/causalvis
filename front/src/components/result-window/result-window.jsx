@@ -1,4 +1,5 @@
 import React from 'react';
+import { Grid } from 'semantic-ui-react';
 
 import { DATA_SIM, DATA_TRP3, DATA_WILD, DATA_TRP3_RAW } from '../../constants/general-constants';
 
@@ -55,10 +56,11 @@ export default class ResultWindow extends React.Component {
     if (this.props.filterAllTimeSeries[0] == null) {
       return [];
     }
-    const left = [50, 316];
+    // const left = [50, 316];
+    // <div key={`canvas list${idx}`} style={{ position: 'absolute', left: left[idx] }} >
     return this.props.filterAllTimeSeries.map((id, idx) => {
       return (
-        <div key={`canvas list${idx}`} style={{ position: 'absolute', left: left[idx] }} >
+        <div key={`canvas list${idx}`}>
           <OriginalCanvas
             id={idx}
             allTimeSeries={this.props.filterAllTimeSeries[idx]}
@@ -71,163 +73,172 @@ export default class ResultWindow extends React.Component {
   }
 
   renderNetworkView() {
-    const top = 0;
-    const left = [600, 930];
     return this.props.networks.map((network, idx) => {
       return (
-        <div
-          key={`network list${idx}`}
-          style={{ position: 'absolute', top, left: left[idx], border: '1px solid gray' }}
-        >
-          <NetworkView
-            network={this.props.networks[idx]}
-            positionIdx={idx}
-            selectedClusterList={this.props.selectedClusterLists[idx]}
-          />
-        </div>
+        <Grid.Column width={4} key={`network list${idx}`}>
+          <div
+            key={`network list${idx}`}
+            style={{ border: '1px solid gray' }}
+          >
+            <NetworkView
+              network={this.props.networks[idx]}
+              positionIdx={idx}
+              selectedClusterList={this.props.selectedClusterLists[idx]}
+            />
+          </div>
+        </Grid.Column>
       );
     });
   }
 
   renderGraphContainer() {
-    const top = 640;
-    const left = [600, 920];
+    // const top = 640;
+    // const left = [600, 920];
     return this.props.selectedTimeSeriesLists.map((selectedTimeSeriesList, idx) => {
+      // <div key={`graph list${idx}`} style={{ position: 'absolute', top, left: left[idx] }} >
       return (
-        <div key={`graph list${idx}`} style={{ position: 'absolute', top, left: left[idx] }} >
+        <Grid.Column width={3} key={`graph list${idx}`}>
           <GraphContainer
             dataContainer={selectedTimeSeriesList.averageData}
             rawContainer={selectedTimeSeriesList.rawData}
           />
-        </div>
+        </Grid.Column>
       );
     });
   }
 
   render() {
     return (
-      <div style={{ position: 'relative', top: 50, height: 1200 }}>
-        {
-          /*
-          (() => {
-            return this.renderOriginalCanvas();
-          })()
-          */
-        }
-        <div>
-          <ClusterShape
-            style={{ position: 'absolute', top: 244, left: 50 }}
-            id={0}
-            allTimeSeries={this.props.filterAllTimeSeries[0]}
-            windowSize={this.props.windowSize[0]}
-            clusterMatrix={this.props.clusterMatrices[0]}
-            clusterSampledCoords={this.props.clusterSampledCoords[0]}
-            clusterRangeList={this.props.clusterRangeLists[0]}
-            nClusterList={this.props.nClusterLists[0]}
-            width={this.props.width[0]}
-            scale={this.state.scale[0]}
-            positionIdx={0}
-            selectedClusterList={this.props.selectedClusterLists[0]}
-          />
-
-          <ClusterShape
-            style={{ position: 'absolute', top: 240, left: 316 }}
-            id={1}
-            allTimeSeries={this.props.filterAllTimeSeries[1]}
-            windowSize={this.props.windowSize[1]}
-            clusterMatrix={this.props.clusterMatrices[1]}
-            clusterSampledCoords={this.props.clusterSampledCoords[1]}
-            clusterRangeList={this.props.clusterRangeLists[1]}
-            nClusterList={this.props.nClusterLists[1]}
-            width={this.props.width[1]}
-            scale={this.state.scale[1]}
-            positionIdx={1}
-            selectedClusterList={this.props.selectedClusterLists[1]}
-          />
-        </div>
-
-        {
-          /*
-          (() => {
-            return this.renderNetworkView();
-          })()
-          */
-        }
-        <div>
-          <ClusterHeatmap
-            style={{ position: 'absolute', top: 300, left: 580 }}
-            id={0}
-            allTiffList={this.props.allTiffList[0]}
-            allTimeSeries={this.props.filterAllTimeSeries[0]}
-            clusterMatrix={this.props.clusterMatrices[0]}
-            clusterSampledCoords={this.props.clusterSampledCoords[0]}
-            clusterRangeList={this.props.clusterRangeLists[0]}
-            nClusterList={this.props.nClusterLists[0]}
-            cellScale={this.state.cellScale[0]}
-            positionIdx={0}
-            selectedClusterList={this.props.selectedClusterLists[0]}
-          />
-
-          <ClusterHeatmap
-            style={{ position: 'absolute', top: 300, left: 900 }}
-            id={1}
-            allTiffList={this.props.allTiffList[1]}
-            allTimeSeries={this.props.filterAllTimeSeries[1]}
-            clusterMatrix={this.props.clusterMatrices[1]}
-            clusterSampledCoords={this.props.clusterSampledCoords[1]}
-            clusterRangeList={this.props.clusterRangeLists[1]}
-            nClusterList={this.props.nClusterLists[1]}
-            cellScale={this.state.cellScale[1]}
-            positionIdx={1}
-            selectedClusterList={this.props.selectedClusterLists[1]}
-          />
-        </div>
-
-        {
-          (() => {
-            return this.renderGraphContainer();
-          })()
-        }
-
-        <div>
-          <PointToNearView
-            style={{ position: 'absolute', top: 780, left: 100 }}
-            id={0}
-            positionIdx={0}
-            pointToNearCausal={this.props.pointToNearCausals[0]}
-          />
-          <PointToNearView
-            style={{ position: 'absolute', top: 780, left: 340 }}
-            id={1}
-            positionIdx={1}
-            pointToNearCausal={this.props.pointToNearCausals[1]}
-          />
-        </div>
-        <div>
-          <PointToAllView
-            style={{ position: 'absolute', top: 550, left: 50 }}
-            id={0}
-            allTimeSeries={this.props.filterAllTimeSeries[0]}
-            windowSize={this.props.windowSize[0]}
-            clusterSampledCoords={this.props.clusterSampledCoords[0]}
-            width={this.props.width[0]}
-            scale={this.state.scale[0]}
-            positionIdx={0}
-            pointToAllCausal={this.props.pointToAllCausals[0]}
-          />
-          <PointToAllView
-            style={{ position: 'absolute', top: 550, left: 316 }}
-            id={1}
-            allTimeSeries={this.props.filterAllTimeSeries[1]}
-            windowSize={this.props.windowSize[1]}
-            clusterSampledCoords={this.props.clusterSampledCoords[1]}
-            width={this.props.width[1]}
-            scale={this.state.scale[1]}
-            positionIdx={1}
-            pointToAllCausal={this.props.pointToAllCausals[1]}
-          />
-        </div>
-      </div>
+      <Grid celled>
+        <Grid.Row>
+          <Grid.Column width={16}>
+            {
+              (() => {
+                return this.renderOriginalCanvas();
+              })()
+            }
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column width={16}>
+            <Grid celled>
+              <Grid.Row>
+                <Grid.Column width={4}>
+                  <ClusterShape
+                    // style={{ position: 'absolute', top: 244, left: 50 }}
+                    id={0}
+                    style={{ position: 'relative' }}
+                    allTimeSeries={this.props.filterAllTimeSeries[0]}
+                    windowSize={this.props.windowSize[0]}
+                    clusterMatrix={this.props.clusterMatrices[0]}
+                    clusterSampledCoords={this.props.clusterSampledCoords[0]}
+                    clusterRangeList={this.props.clusterRangeLists[0]}
+                    nClusterList={this.props.nClusterLists[0]}
+                    width={this.props.width[0]}
+                    scale={this.state.scale[0]}
+                    positionIdx={0}
+                    selectedClusterList={this.props.selectedClusterLists[0]}
+                  />
+                </Grid.Column>
+                <Grid.Column width={4}>
+                  <ClusterShape
+                    id={1}
+                    style={{ position: 'relative' }}
+                    allTimeSeries={this.props.filterAllTimeSeries[1]}
+                    windowSize={this.props.windowSize[1]}
+                    clusterMatrix={this.props.clusterMatrices[1]}
+                    clusterSampledCoords={this.props.clusterSampledCoords[1]}
+                    clusterRangeList={this.props.clusterRangeLists[1]}
+                    nClusterList={this.props.nClusterLists[1]}
+                    width={this.props.width[1]}
+                    scale={this.state.scale[1]}
+                    positionIdx={1}
+                    selectedClusterList={this.props.selectedClusterLists[1]}
+                  />
+                </Grid.Column>
+                {
+                  (() => {
+                    return this.renderNetworkView();
+                  })()
+                }
+              </Grid.Row>
+              <Grid.Row>
+                {
+                  (() => {
+                    return this.renderGraphContainer();
+                  })()
+                }
+                <Grid.Column width={5}>
+                  <ClusterHeatmap
+                    id={0}
+                    style={{ position: 'relative' }}
+                    allTiffList={this.props.allTiffList[0]}
+                    allTimeSeries={this.props.filterAllTimeSeries[0]}
+                    clusterMatrix={this.props.clusterMatrices[0]}
+                    clusterSampledCoords={this.props.clusterSampledCoords[0]}
+                    clusterRangeList={this.props.clusterRangeLists[0]}
+                    nClusterList={this.props.nClusterLists[0]}
+                    cellScale={this.state.cellScale[0]}
+                    positionIdx={0}
+                    selectedClusterList={this.props.selectedClusterLists[0]}
+                  />
+                </Grid.Column>
+                <Grid.Column width={5}>
+                  <ClusterHeatmap
+                    id={1}
+                    style={{ position: 'relative' }}
+                    allTiffList={this.props.allTiffList[1]}
+                    allTimeSeries={this.props.filterAllTimeSeries[1]}
+                    clusterMatrix={this.props.clusterMatrices[1]}
+                    clusterSampledCoords={this.props.clusterSampledCoords[1]}
+                    clusterRangeList={this.props.clusterRangeLists[1]}
+                    nClusterList={this.props.nClusterLists[1]}
+                    cellScale={this.state.cellScale[1]}
+                    positionIdx={1}
+                    selectedClusterList={this.props.selectedClusterLists[1]}
+                  />
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <div>
+            <PointToNearView
+              id={0}
+              positionIdx={0}
+              pointToNearCausal={this.props.pointToNearCausals[0]}
+            />
+            <PointToNearView
+              id={1}
+              positionIdx={1}
+              pointToNearCausal={this.props.pointToNearCausals[1]}
+            />
+          </div>
+          <div>
+            <PointToAllView
+              id={0}
+              allTimeSeries={this.props.filterAllTimeSeries[0]}
+              windowSize={this.props.windowSize[0]}
+              clusterSampledCoords={this.props.clusterSampledCoords[0]}
+              width={this.props.width[0]}
+              scale={this.state.scale[0]}
+              positionIdx={0}
+              pointToAllCausal={this.props.pointToAllCausals[0]}
+            />
+            <PointToAllView
+              id={1}
+              allTimeSeries={this.props.filterAllTimeSeries[1]}
+              windowSize={this.props.windowSize[1]}
+              clusterSampledCoords={this.props.clusterSampledCoords[1]}
+              width={this.props.width[1]}
+              scale={this.state.scale[1]}
+              positionIdx={1}
+              pointToAllCausal={this.props.pointToAllCausals[1]}
+            />
+          </div>
+        </Grid.Row>
+      </Grid>
     );
   }
 }

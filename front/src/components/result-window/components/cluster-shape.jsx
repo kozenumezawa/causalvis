@@ -92,7 +92,7 @@ export default class ClusterShape extends React.Component {
   render() {
     return (
       <div style={this.props.style}>
-        <canvas id={`cluster_canvas_${this.props.id}`} style={{ position: 'absolute', zIndex: 1 }} />
+        <canvas id={`cluster_canvas_${this.props.id}`} style={{ zIndex: 1 }} />
         <canvas id={`cluster_canvas_${this.props.id}_overlay`} style={{ position: 'absolute', zIndex: 2, left: 0 }} />
       </div>
     );
