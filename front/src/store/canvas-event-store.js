@@ -38,7 +38,7 @@ const store = (intentSubject, dataSubject, filterSubject, clusteringSubject) => 
   const state = {
     selectedClusterLists: [[], []],
     selectedTimeSeriesLists: [{ averageData: [], rawData: [] }, { averageData: [], rawData: [] }],
-    pointToAllCausals: [{ pointRowIdx: -1, data: [] }, { pointRowIdx: -1, data: [] }],
+    pointToAllCausals: [{ pointRowIdx: -1, lagLists: [] }, { pointRowIdx: -1, lagLists: [] }],
     pointToNearCausals: [{ pointRowIdx: -1, data: [] }, { pointRowIdx: -1, data: [] }],
   };
 
@@ -142,9 +142,23 @@ const store = (intentSubject, dataSubject, filterSubject, clusteringSubject) => 
             break;
           }
 
+          // calculate the lag between selected point (= centerRowIdx) and other points
+          const lagMatrix = clustering.state.lagMatrices[positionIdx];
+          const lagLists = clusterMatrix[centerRowIdx].map((relation, colIdx) => {
+            // search row(cause)
+            if (clusterMatrix[centerRowIdx][colIdx] === true) {
+              return lagMatrix[centerRowIdx][colIdx];
+            }
+            // search col(effect)
+            if (clusterMatrix[colIdx][centerRowIdx] === true) {
+              return -lagMatrix[colIdx][centerRowIdx];
+            }
+            return false;
+          });
+
           state.pointToAllCausals[positionIdx] = {
             pointRowIdx: centerRowIdx,
-            data: clusterMatrix[centerRowIdx],
+            lagLists,
           };
 
           const nearRelation = nearCoordsList.map((nearCoords) => {
@@ -178,7 +192,7 @@ const store = (intentSubject, dataSubject, filterSubject, clusteringSubject) => 
           const { position } = payload;
           state.selectedClusterLists[position] = [];
           state.selectedTimeSeriesLists[position] = { averageData: [], rawData: [] };
-          state.pointToAllCausals[position] = { pointRowIdx: -1, data: [] };
+          state.pointToAllCausals[position] = { pointRowIdx: -1, lagLists: [] };
           state.pointToNearCausals[position] = { pointRowIdx: -1, data: [] };
           subject.onNext({ state });
           break;

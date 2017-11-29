@@ -82,6 +82,8 @@ export default class Main extends React.Component {
                         sampledCoords={this.state.filter.sampledCoords}
                         meanR={this.state.filter.meanR}
                         windowSize={this.state.filter.windowSize}
+                        corrMatrices={this.state.clustering.corrMatrices}
+                        lagMatrices={this.state.clustering.lagMatrices}
                         clusterMatrices={this.state.clustering.clusterMatrices}
                         clusterSampledCoords={this.state.clustering.clusterSampledCoords}
                         clusterRangeLists={this.state.clustering.clusterRangeLists}
