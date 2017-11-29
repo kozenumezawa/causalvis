@@ -112,11 +112,15 @@ export default class ResultWindow extends React.Component {
       <Grid celled>
         <Grid.Row>
           <Grid.Column width={16}>
-            {
-              (() => {
-                return this.renderOriginalCanvas();
-              })()
-            }
+            <Grid>
+              <Grid.Row>
+                {
+                  (() => {
+                    return this.renderOriginalCanvas();
+                  })()
+                }
+              </Grid.Row>
+            </Grid>
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>
