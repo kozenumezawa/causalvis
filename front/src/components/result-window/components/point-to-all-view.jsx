@@ -1,4 +1,5 @@
 import React from 'react';
+import colormap from 'colormap';
 
 import * as drawingTool from '../../../utils/drawing-tool';
 
@@ -12,7 +13,7 @@ export default class PointToAllView extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.pointToAllCausal.data.length === 0) {
+    if (nextProps.pointToAllCausal.lagLists.length === 0) {
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       drawingTool.drawFrame(this.canvas, this.ctx);
       return;
@@ -27,13 +28,24 @@ export default class PointToAllView extends React.Component {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     drawingTool.drawFrame(this.canvas, this.ctx);
 
-    pointToAllCausal.data.forEach((causal, rowIdx) => {
+    const options = {
+      colormap: 'RdBu',
+      nshades: 40,
+      format: 'hex',
+      alpha: 1,
+    };
+
+    const colorCategory = colormap(options);
+
+    pointToAllCausal.lagLists.forEach((lag, rowIdx) => {
       this.ctx.fillStyle = 'black';
-      if (causal === false && pointToAllCausal.pointRowIdx !== rowIdx) {
+      if (lag === false && pointToAllCausal.pointRowIdx !== rowIdx) {
         return;
       }
       if (pointToAllCausal.pointRowIdx === rowIdx) {
         this.ctx.fillStyle = 'red';
+      } else {
+        this.ctx.fillStyle = colorCategory[(40 / 2) + lag];
       }
       const x = clusterSampledCoords[rowIdx].x * scale;
       const y = clusterSampledCoords[rowIdx].y * scale;
