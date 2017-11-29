@@ -34,7 +34,7 @@ const store = (intentSubject, filterSubject) => {
             },
             body: JSON.stringify({
               allTimeSeries,
-              maxLag: 20,
+              maxLag: 30,
               lagStep: 1,
               causalMethod: 'CROSS',
               windowSize: filter.state.windowSize[idx],

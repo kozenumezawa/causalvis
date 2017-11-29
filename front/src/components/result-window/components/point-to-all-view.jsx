@@ -30,7 +30,7 @@ export default class PointToAllView extends React.Component {
 
     const options = {
       colormap: 'RdBu',
-      nshades: 40,
+      nshades: 60,
       format: 'hex',
       alpha: 1,
     };
@@ -45,7 +45,7 @@ export default class PointToAllView extends React.Component {
       if (pointToAllCausal.pointRowIdx === rowIdx) {
         this.ctx.fillStyle = 'red';
       } else {
-        this.ctx.fillStyle = colorCategory[(40 / 2) + lag];
+        this.ctx.fillStyle = colorCategory[(60 / 2) + lag];
       }
       const x = clusterSampledCoords[rowIdx].x * scale;
       const y = clusterSampledCoords[rowIdx].y * scale;
