@@ -66,7 +66,7 @@ export default class SideMenu extends React.Component {
         </Menu.Item>
 
         <Menu.Item>
-          <Menu.Header>Rightr Data</Menu.Header>
+          <Menu.Header>Right Data</Menu.Header>
           <Menu.Menu>
             {(() => {
               return this.renderCheckBoxes();
