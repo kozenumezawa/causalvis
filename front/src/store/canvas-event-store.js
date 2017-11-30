@@ -113,8 +113,8 @@ const store = (intentSubject, dataSubject, filterSubject, clusteringSubject) => 
 
           // set nearCoordsList
           const nearCoordsList = [];
-          for (let i = -1; i <= 1; i += 1) {
-            for (let j = -1; j <= 1; j += 1) {
+          for (let i = -2; i <= 2; i += 1) {
+            for (let j = -2; j <= 2; j += 1) {
               nearCoordsList.push({
                 x: x + (j * pixelInterval),
                 y: y + (i * pixelInterval),
@@ -135,7 +135,8 @@ const store = (intentSubject, dataSubject, filterSubject, clusteringSubject) => 
           });
 
           const clusterMatrix = clustering.state.clusterMatrices[positionIdx];
-          const centerRowIdx = nearCoordsList[4].rowIdx;
+          // const centerRowIdx = nearCoordsList[4].rowIdx;
+          const centerRowIdx = nearCoordsList[12].rowIdx;
 
           if (isOutside(centerRowIdx)) {
             subject.onNext({ state });
