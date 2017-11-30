@@ -1,4 +1,5 @@
 import React from 'react';
+import { Image, Label } from 'semantic-ui-react';
 
 import { DATA_SIM, DATA_TRP3, DATA_WILD, DATA_TRP3_RAW } from '../../constants/general-constants';
 
@@ -107,16 +108,23 @@ export default class ResultWindow extends React.Component {
   render() {
     return (
       <div style={{ position: 'relative', top: 50, height: 1200 }}>
+        <Label style={{ position: 'absolute', top: -30, left: 20 }}>
+          Original Images
+        </Label>
         {
           /*
-          (() => {
-            return this.renderOriginalCanvas();
-          })()
+            (() => {
+              return this.renderOriginalCanvas();
+            })()
           */
         }
+
+        <Label style={{ position: 'absolute', top: 234, left: 20 }}>
+          Cluster View
+        </Label>
         <div>
           <ClusterShape
-            style={{ position: 'absolute', top: 244, left: 50 }}
+            style={{ position: 'absolute', top: 264, left: 50 }}
             id={0}
             allTimeSeries={this.props.filterAllTimeSeries[0]}
             windowSize={this.props.windowSize[0]}
@@ -128,10 +136,11 @@ export default class ResultWindow extends React.Component {
             scale={this.state.scale[0]}
             positionIdx={0}
             selectedClusterList={this.props.selectedClusterLists[0]}
+            pointToAllCausal={this.props.pointToAllCausals[0]}
           />
 
           <ClusterShape
-            style={{ position: 'absolute', top: 240, left: 316 }}
+            style={{ position: 'absolute', top: 260, left: 316 }}
             id={1}
             allTimeSeries={this.props.filterAllTimeSeries[1]}
             windowSize={this.props.windowSize[1]}
@@ -143,16 +152,22 @@ export default class ResultWindow extends React.Component {
             scale={this.state.scale[1]}
             positionIdx={1}
             selectedClusterList={this.props.selectedClusterLists[1]}
+            pointToAllCausal={this.props.pointToAllCausals[1]}
           />
         </div>
 
+        <Label style={{ position: 'absolute', top: -30, left: 570 }}>
+          Network View
+        </Label>
         {
-          /*
           (() => {
             return this.renderNetworkView();
           })()
-          */
         }
+
+        <Label style={{ position: 'absolute', top: 270, left: 570 }}>
+          Adjacency Matrix View
+        </Label>
         <div>
           <ClusterHeatmap
             style={{ position: 'absolute', top: 300, left: 580 }}
@@ -183,26 +198,20 @@ export default class ResultWindow extends React.Component {
           />
         </div>
 
+        <Label style={{ position: 'absolute', top: 610, left: 570 }}>
+          Time Series Graph View
+        </Label>
         {
-          (() => {
-            return this.renderGraphContainer();
-          })()
+          /*
+            (() => {
+              return this.renderGraphContainer();
+            })()
+          */
         }
 
-        <div>
-          <PointToNearView
-            style={{ position: 'absolute', top: 780, left: 100 }}
-            id={0}
-            positionIdx={0}
-            pointToNearCausal={this.props.pointToNearCausals[0]}
-          />
-          <PointToNearView
-            style={{ position: 'absolute', top: 780, left: 340 }}
-            id={1}
-            positionIdx={1}
-            pointToNearCausal={this.props.pointToNearCausals[1]}
-          />
-        </div>
+        <Label style={{ position: 'absolute', top: 520, left: 20 }}>
+          Point-to-All View (Detail Visualization)
+        </Label>
         <div>
           <PointToAllView
             style={{ position: 'absolute', top: 550, left: 50 }}
@@ -227,6 +236,31 @@ export default class ResultWindow extends React.Component {
             pointToAllCausal={this.props.pointToAllCausals[1]}
           />
         </div>
+
+        <Label style={{ position: 'absolute', top: 780, left: 20 }}>
+          Point-to-Near View (Detail Visualization)
+        </Label>
+        <div>
+          <PointToNearView
+            style={{ position: 'absolute', top: 810, left: 80 }}
+            id={0}
+            positionIdx={0}
+            pointToNearCausal={this.props.pointToNearCausals[0]}
+          />
+          <PointToNearView
+            style={{ position: 'absolute', top: 810, left: 325 }}
+            id={1}
+            positionIdx={1}
+            pointToNearCausal={this.props.pointToNearCausals[1]}
+          />
+        </div>
+
+        <Image
+          style={{ position: 'absolute', top: 1010, left: 80 }}
+          src="./lag-legend-rotate.png"
+          alt="legend"
+          size="medium"
+        />
       </div>
     );
   }
