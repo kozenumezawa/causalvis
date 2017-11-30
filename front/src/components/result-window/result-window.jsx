@@ -112,9 +112,6 @@ export default class ResultWindow extends React.Component {
           <Label size="large" color="brown">
             Original Images
           </Label>
-          <Label size="large" color="green">
-            Overview Visualization
-          </Label>
         </div>
         {
           (() => {
