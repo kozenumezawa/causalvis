@@ -58,20 +58,24 @@ export default class Main extends React.Component {
               <div>
                 <Sidebar.Pushable as={Segment}>
                   <SideMenu />
-
                   <Sidebar.Pusher>
-                    <Accordion activeIndex={this.state.activateIndex} onTitleClick={this.onAccordionClick}>
-                      <Accordion.Title>
-                        <Icon name="dropdown" />
-                        Analysis Methods window
-                      </Accordion.Title>
-                      <Accordion.Content>
-                        <ControlWindow
-                          openModal={this.state.modal.openModal}
-                          causalMethodParamsList={this.state.modal.causalMethodParamsList}
-                        />
-                      </Accordion.Content>
-                    </Accordion>
+                    {
+                      /*
+                      <Accordion activeIndex={this.state.activateIndex} onTitleClick={this.onAccordionClick}>
+                        <Accordion.Title>
+                          <Icon name="dropdown" />
+                          Analysis Methods window
+                        </Accordion.Title>
+                        <Accordion.Content>
+                          <ControlWindow
+                            openModal={this.state.modal.openModal}
+                            causalMethodParamsList={this.state.modal.causalMethodParamsList}
+                          />
+                        </Accordion.Content>
+                      </Accordion>
+
+                      */
+                    }
                     <div>
                       <ResultWindow
                         allTiffList={this.state.data.allTiffList}
