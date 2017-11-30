@@ -178,6 +178,8 @@ const store = (intentSubject, dataSubject, filterSubject, clusteringSubject) => 
               rowIdx: nearCoords.rowIdx,
               fromCenter: clusterMatrix[centerRowIdx][targetRowIdx],
               toCenter: clusterMatrix[targetRowIdx][centerRowIdx],
+              lagFromCenter: lagMatrix[centerRowIdx][targetRowIdx],
+              lagToCenter: -lagMatrix[targetRowIdx][centerRowIdx],
             };
           });
 

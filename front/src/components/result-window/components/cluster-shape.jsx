@@ -36,7 +36,7 @@ export default class ClusterShape extends React.Component {
 
   drawSelectedCluster(props) {
     this.clusterOverlayCtx.clearRect(0, 0, this.clusterOverlayCanvas.width, this.clusterOverlayCanvas.height);
-    this.clusterOverlayCtx.fillStyle = 'black';
+    this.clusterOverlayCtx.fillStyle = '#339933';
     // draw heatmap and canvas
     props.selectedClusterList.forEach((belongCluster) => {
       for (let cellIdx = this.clusterRangeList[belongCluster].start;

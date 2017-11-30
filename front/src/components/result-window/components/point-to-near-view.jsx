@@ -9,9 +9,9 @@ export default class PointToNearView extends React.Component {
 
     const getRenderItem = (idx) => {
       if (pointToNearCausal.data[idx].fromCenter === true) {
-        return 'effect';
+        return pointToNearCausal.data[idx].lagFromCenter;
       } else if (pointToNearCausal.data[idx].toCenter === true) {
-        return 'cause';
+        return pointToNearCausal.data[idx].lagToCenter;
       }
       return ' ';
     };

@@ -31,8 +31,8 @@ export default class PointToAllView extends React.Component {
     const options = {
       colormap: 'RdBu',
       nshades: 60,
-      format: 'hex',
-      alpha: 1,
+      format: 'rgbaString',
+      alpha: [0.2, 0.6],
     };
 
     const colorCategory = colormap(options);
@@ -43,9 +43,12 @@ export default class PointToAllView extends React.Component {
         return;
       }
       if (pointToAllCausal.pointRowIdx === rowIdx) {
-        this.ctx.fillStyle = 'red';
+        this.ctx.fillStyle = 'green';
       } else {
-        this.ctx.fillStyle = colorCategory[(60 / 2) + lag];
+        // if (lag < 0) {
+        //   return;
+        // }
+        this.ctx.fillStyle = colorCategory[30 + lag];
       }
       const x = clusterSampledCoords[rowIdx].x * scale;
       const y = clusterSampledCoords[rowIdx].y * scale;
