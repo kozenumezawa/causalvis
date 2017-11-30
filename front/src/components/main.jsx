@@ -7,7 +7,7 @@ import { Sidebar, Segment } from 'semantic-ui-react';
 import { loadTiff } from '../intents/intent';
 
 import SideMenu from './side-bar/side-menu.jsx';
-import ControlWindow from './control-window/control-window.jsx';
+// import ControlWindow from './control-window/control-window.jsx';
 import ResultWindow from './result-window/result-window.jsx';
 
 export default class Main extends React.Component {
