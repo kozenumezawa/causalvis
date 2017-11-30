@@ -160,9 +160,11 @@ export default class ResultWindow extends React.Component {
           Network View
         </Label>
         {
+          /*
           (() => {
             return this.renderNetworkView();
           })()
+          */
         }
 
         <Label style={{ position: 'absolute', top: 270, left: 570 }}>
@@ -202,11 +204,9 @@ export default class ResultWindow extends React.Component {
           Time Series Graph View
         </Label>
         {
-          /*
-            (() => {
-              return this.renderGraphContainer();
-            })()
-          */
+          (() => {
+            return this.renderGraphContainer();
+          })()
         }
 
         <Label style={{ position: 'absolute', top: 520, left: 20 }}>
