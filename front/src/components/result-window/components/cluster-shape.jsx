@@ -16,7 +16,7 @@ export default class ClusterShape extends React.Component {
     this.clusterOverlayCanvas = document.getElementById(`cluster_canvas_${this.props.id}_overlay`);
     this.clusterOverlayCtx = this.clusterOverlayCanvas.getContext('2d');
 
-    this.clusterOverlayCanvas.addEventListener('mouseup', this.onMouseUpShape.bind(this), false);
+    this.clusterOverlayCanvas.addEventListener('mouseup', this.onMouseUpShape.bind(this));
   }
 
   componentWillReceiveProps(nextProps) {
@@ -24,6 +24,7 @@ export default class ClusterShape extends React.Component {
       this.drawData(nextProps);
     }
     this.drawSelectedCluster(nextProps);
+    this.drawClickedPoint(nextProps);
   }
 
   onMouseUpShape(e) {
@@ -36,7 +37,7 @@ export default class ClusterShape extends React.Component {
 
   drawSelectedCluster(props) {
     this.clusterOverlayCtx.clearRect(0, 0, this.clusterOverlayCanvas.width, this.clusterOverlayCanvas.height);
-    this.clusterOverlayCtx.fillStyle = '#339933';
+    this.clusterOverlayCtx.fillStyle = '#03A9F4';
     // draw heatmap and canvas
     props.selectedClusterList.forEach((belongCluster) => {
       for (let cellIdx = this.clusterRangeList[belongCluster].start;
@@ -49,6 +50,21 @@ export default class ClusterShape extends React.Component {
         this.clusterOverlayCtx.fillRect(x - r, y - r, sideLength, sideLength);
       }
     });
+  }
+
+  drawClickedPoint(props) {
+    const { clusterSampledCoords, windowSize, scale } = props;
+    const { pointRowIdx, lagLists } = props.pointToAllCausal;
+    if (lagLists.length === 0) {
+      return;
+    }
+    this.clusterOverlayCtx.fillStyle = '#43A047';
+
+    const x = clusterSampledCoords[pointRowIdx].x * scale;
+    const y = clusterSampledCoords[pointRowIdx].y * scale;
+    const sideLength = windowSize * scale;
+    const r = ((windowSize - 1) * scale) / 2;
+    this.clusterOverlayCtx.fillRect(x - r, y - r, sideLength, sideLength);
   }
 
   drawData(props) {
