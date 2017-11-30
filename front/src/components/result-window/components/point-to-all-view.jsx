@@ -32,9 +32,8 @@ export default class PointToAllView extends React.Component {
       colormap: 'RdBu',
       nshades: 60,
       format: 'rgbaString',
-      alpha: [0.2, 0.6],
+      alpha: [1, 1],
     };
-
     const colorCategory = colormap(options);
 
     pointToAllCausal.lagLists.forEach((lag, rowIdx) => {
