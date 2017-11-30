@@ -1,6 +1,7 @@
 import React from 'react';
 import colormap from 'colormap';
 
+import { selectOnePoint } from '../../../intents/intent';
 import * as drawingTool from '../../../utils/drawing-tool';
 
 export default class PointToAllView extends React.Component {
@@ -10,6 +11,8 @@ export default class PointToAllView extends React.Component {
 
     this.canvas.width = 200;
     this.canvas.height = 200;
+
+    this.canvas.addEventListener('mouseup', this.onMouseUpShape.bind(this));
   }
 
   componentWillReceiveProps(nextProps) {
@@ -19,6 +22,14 @@ export default class PointToAllView extends React.Component {
       return;
     }
     this.drawData(nextProps);
+  }
+
+  onMouseUpShape(e) {
+    const rect = e.target.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    selectOnePoint(Math.floor(x / this.props.scale), Math.floor(y / this.props.scale), this.props.positionIdx);
   }
 
   drawData(props) {
