@@ -1,7 +1,8 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import { Sidebar, Segment, Accordion, Icon } from 'semantic-ui-react';
+// import { Sidebar, Segment, Accordion, Icon } from 'semantic-ui-react';
+import { Sidebar, Segment } from 'semantic-ui-react';
 
 import { loadTiff } from '../intents/intent';
 

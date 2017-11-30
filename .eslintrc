@@ -12,7 +12,7 @@
     "no-unused-vars": "warn",
     "no-console": "off",
     "arrow-body-style": "off",
-    "max-len": ["error", 120],
+    "max-len": ["off", 120],
     "class-methods-use-this": "off",
     "react/jsx-no-bind": "off",
     "react/prop-types": "off",
