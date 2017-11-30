@@ -29,39 +29,39 @@ export default class PointToNearView extends React.Component {
       <table style={{ border: '1px solid' }}>
         <tbody>
           <tr style={{ border: '1px solid' }}>
-            <th style={{ width: 40, height: 30, border: '1px solid', backgroundColor: colorCategory[30 + getRenderItem(0)] }}>{ getRenderItem(0) }</th>
-            <th style={{ width: 40, height: 30, border: '1px solid', backgroundColor: colorCategory[30 + getRenderItem(1)] }}>{ getRenderItem(1) }</th>
-            <th style={{ width: 40, height: 30, border: '1px solid', backgroundColor: colorCategory[30 + getRenderItem(2)] }}>{ getRenderItem(2) }</th>
-            <th style={{ width: 40, height: 30, border: '1px solid', backgroundColor: colorCategory[30 + getRenderItem(3)] }}>{ getRenderItem(3) }</th>
-            <th style={{ width: 40, height: 30, border: '1px solid', backgroundColor: colorCategory[30 + getRenderItem(4)] }}>{ getRenderItem(4) }</th>
+            <th style={{ width: 40, height: 30, border: '1px solid black', fontSize: 9, color: '#F5F5F5', backgroundColor: colorCategory[30 + getRenderItem(0)] }}>{ getRenderItem(0) }</th>
+            <th style={{ width: 40, height: 30, border: '1px solid black', fontSize: 9, color: '#F5F5F5', backgroundColor: colorCategory[30 + getRenderItem(1)] }}>{ getRenderItem(1) }</th>
+            <th style={{ width: 40, height: 30, border: '1px solid black', fontSize: 9, color: '#F5F5F5', backgroundColor: colorCategory[30 + getRenderItem(2)] }}>{ getRenderItem(2) }</th>
+            <th style={{ width: 40, height: 30, border: '1px solid black', fontSize: 9, color: '#F5F5F5', backgroundColor: colorCategory[30 + getRenderItem(3)] }}>{ getRenderItem(3) }</th>
+            <th style={{ width: 40, height: 30, border: '1px solid black', fontSize: 9, color: '#F5F5F5', backgroundColor: colorCategory[30 + getRenderItem(4)] }}>{ getRenderItem(4) }</th>
           </tr>
           <tr style={{ border: '1px solid' }}>
-            <th style={{ width: 40, height: 30, border: '1px solid', backgroundColor: colorCategory[30 + getRenderItem(5)] }}>{ getRenderItem(5) }</th>
-            <th style={{ width: 40, height: 30, border: '1px solid', backgroundColor: colorCategory[30 + getRenderItem(6)] }}>{ getRenderItem(6) }</th>
-            <th style={{ width: 40, height: 30, border: '1px solid', backgroundColor: colorCategory[30 + getRenderItem(7)] }}>{ getRenderItem(7) }</th>
-            <th style={{ width: 40, height: 30, border: '1px solid', backgroundColor: colorCategory[30 + getRenderItem(8)] }}>{ getRenderItem(8) }</th>
-            <th style={{ width: 40, height: 30, border: '1px solid', backgroundColor: colorCategory[30 + getRenderItem(9)] }}>{ getRenderItem(9) }</th>
+            <th style={{ width: 40, height: 30, border: '1px solid black', fontSize: 9, color: '#F5F5F5', backgroundColor: colorCategory[30 + getRenderItem(5)] }}>{ getRenderItem(5) }</th>
+            <th style={{ width: 40, height: 30, border: '1px solid black', fontSize: 9, color: '#F5F5F5', backgroundColor: colorCategory[30 + getRenderItem(6)] }}>{ getRenderItem(6) }</th>
+            <th style={{ width: 40, height: 30, border: '1px solid black', fontSize: 9, color: '#F5F5F5', backgroundColor: colorCategory[30 + getRenderItem(7)] }}>{ getRenderItem(7) }</th>
+            <th style={{ width: 40, height: 30, border: '1px solid black', fontSize: 9, color: '#F5F5F5', backgroundColor: colorCategory[30 + getRenderItem(8)] }}>{ getRenderItem(8) }</th>
+            <th style={{ width: 40, height: 30, border: '1px solid black', fontSize: 9, color: '#F5F5F5', backgroundColor: colorCategory[30 + getRenderItem(9)] }}>{ getRenderItem(9) }</th>
           </tr>
           <tr style={{ align: 'center', border: '1px solid' }}>
-            <th style={{ width: 40, height: 30, border: '1px solid', backgroundColor: colorCategory[30 + getRenderItem(10)] }}>{ getRenderItem(10) }</th>
-            <th style={{ width: 40, height: 30, border: '1px solid', backgroundColor: colorCategory[30 + getRenderItem(11)] }}>{ getRenderItem(11) }</th>
-            <th style={{ width: 40, height: 30, border: '1px solid', backgroundColor: 'green' }} />
-            <th style={{ width: 40, height: 30, border: '1px solid', backgroundColor: colorCategory[30 + getRenderItem(13)] }}>{ getRenderItem(13) }</th>
-            <th style={{ width: 40, height: 30, border: '1px solid', backgroundColor: colorCategory[30 + getRenderItem(14)] }}>{ getRenderItem(14) }</th>
+            <th style={{ width: 40, height: 30, border: '1px solid black', fontSize: 9, color: '#F5F5F5', backgroundColor: colorCategory[30 + getRenderItem(10)] }}>{ getRenderItem(10) }</th>
+            <th style={{ width: 40, height: 30, border: '1px solid black', fontSize: 9, color: '#F5F5F5', backgroundColor: colorCategory[30 + getRenderItem(11)] }}>{ getRenderItem(11) }</th>
+            <th style={{ width: 40, height: 30, border: '1px solid black', fontSize: 9, color: '#F5F5F5', backgroundColor: '#43A047' }} />
+            <th style={{ width: 40, height: 30, border: '1px solid black', fontSize: 9, color: '#F5F5F5', backgroundColor: colorCategory[30 + getRenderItem(13)] }}>{ getRenderItem(13) }</th>
+            <th style={{ width: 40, height: 30, border: '1px solid black', fontSize: 9, color: '#F5F5F5', backgroundColor: colorCategory[30 + getRenderItem(14)] }}>{ getRenderItem(14) }</th>
           </tr>
           <tr style={{ border: '1px solid' }}>
-            <th style={{ width: 40, height: 30, border: '1px solid', backgroundColor: colorCategory[30 + getRenderItem(15)] }}>{ getRenderItem(15) }</th>
-            <th style={{ width: 40, height: 30, border: '1px solid', backgroundColor: colorCategory[30 + getRenderItem(16)] }}>{ getRenderItem(16) }</th>
-            <th style={{ width: 40, height: 30, border: '1px solid', backgroundColor: colorCategory[30 + getRenderItem(17)] }}>{ getRenderItem(17) }</th>
-            <th style={{ width: 40, height: 30, border: '1px solid', backgroundColor: colorCategory[30 + getRenderItem(18)] }}>{ getRenderItem(18) }</th>
-            <th style={{ width: 40, height: 30, border: '1px solid', backgroundColor: colorCategory[30 + getRenderItem(19)] }}>{ getRenderItem(19) }</th>
+            <th style={{ width: 40, height: 30, border: '1px solid black', fontSize: 9, color: '#F5F5F5', backgroundColor: colorCategory[30 + getRenderItem(15)] }}>{ getRenderItem(15) }</th>
+            <th style={{ width: 40, height: 30, border: '1px solid black', fontSize: 9, color: '#F5F5F5', backgroundColor: colorCategory[30 + getRenderItem(16)] }}>{ getRenderItem(16) }</th>
+            <th style={{ width: 40, height: 30, border: '1px solid black', fontSize: 9, color: '#F5F5F5', backgroundColor: colorCategory[30 + getRenderItem(17)] }}>{ getRenderItem(17) }</th>
+            <th style={{ width: 40, height: 30, border: '1px solid black', fontSize: 9, color: '#F5F5F5', backgroundColor: colorCategory[30 + getRenderItem(18)] }}>{ getRenderItem(18) }</th>
+            <th style={{ width: 40, height: 30, border: '1px solid black', fontSize: 9, color: '#F5F5F5', backgroundColor: colorCategory[30 + getRenderItem(19)] }}>{ getRenderItem(19) }</th>
           </tr>
           <tr style={{ border: '1px solid' }}>
-            <th style={{ width: 40, height: 30, border: '1px solid', backgroundColor: colorCategory[30 + getRenderItem(20)] }}>{ getRenderItem(20) }</th>
-            <th style={{ width: 40, height: 30, border: '1px solid', backgroundColor: colorCategory[30 + getRenderItem(21)] }}>{ getRenderItem(21) }</th>
-            <th style={{ width: 40, height: 30, border: '1px solid', backgroundColor: colorCategory[30 + getRenderItem(22)] }}>{ getRenderItem(22) }</th>
-            <th style={{ width: 40, height: 30, border: '1px solid', backgroundColor: colorCategory[30 + getRenderItem(23)] }}>{ getRenderItem(23) }</th>
-            <th style={{ width: 40, height: 30, border: '1px solid', backgroundColor: colorCategory[30 + getRenderItem(24)] }}>{ getRenderItem(24) }</th>
+            <th style={{ width: 40, height: 30, border: '1px solid black', fontSize: 9, color: '#F5F5F5', backgroundColor: colorCategory[30 + getRenderItem(20)] }}>{ getRenderItem(20) }</th>
+            <th style={{ width: 40, height: 30, border: '1px solid black', fontSize: 9, color: '#F5F5F5', backgroundColor: colorCategory[30 + getRenderItem(21)] }}>{ getRenderItem(21) }</th>
+            <th style={{ width: 40, height: 30, border: '1px solid black', fontSize: 9, color: '#F5F5F5', backgroundColor: colorCategory[30 + getRenderItem(22)] }}>{ getRenderItem(22) }</th>
+            <th style={{ width: 40, height: 30, border: '1px solid black', fontSize: 9, color: '#F5F5F5', backgroundColor: colorCategory[30 + getRenderItem(23)] }}>{ getRenderItem(23) }</th>
+            <th style={{ width: 40, height: 30, border: '1px solid black', fontSize: 9, color: '#F5F5F5', backgroundColor: colorCategory[30 + getRenderItem(24)] }}>{ getRenderItem(24) }</th>
           </tr>
         </tbody>
       </table>

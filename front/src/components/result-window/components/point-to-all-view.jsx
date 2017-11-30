@@ -42,11 +42,8 @@ export default class PointToAllView extends React.Component {
         return;
       }
       if (pointToAllCausal.pointRowIdx === rowIdx) {
-        this.ctx.fillStyle = 'green';
+        this.ctx.fillStyle = '#43A047';
       } else {
-        // if (lag < 0) {
-        //   return;
-        // }
         this.ctx.fillStyle = colorCategory[30 + lag];
       }
       const x = clusterSampledCoords[rowIdx].x * scale;

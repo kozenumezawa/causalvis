@@ -69,7 +69,7 @@ export function getColorCategory(n) {
   // color_category = d3_scale.schemeCategory20c;
   const options = {
     colormap: 'hot',
-    nshades: n,
+    nshades: n + 2,
     format: 'hex',
     alpha: 1,
   };
