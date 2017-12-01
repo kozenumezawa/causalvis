@@ -282,12 +282,19 @@ export default class ResultWindow extends React.Component {
           />
         </div>
 
-        <Image
-          style={{ position: 'absolute', top: 1010, left: 80 }}
-          src="./lag-legend-rotate.png"
-          alt="legend"
-          size="medium"
-        />
+        <div style={{ position: 'absolute', top: 1000, left: 140 }}>
+          <Image
+            src="./lag-legend-rotate.png"
+            alt="legend"
+            size="medium"
+          />
+          <div style={{ position: 'absolute', marginLeft: 100 }}>
+            lag [time step]
+          </div>
+          <Label size="medium" style={{ position: 'absolute', width: 315, left: -10, marginTop: 25 }}>
+            colormap of the lag which maximizes cross-correlation
+          </Label>
+        </div>
       </div>
     );
   }
