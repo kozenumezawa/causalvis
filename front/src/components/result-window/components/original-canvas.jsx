@@ -44,7 +44,7 @@ export default class OriginalCanvas extends React.Component {
 
     this.canvas.width = props.width * props.scale;
     this.canvas.height = (props.allTimeSeries.length / props.width) * props.scale;
-    
+
     this.playTiff = setInterval(() => {
       if (this.state.playIndex === props.allTimeSeries[0].length - 1) {
         this.state.playIndex = (this.state.playIndex === props.allTimeSeries[0].length - 1) ? 0 : this.state.playIndex;

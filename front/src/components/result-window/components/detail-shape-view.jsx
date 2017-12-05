@@ -25,7 +25,7 @@ export default class DetailShapeView extends React.Component {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     drawingTool.drawFrame(this.canvas, this.ctx);
 
-    const color = drawingTool.getColorCategory(nClusterList.length);
+    const color = drawingTool.getBlackBodyColormap(nClusterList.length);
     this.ctx.fillStyle = color[selectedCluster];
     for (let rowIdx = clusterRangeList[selectedCluster].start; rowIdx < clusterRangeList[selectedCluster].end; rowIdx++) {
       const x = clusterSampledCoords[rowIdx].x * scale;

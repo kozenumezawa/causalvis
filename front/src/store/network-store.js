@@ -20,7 +20,7 @@ const store = (intentSubject, clusteringSubject) => {
 
           const clusterRangeIdx =
             new Map(clusterRangeList.map((causalClusterRange, idx) => [causalClusterRange, idx]));
-          const color = drawingTool.getColorCategory(nClusterList.length);
+          const color = drawingTool.getBlackBodyColormap(nClusterList.length);
           const sizeCoeff = 3;
           const nodes = nClusterList.map((nCluster, idx) => {
             const node = {

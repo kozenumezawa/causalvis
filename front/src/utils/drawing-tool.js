@@ -1,4 +1,4 @@
-import colormap from 'colormap';
+import blackBodyColormap from './black-body-colormap';
 
 /**
  * Converts an HSL color value to RGB. Conversion formula
@@ -50,32 +50,25 @@ export function hslToRgb(h, s, l) {
   return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
 }
 
-export function getColorCategory(n) {
-  const lightness = 0.5;
-  const saturation = 0.8;
-
-  let colorCategory = [];
-  for (let i = 0; i < n; i += 1) {
-    const hue = (1 / (n - 1)) * i;
-    const rgb = hslToRgb((2 / 3) * (1 - hue), saturation, lightness);
-
-    let colorString = '#';
-    rgb.forEach((color) => {
-      colorString += color.toString(16);
-    });
-    colorCategory.push(colorString);
-  }
-
-  // color_category = d3_scale.schemeCategory20c;
-  const options = {
-    colormap: 'hot',
-    nshades: n + 2,
-    format: 'hex',
-    alpha: 1,
+export function getBlackBodyColormap(colormapSize) {
+  const componentToHex = (c) => {
+    // ref: https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
+    const hex = c.toString(16);
+    return hex.length === 1 ? `0${hex}` : hex;
   };
 
-  colorCategory = colormap(options);
-  return colorCategory;
+  const originalColormapSize = blackBodyColormap.n;
+  const colorInterval = originalColormapSize / colormapSize;
+
+  const newColormap = [];
+  for (let i = 0; i < colormapSize; i += 1) {
+    const r = blackBodyColormap.r[Math.floor(i * colorInterval)];
+    const g = blackBodyColormap.g[Math.floor(i * colorInterval)];
+    const b = blackBodyColormap.b[Math.floor(i * colorInterval)];
+    const colorHex = `#${componentToHex(r) + componentToHex(g) + componentToHex(b)}`;
+    newColormap.push(colorHex);
+  }
+  return newColormap;
 }
 
 export function drawFrame(canvas, ctx) {
