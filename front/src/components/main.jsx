@@ -74,7 +74,6 @@ export default class Main extends React.Component {
                           />
                         </Accordion.Content>
                       </Accordion>
-
                       */
                     }
                     <div>
