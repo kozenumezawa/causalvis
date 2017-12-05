@@ -138,7 +138,7 @@ export default class ClusterMatrix extends React.Component {
     this.nClusterList = props.nClusterList;
     this.clusterSampledCoords = props.clusterSampledCoords;
 
-    const color = drawingTool.getColorCategory(this.nClusterList.length);
+    const color = drawingTool.getBlackBodyColormap(this.nClusterList.length);
 
     this.heatmapCanvas.width = (this.graphSorted.length * props.cellScale) + this.legendWidth;
     this.heatmapCanvas.height = (this.graphSorted.length * props.cellScale) + this.legendWidth;

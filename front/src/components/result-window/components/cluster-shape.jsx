@@ -76,7 +76,7 @@ export default class ClusterShape extends React.Component {
     this.nClusterList = props.nClusterList;
     this.clusterSampledCoords = props.clusterSampledCoords;
 
-    const color = drawingTool.getColorCategory(this.nClusterList.length);
+    const color = drawingTool.getBlackBodyColormap(this.nClusterList.length);
 
     // draw a canvas
     this.clusterCanvas.width = props.width * props.scale;

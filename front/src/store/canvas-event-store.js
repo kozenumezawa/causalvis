@@ -65,7 +65,7 @@ const store = (intentSubject, dataSubject, filterSubject, clusteringSubject) => 
             const clusterSampledCoords = clustering.state.clusterSampledCoords[positionIdx];
             const nClusterList = clustering.state.nClusterLists[positionIdx];
 
-            const color = drawingTool.getColorCategory(nClusterList.length);
+            const color = drawingTool.getBlackBodyColormap(nClusterList.length);
 
             const selectedTimeSeries = [];
             for (let rowIdx = clusterRangeList[clusterNumber].start;
