@@ -36,7 +36,7 @@ const store = (intentSubject) => {
               state.width[0] = state.allTiffList[0][0].width;
             });
           });
-        const simFetch = fetch('NagumoInterpolate.json')
+        const simFetch = fetch('NagumoSimulation.json')
           .then(nagumoResponse => nagumoResponse.json())
           .then((json) => {
             state.allTimeSeries[1] = json.allTimeSeries;
@@ -54,7 +54,7 @@ const store = (intentSubject) => {
         state.dataType[position] = dataType;
         switch (dataType) {
           case DATA_SIM:
-            window.fetch('NagumoInterpolate.json')
+            window.fetch('NagumoSimulation.json')
               .then(nagumoResponse => nagumoResponse.json())
               .then((json) => {
                 state.allTimeSeries[position] = json.allTimeSeries;
