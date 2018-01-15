@@ -36,11 +36,11 @@ const store = (intentSubject, filterSubject) => {
               allTimeSeries,
               maxLag: 30,
               lagStep: 1,
-              causalMethod: 'CROSS',
+              causalMethod: 'CCM',
               windowSize: filter.state.windowSize[idx],
 
               clusteringMethod: 'IRM',
-              threshold: 0.7,
+              threshold: 0.1, // 0.7,
               sampledCoords: filter.state.sampledCoords[idx],
               dataName: dataNames[idx],
             }),
