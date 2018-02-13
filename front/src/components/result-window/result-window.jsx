@@ -58,6 +58,9 @@ export default class ResultWindow extends React.Component {
     }
     const left = [50, 316];
     return this.props.filterAllTimeSeries.map((id, idx) => {
+      if (idx === 1) {
+        return <div />;
+      }
       return (
         <div key={`canvas list${idx}`} style={{ position: 'absolute', top: 10, left: left[idx] }} >
           <OriginalCanvas
@@ -75,6 +78,9 @@ export default class ResultWindow extends React.Component {
     const top = 20;
     const left = [600, 930];
     return this.props.networks.map((network, idx) => {
+      if (idx === 1) {
+        return <div />;
+      }
       return (
         <div
           key={`network list${idx}`}
@@ -94,6 +100,9 @@ export default class ResultWindow extends React.Component {
     const top = 710;
     const left = [600, 920];
     return this.props.selectedTimeSeriesLists.map((selectedTimeSeriesList, idx) => {
+      if (idx === 1) {
+        return <div />;
+      }
       return (
         <div key={`graph list${idx}`} style={{ position: 'absolute', top, left: left[idx] }} >
           <GraphContainer
@@ -118,7 +127,7 @@ export default class ResultWindow extends React.Component {
             return this.renderOriginalCanvas();
           })()
         }
-        <div style={{ position: 'absolute', top: 254, left: 20 }}>
+        <div style={{ position: 'absolute', top: -30, left: 350 }}>
           <Label size="large" color="brown">
             Cluster View
           </Label>
@@ -128,7 +137,7 @@ export default class ResultWindow extends React.Component {
         </div>
         <div>
           <ClusterShape
-            style={{ position: 'absolute', top: 294, left: 50 }}
+            style={{ position: 'absolute', top: 10, left: 380 }}
             id={0}
             allTimeSeries={this.props.filterAllTimeSeries[0]}
             windowSize={this.props.windowSize[0]}
@@ -142,37 +151,43 @@ export default class ResultWindow extends React.Component {
             selectedClusterList={this.props.selectedClusterLists[0]}
             pointToAllCausal={this.props.pointToAllCausals[0]}
           />
+        </div>
 
-          <ClusterShape
-            style={{ position: 'absolute', top: 290, left: 316 }}
-            id={1}
-            allTimeSeries={this.props.filterAllTimeSeries[1]}
-            windowSize={this.props.windowSize[1]}
-            clusterMatrix={this.props.clusterMatrices[1]}
-            clusterSampledCoords={this.props.clusterSampledCoords[1]}
-            clusterRangeList={this.props.clusterRangeLists[1]}
-            nClusterList={this.props.nClusterLists[1]}
-            width={this.props.width[1]}
-            scale={this.state.scale[1]}
-            positionIdx={1}
-            selectedClusterList={this.props.selectedClusterLists[1]}
-            pointToAllCausal={this.props.pointToAllCausals[1]}
+        <div style={{ position: 'absolute', top: -30, left: 680 }}>
+          <Label size="large" color="brown">
+            Point-to-All View
+          </Label>
+          <Label size="large" color="blue">
+            Detail Visualization
+          </Label>
+        </div>
+        <div>
+          <PointToAllView
+            style={{ position: 'absolute', top: 10, left: 710 }}
+            id={0}
+            allTimeSeries={this.props.filterAllTimeSeries[0]}
+            windowSize={this.props.windowSize[0]}
+            clusterSampledCoords={this.props.clusterSampledCoords[0]}
+            width={this.props.width[0]}
+            scale={this.state.scale[0]}
+            positionIdx={0}
+            pointToAllCausal={this.props.pointToAllCausals[0]}
           />
         </div>
 
-        <div style={{ position: 'absolute', top: -30, left: 570 }}>
-          <Label size="large" color="brown">
-            Network View
-          </Label>
-          <Label size="large" color="green">
-            Overview Visualization
-          </Label>
-        </div>
-        {
-          (() => {
-            return this.renderNetworkView();
-          })()
-        }
+        {/*<div style={{ position: 'absolute', top: -30, left: 570 }}>*/}
+          {/*<Label size="large" color="brown">*/}
+            {/*Network View*/}
+          {/*</Label>*/}
+          {/*<Label size="large" color="green">*/}
+            {/*Overview Visualization*/}
+          {/*</Label>*/}
+        {/*</div>*/}
+        {/*{*/}
+          {/*(() => {*/}
+            {/*return this.renderNetworkView();*/}
+          {/*})()*/}
+        {/*}*/}
 
         <div style={{ position: 'absolute', top: 300, left: 570 }}>
           <Label size="large" color="brown">
@@ -196,20 +211,6 @@ export default class ResultWindow extends React.Component {
             positionIdx={0}
             selectedClusterList={this.props.selectedClusterLists[0]}
           />
-
-          <ClusterHeatmap
-            style={{ position: 'absolute', top: 340, left: 900 }}
-            id={1}
-            allTiffList={this.props.allTiffList[1]}
-            allTimeSeries={this.props.filterAllTimeSeries[1]}
-            clusterMatrix={this.props.clusterMatrices[1]}
-            clusterSampledCoords={this.props.clusterSampledCoords[1]}
-            clusterRangeList={this.props.clusterRangeLists[1]}
-            nClusterList={this.props.nClusterLists[1]}
-            cellScale={this.state.cellScale[1]}
-            positionIdx={1}
-            selectedClusterList={this.props.selectedClusterLists[1]}
-          />
         </div>
 
         <div style={{ position: 'absolute', top: 660, left: 570 }}>
@@ -226,39 +227,6 @@ export default class ResultWindow extends React.Component {
           })()
         }
 
-        <div style={{ position: 'absolute', top: 520, left: 20 }}>
-          <Label size="large" color="brown">
-            Point-to-All View
-          </Label>
-          <Label size="large" color="blue">
-            Detail Visualization
-          </Label>
-        </div>
-        <div>
-          <PointToAllView
-            style={{ position: 'absolute', top: 560, left: 50 }}
-            id={0}
-            allTimeSeries={this.props.filterAllTimeSeries[0]}
-            windowSize={this.props.windowSize[0]}
-            clusterSampledCoords={this.props.clusterSampledCoords[0]}
-            width={this.props.width[0]}
-            scale={this.state.scale[0]}
-            positionIdx={0}
-            pointToAllCausal={this.props.pointToAllCausals[0]}
-          />
-          <PointToAllView
-            style={{ position: 'absolute', top: 560, left: 316 }}
-            id={1}
-            allTimeSeries={this.props.filterAllTimeSeries[1]}
-            windowSize={this.props.windowSize[1]}
-            clusterSampledCoords={this.props.clusterSampledCoords[1]}
-            width={this.props.width[1]}
-            scale={this.state.scale[1]}
-            positionIdx={1}
-            pointToAllCausal={this.props.pointToAllCausals[1]}
-          />
-        </div>
-
         <div style={{ position: 'absolute', top: 780, left: 20 }}>
           <Label size="large" color="brown">
             Point-to-Near View
@@ -273,12 +241,6 @@ export default class ResultWindow extends React.Component {
             id={0}
             positionIdx={0}
             pointToNearCausal={this.props.pointToNearCausals[0]}
-          />
-          <PointToNearView
-            style={{ position: 'absolute', top: 820, left: 325 }}
-            id={1}
-            positionIdx={1}
-            pointToNearCausal={this.props.pointToNearCausals[1]}
           />
         </div>
 
