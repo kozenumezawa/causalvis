@@ -1,5 +1,6 @@
 import React from 'react';
 import colormap from 'colormap';
+import { Radio, Form, Segment } from 'semantic-ui-react';
 
 import * as drawingTool from '../../../utils/drawing-tool';
 
@@ -37,6 +38,33 @@ export default class OriginalCanvas extends React.Component {
     }
   }
 
+  handleSliderChange(e) {
+    this.setState({
+      playIndex: Number(e.target.value),
+    });
+    this.drawData(Number(e.target.value));
+  }
+
+  handleRadioChange(e, { checked }) {
+    if (checked === true) {
+      this.startAutoMode();
+      return;
+    }
+    clearInterval(this.playTiff);
+  }
+
+  startAutoMode() {
+    // auto mode
+    this.playTiff = setInterval(() => {
+      if (this.state.playIndex === this.props.allTimeSeries[0].length - 1) {
+        this.state.playIndex = (this.state.playIndex === this.props.allTimeSeries[0].length - 1) ? 0 : this.state.playIndex;
+      }
+      this.drawData(this.state.playIndex);
+      this.setState({ playIndex: this.state.playIndex + 1 });
+    }, 30);
+    this.drawData();
+  }
+
   drawData(props) {
     if (props.allTimeSeries == null) {
       return;
@@ -67,13 +95,43 @@ export default class OriginalCanvas extends React.Component {
   }
 
   render() {
-    const timeText = `${this.state.playIndex} / ${this.props.allTimeSeries[0].length}`;
+    const timeText = `${this.state.playIndex} / ${this.props.allTimeSeries[0].length - 1}`;
     return (
       <div>
         <canvas id={`original_canvas_${this.props.id}`} />
-        <div>
-          { timeText }
+        <div
+          style={{ position: 'absolute', top: 220, left: -40, width: 330 }}
+          data-intro="この部分では、動画の自動再生のON/OFFや、手動で再生時間を変えることができます。"
+          data-step="6"
+        >
+          <Segment>
+            <Form>
+              <Form.Group inline>
+                <label style={{ width: 110 }}>time</label>
+                <input
+                  type="range"
+                  className="input-range"
+                  min={0}
+                  max={199}
+                  value={this.state.playIndex}
+                  onChange={this.handleSliderChange.bind(this)}
+                />
+                <label style={{ width: 110, marginLeft: 10 }}>
+                  { timeText }
+                </label>
+              </Form.Group>
+              <Form.Group inline>
+                <label>auto mode</label>
+                <Radio
+                  defaultChecked
+                  toggle
+                  onChange={this.handleRadioChange.bind(this)}
+                />
+              </Form.Group>
+            </Form>
+          </Segment>
         </div>
+
       </div>
     );
   }

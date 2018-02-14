@@ -75,8 +75,8 @@ export default class ResultWindow extends React.Component {
   }
 
   renderNetworkView() {
-    const top = 20;
-    const left = [600, 930];
+    const top = 400;
+    const left = [400, 930];
     return this.props.networks.map((network, idx) => {
       if (idx === 1) {
         return <div />;
@@ -97,8 +97,8 @@ export default class ResultWindow extends React.Component {
   }
 
   renderGraphContainer() {
-    const top = 710;
-    const left = [600, 920];
+    const top = 400;
+    const left = [690, 920];
     return this.props.selectedTimeSeriesLists.map((selectedTimeSeriesList, idx) => {
       if (idx === 1) {
         return <div />;
@@ -132,7 +132,7 @@ export default class ResultWindow extends React.Component {
             Cluster View
           </Label>
           <Label size="large" color="green">
-            Overview Visualization
+            Overview
           </Label>
         </div>
         <div>
@@ -158,7 +158,7 @@ export default class ResultWindow extends React.Component {
             Point-to-All View
           </Label>
           <Label size="large" color="blue">
-            Detail Visualization
+            Detail
           </Label>
         </div>
         <div>
@@ -175,31 +175,62 @@ export default class ResultWindow extends React.Component {
           />
         </div>
 
-        {/*<div style={{ position: 'absolute', top: -30, left: 570 }}>*/}
-          {/*<Label size="large" color="brown">*/}
-            {/*Network View*/}
-          {/*</Label>*/}
-          {/*<Label size="large" color="green">*/}
-            {/*Overview Visualization*/}
-          {/*</Label>*/}
-        {/*</div>*/}
-        {/*{*/}
-          {/*(() => {*/}
-            {/*return this.renderNetworkView();*/}
-          {/*})()*/}
-        {/*}*/}
+        <div style={{ position: 'absolute', top: -30, left: 1020 }}>
+          <Label size="large" color="brown">
+            Point-to-Near View
+          </Label>
+          <Label size="large" color="blue">
+            Detail
+          </Label>
+        </div>
+        <div>
+          <PointToNearView
+            style={{ position: 'absolute', top: 10, left: 1050 }}
+            id={0}
+            positionIdx={0}
+            pointToNearCausal={this.props.pointToNearCausals[0]}
+          />
+        </div>
 
-        <div style={{ position: 'absolute', top: 300, left: 570 }}>
+        <div style={{ position: 'absolute', top: 220, left: 850 }}>
+          <Image
+            src="./lag-legend-rotate.png"
+            alt="legend"
+            size="medium"
+          />
+          <div style={{ position: 'absolute', marginLeft: 100 }}>
+            lag [time step]
+          </div>
+          <Label size="medium" style={{ position: 'absolute', width: 315, left: -10, marginTop: 25 }}>
+            colormap of the lag which maximizes cross-correlation
+          </Label>
+        </div>
+
+        <div style={{ position: 'absolute', top: 360, left: 350 }}>
+          <Label size="large" color="brown">
+            Network View
+          </Label>
+          <Label size="large" color="green">
+            Overview
+          </Label>
+        </div>
+        {
+          (() => {
+            return this.renderNetworkView();
+          })()
+        }
+
+        <div style={{ position: 'absolute', top: 360, left: 20 }}>
           <Label size="large" color="brown">
             Adjacency Matrix View
           </Label>
           <Label size="large" color="green">
-            Overview Visualization
+            Overview
           </Label>
         </div>
         <div>
           <ClusterHeatmap
-            style={{ position: 'absolute', top: 340, left: 580 }}
+            style={{ position: 'absolute', top: 400, left: 50 }}
             id={0}
             allTiffList={this.props.allTiffList[0]}
             allTimeSeries={this.props.filterAllTimeSeries[0]}
@@ -213,12 +244,12 @@ export default class ResultWindow extends React.Component {
           />
         </div>
 
-        <div style={{ position: 'absolute', top: 660, left: 570 }}>
+        <div style={{ position: 'absolute', top: 360, left: 650 }}>
           <Label size="large" color="brown">
             Time Series Graph View
           </Label>
           <Label size="large" color="green">
-            Overview Visualization
+            Overview
           </Label>
         </div>
         {
@@ -226,37 +257,6 @@ export default class ResultWindow extends React.Component {
             return this.renderGraphContainer();
           })()
         }
-
-        <div style={{ position: 'absolute', top: 780, left: 20 }}>
-          <Label size="large" color="brown">
-            Point-to-Near View
-          </Label>
-          <Label size="large" color="blue">
-            Detail Visualization
-          </Label>
-        </div>
-        <div>
-          <PointToNearView
-            style={{ position: 'absolute', top: 820, left: 80 }}
-            id={0}
-            positionIdx={0}
-            pointToNearCausal={this.props.pointToNearCausals[0]}
-          />
-        </div>
-
-        <div style={{ position: 'absolute', top: 1000, left: 140 }}>
-          <Image
-            src="./lag-legend-rotate.png"
-            alt="legend"
-            size="medium"
-          />
-          <div style={{ position: 'absolute', marginLeft: 100 }}>
-            lag [time step]
-          </div>
-          <Label size="medium" style={{ position: 'absolute', width: 315, left: -10, marginTop: 25 }}>
-            colormap of the lag which maximizes cross-correlation
-          </Label>
-        </div>
       </div>
     );
   }
